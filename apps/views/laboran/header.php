@@ -9,8 +9,11 @@
   <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/img/favicon.png') ?>" />
   <link href="<?= base_url('assets/inspinia/') ?>css/bootstrap.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/iCheck/custom.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
@@ -33,44 +36,82 @@
               <img alt="image" class="rounded-circle" src="<?= base_url('assets/') ?>img/favicon.png" height="50px" height="50px">
             </div>
           </li>
-          <li>
-            <a href="<?= base_url('Laboran/Dashboard') ?>">
-              <i class="fa fa-dashboard"></i>
-              <span class="nav-label">Dashboard</span>
-            </a>
+          <?php
+          if (uri('2') == 'Dashboard') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Laboran/Dashboard') ?>">
+            <i class="fa fa-dashboard"></i>
+            <span class="nav-label">Dashboard</span>
+          </a>
           </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-barcode"></i>
-              <span class="nav-label">Stock Opname</span>
-              <span class="fa arrow"></span>
-            </a>
-            <ul class="nav nav-second-level collapse">
-              <li>
-                <a href="<?= base_url('Laboran/StockLists') ?>">Stock Lists</a>
-              </li>
-              <li>
-                <a href="<?= base_url('Laboran/AdditionalStock') ?>">Additional Stock</a>
-              </li>
-              <li>
-                <a href="<?= base_url('Laboran/ReductionStock') ?>">Reduction Stock</a>
-              </li>
-            </ul>
+          <?php
+          if (uri('2') == 'StockLists' || uri('2') == 'AddStockList' || uri('2') == 'EditStockList') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="#">
+            <i class="fa fa-barcode"></i>
+            <span class="nav-label">Stock Opname</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <?php
+            if (uri('2') == 'StockLists' || uri('2') == 'AddStockList' || uri('2') == 'EditStockList') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Laboran/StockLists') ?>">Stock Lists</a>
+            </li>
+            <li>
+              <!-- <a href="<?= base_url('Laboran/AdditionalStock') ?>">Additional Stock</a> -->
+              <a href="#">Additional Stock</a>
+            </li>
+            <li>
+              <!-- <a href="<?= base_url('Laboran/ReductionStock') ?>">Reduction Stock</a> -->
+              <a href="#">Reduction Stock</a>
+            </li>
+          </ul>
           </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-bank"></i>
-              <span class="nav-label">Laboratory</span>
-              <span class="fa arrow"></span>
-            </a>
-            <ul class="nav nav-second-level collapse">
-              <li>
-                <a href="<?= base_url('Laboran/PracticumLaboratory') ?>">Practicum Laboratory</a>
-              </li>
-              <li>
-                <a href="<?= base_url('Laboran/ResearchLaboratory') ?>">Research Laboratory</a>
-              </li>
-            </ul>
+          <?php
+          if (uri('2') == 'PracticumLaboratory' || uri('2') == 'ViewLaboratory' || uri('2') == 'ResearchLaboratory') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="#">
+            <i class="fa fa-bank"></i>
+            <span class="nav-label">Laboratory</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <?php
+            if (uri('2') == 'PracticumLaboratory') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Laboran/PracticumLaboratory') ?>">Practicum Laboratory</a>
+            </li>
+            <?php
+            if (uri('2') == 'ResearchLaboratory') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Laboran/ResearchLaboratory') ?>">Research Laboratory</a>
+            </li>
+          </ul>
           </li>
           <li>
             <a href="#">

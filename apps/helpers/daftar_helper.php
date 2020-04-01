@@ -49,6 +49,12 @@ function userdata($session)
   return $ci->session->userdata($session);
 }
 
+function uri($segment)
+{
+  $ci = &get_instance();
+  return $ci->uri->segment($segment);
+}
+
 if (!function_exists('tanggal_inggris')) {
   function tanggal_inggris($tanggal)
   {

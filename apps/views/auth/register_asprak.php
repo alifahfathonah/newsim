@@ -45,7 +45,7 @@
                   <option></option>
                   <?php
                   foreach ($data as $d) {
-                    echo '<option value="' . $d->nim . '">' . $d->nim . '</option>';
+                    echo '<option value="' . $d->nim_asprak . '">' . $d->nim_asprak . '</option>';
                   }
                   ?>
                 </select>

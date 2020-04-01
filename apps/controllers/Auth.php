@@ -16,7 +16,7 @@ class Auth extends CI_Controller
     } elseif (userdata('login') == 'aslab') {
       #
     } elseif (userdata('login') == 'asprak') {
-      #
+      redirect('Asprak/Dashboard');
     } elseif (userdata('login') == 'grant') {
       #
     } elseif (userdata('login') == 'magang') {
@@ -33,15 +33,15 @@ class Auth extends CI_Controller
         $where    = array('username' => $username, 'password' => $password);
         $cekData  = $this->auth->cekUser($where)->row();
         if ($cekData) {
+          $history = array(
+            'ip'            => $this->cekIP(),
+            'browser'       => $this->cekUserAgent(),
+            'platform'      => $this->agent->platform(),
+            'username'      => $username,
+            'tanggal_login' => date('Y-m-d H:i:s')
+          );
+          $this->auth->insertData('history_login', $history);
           if ($cekData->jenisAkses == 'laboran') {
-            $history = array(
-              'ip'            => $this->cekIP(),
-              'browser'       => $this->cekUserAgent(),
-              'platform'      => $this->agent->platform(),
-              'username'      => $username,
-              'tanggal_login' => date('Y-m-d H:i:s')
-            );
-            $this->auth->insertData('history_login', $history);
             $session = array(
               'login'     => $cekData->jenisAkses,
               'id'        => $cekData->idUser,
@@ -54,7 +54,15 @@ class Auth extends CI_Controller
           } elseif ($cekData->jenisAkses == 'aslab') {
             echo 2;
           } elseif ($cekData->jenisAkses == 'asprak') {
-            echo 3;
+            $session = array(
+              'login'     => $cekData->jenisAkses,
+              'id'        => $cekData->idUser,
+              'username'  => $cekData->username,
+              'nim'       => $cekData->nimAsprak,
+              'jabatan'   => $cekData->jabatan
+            );
+            set_userdata($session);
+            redirect('Asprak/Dashboard');
           } elseif ($cekData->jenisAkses == 'magang') {
             echo 4;
           } elseif ($cekData->jenisAkses == 'grant') {
@@ -112,7 +120,7 @@ class Auth extends CI_Controller
         'password'    => $password_user,
         'nimAsprak'   => $nim_user,
         'jenisAkses'  => 'asprak',
-        'jabatan'     => 'Practicum Assistant',
+        'jabatan'     => 'Asisten Praktikum',
         'status'      => '1'
       );
       $this->auth->insertData('users', $input);

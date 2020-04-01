@@ -34,11 +34,11 @@ class M_Auth extends CI_Model
 
   function daftarAsprak()
   {
-    $this->db->select('asprak.nim');
+    $this->db->select('asprak.nim_asprak');
     $this->db->from('asprak');
-    $this->db->join('users', 'asprak.nim = users.nimAsprak', 'left outer');
+    $this->db->join('users', 'asprak.nim_asprak = users.nimAsprak', 'left outer');
     $this->db->where('users.nimAsprak', null);
-    $this->db->order_by('asprak.nim', 'asc');
+    $this->db->order_by('asprak.nim_asprak', 'asc');
     return $this->db->get();
   }
 }

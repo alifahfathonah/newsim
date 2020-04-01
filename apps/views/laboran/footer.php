@@ -16,6 +16,10 @@
 <!-- Addon scripts -->
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/chartJs/Chart.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/touchspin/jquery.bootstrap-touchspin.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/sweetalert/sweetalert.min.js"></script>
 <script>
@@ -24,6 +28,48 @@
       $(this).remove();
     });
   }, 3500);
+
+  <?php
+  if (isset($komplain)) {
+  ?>
+    $(function() {
+      var line_data = {
+        labels: ['', <?php
+                      foreach ($komplain as $k) {
+                        echo "'" . $k->bulan . "', ";
+                      }
+                      ?>],
+        datasets: [{
+          label: 'Complaint(s)',
+          backgroundColor: 'rgba(26,179,148,0.5)',
+          borderColor: "rgba(26,179,148,0.7)",
+          pointBackgroundColor: "rgba(26,179,148,1)",
+          pointBorderColor: "#fff",
+          data: [0, <?php
+                    foreach ($komplain as $k) {
+                      echo $k->jumlah . ',';
+                    }
+                    ?>]
+        }]
+      };
+
+      var line_option = {
+        responsive: true,
+        legend: {
+          display: false
+        }
+      };
+
+      var ctx = document.getElementById("grafik_komplain").getContext("2d");
+      new Chart(ctx, {
+        type: 'line',
+        data: line_data,
+        options: line_option
+      });
+    });
+  <?php
+  }
+  ?>
 
   var tanggal_sekarang = new Date();
   tanggal_sekarang.setDate(tanggal_sekarang.getDate());
@@ -41,41 +87,62 @@
       checkboxClass: 'icheckbox_square-green',
       radioClass: 'iradio_square-green',
     });
-  });
 
-  $(function() {
-    var line_data = {
-      labels: ['', <?php
-                    foreach ($komplain as $k) {
-                      echo "'" . $k->bulan . "', ";
-                    }
-                    ?>],
-      datasets: [{
-        label: 'Complaint(s)',
-        backgroundColor: 'rgba(26,179,148,0.5)',
-        borderColor: "rgba(26,179,148,0.7)",
-        pointBackgroundColor: "rgba(26,179,148,1)",
-        pointBorderColor: "#fff",
-        data: [0, <?php
-                  foreach ($komplain as $k) {
-                    echo $k->jumlah . ',';
-                  }
-                  ?>]
-      }]
-    };
+    <?php
+    if (uri('2') == 'StockLists') {
+    ?>
+      $('.stock_lists').DataTable({
+        pageLength: 10,
+        responsive: true,
+        <?php
+        if (isset($id_lab)) {
+          echo "'ajax': '" . base_url('Laboran/ajaxStockLists/' . $id_lab) . "',";
+        } else {
+          echo "'ajax': '" . base_url('Laboran/ajaxStockLists') . "',";
+        }
+        ?> 'columns': [{
+          "data": "no"
+        }, {
+          "data": "barcode"
+        }, {
+          "data": "tools"
+        }, {
+          "data": "lab"
+        }, {
+          "data": "qty"
+        }, {
+          "data": "condition"
+        }, {
+          "data": "spesification"
+        }, {
+          "data": "action"
+        }],
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+    <?php
+    }
+    ?>
 
-    var line_option = {
+    $(".laboratorium").select2({
+      placeholder: "Select a Laboratory",
+    });
+
+    $(".touchspin1").TouchSpin({
+      buttondown_class: 'btn btn-white',
+      buttonup_class: 'btn btn-white'
+    });
+
+    $('.daftar_lab').DataTable({
+      pageLength: 10,
       responsive: true,
-      legend: {
-        display: false
-      }
-    };
+      dom: '<"html5buttons"B>lTfgitp',
+      buttons: []
+    });
 
-    var ctx = document.getElementById("grafik_komplain").getContext("2d");
-    new Chart(ctx, {
-      type: 'line',
-      data: line_data,
-      options: line_option
+    $('.custom-file-input').on('change', function() {
+      let fileName = $(this).val().split('\\').pop();
+      $(this).next('.custom-file-label').addClass("selected").html(fileName);
     });
   });
 </script>
