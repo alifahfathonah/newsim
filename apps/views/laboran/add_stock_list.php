@@ -75,7 +75,7 @@
                             <button type="reset" class="btn btn-warning btn-sm btn-block">Reset</button>
                           </div>
                           <div class="col-md-4 col-sm-4" style="margin-bottom: 5px">
-                            <button type="button" class="btn btn-danger btn-sm btn-block">Cancel</button>
+                            <a href="<?= base_url('Laboran/StockLists') ?>"><button type="button" class="btn btn-danger btn-sm btn-block">Cancel</button></a>
                           </div>
                         </div>
                       </div>
