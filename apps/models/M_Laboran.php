@@ -89,4 +89,9 @@ class M_Laboran extends CI_Model
   {
     return $this->db->get_where('laboratorium', array('tipeLab' => 'Research Lab'));
   }
+
+  function daftarMataKuliah()
+  {
+    return $this->db->order_by('kode_mk')->get('matakuliah');
+  }
 }

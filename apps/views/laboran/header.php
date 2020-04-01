@@ -113,23 +113,35 @@
             </li>
           </ul>
           </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-users"></i>
-              <span class="nav-label">Practicum</span>
-              <span class="fa arrow"></span>
-            </a>
-            <ul class="nav nav-second-level collapse">
-              <li>
-                <a href="<?= base_url('Laboran/Courses') ?>">Courses</a>
-              </li>
-              <li>
-                <a href="<?= base_url('Laboran/PracticumAssistant') ?>">Practicum Assistant</a>
-              </li>
-              <li>
-                <a href="<?= base_url('Laboran/PresenceAsprak') ?>">Presence Asprak</a>
-              </li>
-            </ul>
+          <?php
+          if (uri('2') == 'Courses') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="#">
+            <i class="fa fa-users"></i>
+            <span class="nav-label">Practicum</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <?php
+            if (uri('2') == 'Courses') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Laboran/Courses') ?>">Courses</a>
+            </li>
+            <li>
+              <a href="<?= base_url('Laboran/PracticumAssistant') ?>">Practicum Assistant</a>
+            </li>
+            <li>
+              <a href="<?= base_url('Laboran/PresenceAsprak') ?>">Presence Asprak</a>
+            </li>
+          </ul>
           </li>
           <li>
             <a href="#">
