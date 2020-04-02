@@ -8,7 +8,7 @@
           <div class="col-md-12 col-sm-12">
             <div class="ibox">
               <div class="ibox-content">
-                <form method="post" action="<?= base_url('Laboran/AddStockList') ?>">
+                <form method="post" action="<?= base_url('StockLists/AddStockList') ?>">
                   <div class="row">
                     <div class="col-md-6 col-sm-6">
                       <div class="form-group">
@@ -40,7 +40,7 @@
                     <div class="col-md-6 col-sm-6">
                       <div class="form-group">
                         <label class="font-bold">Qty</label>
-                        <input type="text" name="jumlah_inventaris" id="jumlah_inventaris" placeholder="Input Qty" class="touchspin1" required>
+                        <input type="text" name="jumlah_inventaris" id="jumlah_inventaris" placeholder="Input Qty" class="form-control" onkeypress="return hanya_angka(event)" required>
                       </div>
                     </div>
                   </div>
@@ -75,7 +75,7 @@
                             <button type="reset" class="btn btn-warning btn-sm btn-block">Reset</button>
                           </div>
                           <div class="col-md-4 col-sm-4" style="margin-bottom: 5px">
-                            <a href="<?= base_url('Laboran/StockLists') ?>"><button type="button" class="btn btn-danger btn-sm btn-block">Cancel</button></a>
+                            <a href="<?= base_url('StockLists') ?>"><button type="button" class="btn btn-danger btn-sm btn-block">Cancel</button></a>
                           </div>
                         </div>
                       </div>

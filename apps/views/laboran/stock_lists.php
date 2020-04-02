@@ -13,17 +13,17 @@
             ?>
             <div class="row">
               <div class="col-md-2 col-sm-2" style="margin-bottom: 5px">
-                <a href="<?= base_url('Laboran/AddStockList') ?>">
+                <a href="<?= base_url('StockLists/AddStockList') ?>">
                   <button class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Stock List</button>
                 </a>
               </div>
               <div class="col-md-4 offset-md-2" style="margin-bottom: 5px">
                 <select class="form-control laboratorium" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                   <option></option>
-                  <option value="<?= base_url() ?>Laboran/StockLists">All Laboratory</option>
+                  <option value="<?= base_url('StockLists') ?>">All Laboratory</option>
                   <?php
                   foreach ($lab as $l) {
-                    echo '<option value="' . base_url('Laboran/StockLists/' . substr(sha1($l->idLab), 6, 4)) . '">' . $l->namaLab . '</option>';
+                    echo '<option value="' . base_url('StockLists/index/' . substr(sha1($l->idLab), 6, 4)) . '">' . $l->namaLab . '</option>';
                   }
                   ?>
                 </select>
@@ -57,7 +57,7 @@
       <script>
         function hapus_inventaris(id) {
           $.ajax({
-            url: '<?= base_url('Laboran/ajaxNamaStockList') ?>',
+            url: '<?= base_url('StockLists/ajaxNamaStockList') ?>',
             method: 'post',
             data: {
               id: id
@@ -80,7 +80,7 @@
                   type: 'success',
                   showConfirmButton: false
                 }, function() {
-                  window.location.href = '<?= base_url('Laboran/DeleteStockList/') ?>' + id;
+                  window.location.href = '<?= base_url('StockLists/DeleteStockList/') ?>' + id;
                 });
               });
             }

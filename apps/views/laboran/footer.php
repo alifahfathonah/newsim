@@ -20,7 +20,6 @@
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/touchspin/jquery.bootstrap-touchspin.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/sweetalert/sweetalert.min.js"></script>
@@ -30,6 +29,13 @@
       $(this).remove();
     });
   }, 3500);
+
+  function hanya_angka(event) {
+    var angka = (event.which) ? event.which : event.keyCode
+    if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+      return false;
+    return true;
+  }
 
   <?php
   if (isset($komplain)) {
@@ -91,16 +97,16 @@
     });
 
     <?php
-    if (uri('2') == 'StockLists') {
+    if (uri('1') == 'StockLists') {
     ?>
       $('.stock_lists').DataTable({
         pageLength: 10,
         responsive: true,
         <?php
         if (isset($id_lab)) {
-          echo "'ajax': '" . base_url('Laboran/ajaxStockLists/' . $id_lab) . "',";
+          echo "'ajax': '" . base_url('StockLists/ajaxStockLists/' . $id_lab) . "',";
         } else {
-          echo "'ajax': '" . base_url('Laboran/ajaxStockLists') . "',";
+          echo "'ajax': '" . base_url('StockLists/ajaxStockLists') . "',";
         }
         ?> 'columns': [{
           "data": "no"
@@ -159,11 +165,6 @@
 
     $(".periode").select2({
       placeholder: "Select a Periode of Journal",
-    });
-
-    $(".touchspin1").TouchSpin({
-      buttondown_class: 'btn btn-white',
-      buttonup_class: 'btn btn-white'
     });
 
     $('.daftar_lab').DataTable({

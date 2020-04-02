@@ -123,4 +123,18 @@ class M_Model extends CI_Model
     $this->db->limit('7');
     return $this->db->get();
   }
+
+  function daftarLaboratorium()
+  {
+    $this->db->select('*');
+    $this->db->from('laboratorium');
+    $this->db->order_by('namaLab', 'asc');
+    return $this->db->get();
+  }
+
+  function dataStockList($id)
+  {
+    $this->db->where('substring(sha1(idAlat), 7, 4) = "' . $id . '"');
+    return $this->db->get('alatlab');
+  }
 }

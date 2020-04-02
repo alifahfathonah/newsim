@@ -3,20 +3,6 @@
 class M_Laboran extends CI_Model
 {
 
-  function dataStockList($id)
-  {
-    $this->db->where('substring(sha1(idAlat), 7, 4) = "' . $id . '"');
-    return $this->db->get('alatlab');
-  }
-
-  function daftarLaboratorium()
-  {
-    $this->db->select('*');
-    $this->db->from('laboratorium');
-    $this->db->order_by('namaLab', 'asc');
-    return $this->db->get();
-  }
-
   function detailLaboratorium($id)
   {
     $this->db->where('substring(sha1(idLab), 7, 4) = "' . $id . '"');

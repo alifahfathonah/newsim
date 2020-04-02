@@ -61,7 +61,7 @@
           </a>
           </li>
           <?php
-          if (uri('2') == 'StockLists' || uri('2') == 'AddStockList' || uri('2') == 'EditStockList') {
+          if (uri('1') == 'StockLists' || uri('1') == 'AddStockList' || uri('1') == 'EditStockList') {
             echo '<li class="active">';
           } else {
             echo '<li>';
@@ -74,7 +74,7 @@
           </a>
           <ul class="nav nav-second-level collapse">
             <?php
-            if (uri('2') == 'StockLists' || uri('2') == 'AddStockList' || uri('2') == 'EditStockList') {
+            if (uri('1') == 'StockLists' || uri('1') == 'AddStockList' || uri('1') == 'EditStockList') {
               echo '<li class="active">';
             } else {
               echo '<li>';
@@ -93,7 +93,7 @@
           </ul>
           </li>
           <?php
-          if (uri('2') == 'PracticumLaboratory' || uri('2') == 'ViewLaboratory' || uri('2') == 'ResearchLaboratory') {
+          if (uri('1') == 'PracticumLaboratory' || uri('1') == 'ViewLaboratory' || uri('1') == 'ResearchLaboratory') {
             echo '<li class="active">';
           } else {
             echo '<li>';
@@ -106,22 +106,22 @@
           </a>
           <ul class="nav nav-second-level collapse">
             <?php
-            if (uri('2') == 'PracticumLaboratory') {
+            if (uri('1') == 'PracticumLaboratory') {
               echo '<li class="active">';
             } else {
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('PracticumLaboratory') ?>">Practicum Laboratory</a>
+            <a href="<?= base_url('Laboratory/Practicum') ?>">Practicum Laboratory</a>
             </li>
             <?php
-            if (uri('2') == 'ResearchLaboratory') {
+            if (uri('1') == 'ResearchLaboratory') {
               echo '<li class="active">';
             } else {
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('ResearchLaboratory') ?>">Research Laboratory</a>
+            <a href="<?= base_url('Laboratory/Research') ?>">Research Laboratory</a>
             </li>
           </ul>
           </li>
