@@ -20,7 +20,7 @@
                       <div class="modal-header">
                         <h4 class="modal-title">Add Practicum Laboratory</h4>
                       </div>
-                      <form method="post" action="<?= base_url('Laboran/SavePracticumLaboratory') ?>" enctype="multipart/form-data">
+                      <form method="post" action="<?= base_url('Laboratory/SavePracticumLaboratory') ?>" enctype="multipart/form-data">
                         <div class="modal-body">
                           <div class="row">
                             <div class="col-md-6 col-sm-12">
@@ -59,31 +59,27 @@
                                 <label class="font-bold">Location</label>
                                 <div class="row">
                                   <div class="col-md-2 col-sm-6">
-                                    <div class="i-checks">
-                                      <label>
-                                        <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 1" required> <i></i> Lantai 1
-                                      </label>
+                                    <div class="radio">
+                                      <input type="radio" name="lokasi_lab" id="lantai1" value="Lantai 1" required>
+                                      <label for="lantai1">Lantai 1</label>
                                     </div>
                                   </div>
                                   <div class="col-md-2 col-sm-6">
-                                    <div class="i-checks">
-                                      <label>
-                                        <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 2" required> <i></i> Lantai 2
-                                      </label>
+                                    <div class="radio">
+                                      <input type="radio" name="lokasi_lab" id="lantai2" value="Lantai 2" required>
+                                      <label for="lantai2">Lantai 2</label>
                                     </div>
                                   </div>
                                   <div class="col-md-2 col-sm-6">
-                                    <div class="i-checks">
-                                      <label>
-                                        <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 3" required> <i></i> Lantai 3
-                                      </label>
+                                    <div class="radio">
+                                      <input type="radio" name="lokasi_lab" id="lantai3" value="Lantai 3" required>
+                                      <label for="lantai3">Lantai 3</label>
                                     </div>
                                   </div>
                                   <div class="col-md-2 col-sm-6">
-                                    <div class="i-checks">
-                                      <label>
-                                        <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 4" required> <i></i> Lantai 4
-                                      </label>
+                                    <div class="radio">
+                                      <input type="radio" name="lokasi_lab" id="lantai4" value="Lantai 4" required>
+                                      <label for="lantai4">Lantai 4</label>
                                     </div>
                                   </div>
                                 </div>
@@ -123,7 +119,7 @@
                         <tr>
                           <td><?= $no++ ?></td>
                           <td>
-                            <a href="<?= base_url('Laboran/ViewLaboratory/' . substr(sha1($d->idLab), 6, 4)) ?>" style="color: #333"><?= $d->namaLab ?></a>
+                            <a href="<?= base_url('Laboratory/ViewLaboratory/' . substr(sha1($d->idLab), 6, 4)) ?>" style="color: #333"><?= $d->namaLab ?></a>
                           </td>
                           <td><?= $d->lokasiLab ?></td>
                           <td><?= $d->kodeRuang ?></td>
@@ -139,7 +135,7 @@
                               <div class="modal-header">
                                 <h4 class="modal-title">Edit Practicum Laboratory</h4>
                               </div>
-                              <form method="post" action="<?= base_url('Laboran/EditPracticumLaboratory') ?>" enctype="multipart/form-data">
+                              <form method="post" action="<?= base_url('Laboratory/EditPracticumLaboratory') ?>" enctype="multipart/form-data">
                                 <div class="modal-body">
                                   <div class="row">
                                     <div class="col-md-6 col-sm-12">
@@ -233,7 +229,7 @@
       <script>
         function hapus_lab(id) {
           $.ajax({
-            url: '<?= base_url('Laboran/ajaxNamaLab') ?>',
+            url: '<?= base_url('Laboratory/ajaxNamaLab') ?>',
             method: 'post',
             data: {
               id: id
@@ -256,7 +252,7 @@
                   type: 'success',
                   showConfirmButton: false
                 }, function() {
-                  window.location.href = '<?= base_url('Laboran/DeleteLaboratory/') ?>' + id;
+                  window.location.href = '<?= base_url('Laboratory/DeleteLaboratory/') ?>' + id;
                 });
               });
             }

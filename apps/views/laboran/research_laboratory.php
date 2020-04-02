@@ -20,7 +20,7 @@
                       <div class="modal-header">
                         <h4 class="modal-title">Add Practicum Laboratory</h4>
                       </div>
-                      <form method="post" action="<?= base_url('Laboran/SaveResearchLaboratory') ?>" enctype="multipart/form-data">
+                      <form method="post" action="<?= base_url('Laboratory/SaveResearchLaboratory') ?>" enctype="multipart/form-data">
                         <div class="modal-body">
                           <div class="row">
                             <div class="col-md-6 col-sm-12">
@@ -123,7 +123,7 @@
                         <tr>
                           <td><?= $no++ ?></td>
                           <td>
-                            <a href="<?= base_url('Laboran/ViewLaboratory/' . substr(sha1($d->idLab), 6, 4)) ?>" style="color: #333"><?= $d->namaLab ?></a>
+                            <a href="<?= base_url('Laboratory/ViewLaboratory/' . substr(sha1($d->idLab), 6, 4)) ?>" style="color: #333"><?= $d->namaLab ?></a>
                           </td>
                           <td><?= $d->lokasiLab ?></td>
                           <td><?= $d->kodeRuang ?></td>
@@ -139,7 +139,7 @@
                               <div class="modal-header">
                                 <h4 class="modal-title">Edit Practicum Laboratory</h4>
                               </div>
-                              <form method="post" action="<?= base_url('Laboran/EditResearchLaboratory') ?>" enctype="multipart/form-data">
+                              <form method="post" action="<?= base_url('Laboratory/EditResearchLaboratory') ?>" enctype="multipart/form-data">
                                 <div class="modal-body">
                                   <div class="row">
                                     <div class="col-md-6 col-sm-12">
@@ -233,7 +233,7 @@
       <script>
         function hapus_lab(id) {
           $.ajax({
-            url: '<?= base_url('Laboran/ajaxNamaLab') ?>',
+            url: '<?= base_url('Laboratory/ajaxNamaLab') ?>',
             method: 'post',
             data: {
               id: id
@@ -256,7 +256,7 @@
                   type: 'success',
                   showConfirmButton: false
                 }, function() {
-                  window.location.href = '<?= base_url('Laboran/DeleteLaboratory/') ?>' + id;
+                  window.location.href = '<?= base_url('Laboratory/DeleteLaboratory/') ?>' + id;
                 });
               });
             }

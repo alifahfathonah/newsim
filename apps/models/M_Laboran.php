@@ -3,43 +3,6 @@
 class M_Laboran extends CI_Model
 {
 
-  function detailLaboratorium($id)
-  {
-    $this->db->where('substring(sha1(idLab), 7, 4) = "' . $id . '"');
-    return $this->db->get('laboratorium');
-  }
-
-  function pjAslab($id, $periode)
-  {
-    $this->db->select('aslab.namaLengkap');
-    $this->db->from('aslab');
-    $this->db->join('asistenlab', 'aslab.idAslab = asistenlab.idAslab');
-    $this->db->where('substring(sha1(asistenlab.idLab), 7, 4) = "' . $id . '"');
-    $this->db->where('aslab.tahunAjaran', $periode);
-    $this->db->order_by('aslab.namaLengkap', 'asc');
-    return $this->db->get();
-  }
-
-  function daftarInventarisLab($id)
-  {
-    $this->db->select('alatlab.namaAlat, sum(alatlab.jumlah) jumlah, alatlab.kondisi, alatlab.catatan');
-    $this->db->from('laboratorium');
-    $this->db->join('alatlab', 'laboratorium.idLab = alatlab.idLab');
-    $this->db->where('substring(sha1(laboratorium.idLab), 7, 4) = "' . $id . '"');
-    $this->db->group_by('alatlab.namaAlat');
-    return $this->db->get();
-  }
-
-  function daftarLabPraktikum()
-  {
-    return $this->db->order_by('namaLab', 'asc')->get_where('laboratorium', array('tipeLab' => 'Practicum Lab'));
-  }
-
-  function daftarLabRiset()
-  {
-    return $this->db->get_where('laboratorium', array('tipeLab' => 'Research Lab'));
-  }
-
   function daftarMataKuliah()
   {
     return $this->db->order_by('kode_mk')->get('matakuliah');

@@ -16,6 +16,7 @@
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
@@ -93,7 +94,7 @@
           </ul>
           </li>
           <?php
-          if (uri('1') == 'PracticumLaboratory' || uri('1') == 'ViewLaboratory' || uri('1') == 'ResearchLaboratory') {
+          if (uri('2') == 'Practicum' || uri('2') == 'ViewLaboratory' || uri('2') == 'Research') {
             echo '<li class="active">';
           } else {
             echo '<li>';
@@ -106,22 +107,22 @@
           </a>
           <ul class="nav nav-second-level collapse">
             <?php
-            if (uri('1') == 'PracticumLaboratory') {
+            if (uri('2') == 'Practicum') {
               echo '<li class="active">';
             } else {
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('Laboratory/Practicum') ?>">Practicum Laboratory</a>
+            <a href="<?= base_url('Laboratory/Practicum') ?>">Practicum</a>
             </li>
             <?php
-            if (uri('1') == 'ResearchLaboratory') {
+            if (uri('2') == 'Research') {
               echo '<li class="active">';
             } else {
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('Laboratory/Research') ?>">Research Laboratory</a>
+            <a href="<?= base_url('Laboratory/Research') ?>">Research</a>
             </li>
           </ul>
           </li>
