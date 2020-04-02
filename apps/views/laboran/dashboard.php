@@ -1,95 +1,95 @@
-<div class="wrapper wrapper-content animated fadeInDown">
-  <div class="row">
-    <div class="col-md-6 col-sm-12">
-      <div class="ibox float-e-margins">
-        <div class="ibox-title">
-          <h5>Graph Complain in <?= date('Y') ?></h5>
-        </div>
-        <div class="ibox-content">
-          <div class="row">
-            <div class="col-md-12 col-sm-12">
-              <div>
-                <canvas id="grafik_komplain" height="80"></canvas>
+      <div class="wrapper wrapper-content animated fadeInDown">
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <div class="ibox float-e-margins">
+              <div class="ibox-title">
+                <h5>Graph Complain in <?= date('Y') ?></h5>
+              </div>
+              <div class="ibox-content">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12">
+                    <div>
+                      <canvas id="grafik_komplain" height="80"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="ibox float-e-margins">
+              <div class="ibox-title">
+                <h5>Laboratory Activity in <?= date('Y') ?></h5>
+              </div>
+              <div class="ibox-content">
+                <div class="row">
+                  <div class="col-6">
+                    <small class="stats-label">Complaint Not Resolved</small>
+                    <h4><?= $komplain_belum ?></h4>
+                  </div>
+                  <div class="col-6">
+                    <small class="stats-label">Complaint Resolved</small>
+                    <h4><?= $komplain_selesai ?></h4>
+                  </div>
+                </div>
+              </div>
+              <div class="ibox-content">
+                <div class="row">
+                  <div class="col-6">
+                    <small class="stats-label">Borrowing Not Finished</small>
+                    <h4><?= $lab_belum + $alat_belum ?></h4>
+                  </div>
+                  <div class="col-6">
+                    <small class="stats-label">Borrowing Finished</small>
+                    <h4><?= $lab_selesai + $alat_selesai ?></h4>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-6 col-sm-12">
-      <div class="ibox float-e-margins">
-        <div class="ibox-title">
-          <h5>Laboratory Activity in <?= date('Y') ?></h5>
-        </div>
-        <div class="ibox-content">
-          <div class="row">
-            <div class="col-6">
-              <small class="stats-label">Complaint Not Resolved</small>
-              <h4>236 321.80</h4>
-            </div>
-            <div class="col-6">
-              <small class="stats-label">Complaint Resolved</small>
-              <h4>46.11%</h4>
-            </div>
-          </div>
-        </div>
-        <div class="ibox-content">
-          <div class="row">
-            <div class="col-6">
-              <small class="stats-label">Borrowing Not Finished</small>
-              <h4>643 321.10</h4>
-            </div>
-            <div class="col-6">
-              <small class="stats-label">Borrowing Finished</small>
-              <h4>92.43%</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <?php
-      if (flashdata('msg')) {
-        echo flashdata('msg');
-      }
-      ?>
-      <div class="ibox ">
-        <div class="p-md">
-          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPengumuman"><i class="fa fa-plus"></i> Add Announcement</button>
-          <div class="modal inmodal fade" id="tambahPengumuman" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">Add Announcement</h4>
-                </div>
-                <form method="post" action="<?= base_url('Laboran/SaveAnnouncement') ?>">
-                  <div class="modal-body">
-                    <div class="row">
-                      <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                          <label class="font-bold">Name Announcement</label>
-                          <input type="text" name="nama_pengumuman" id="nama_pengumuman" class="form-control" placeholder="Example: Rapat Asisten Laboratorium, Sharing Knowledge PLC" required>
-                        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <?php
+            if (flashdata('msg')) {
+              echo flashdata('msg');
+            }
+            ?>
+            <div class="ibox ">
+              <div class="p-md">
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPengumuman"><i class="fa fa-plus"></i> Add Announcement</button>
+                <div class="modal inmodal fade" id="tambahPengumuman" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Add Announcement</h4>
                       </div>
-                      <div class="col-md-6 col-sm-12">
-                        <div class="form-group" id="date_picker">
-                          <label class="font-bold">Date</label>
-                          <div class="input-group date">
-                            <span class="input-group-addon">
-                              <i class="fa fa-calendar"></i>
-                            </span>
-                            <input type="text" name="tanggal_pengumuman" id="tanggal_pengumuman" class="form-control" value="<?= date('m/d/Y') ?>" required>
+                      <form method="post" action="<?= base_url('Dashboard/SaveAnnouncement') ?>">
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                              <div class="form-group">
+                                <label class="font-bold">Name Announcement</label>
+                                <input type="text" name="nama_pengumuman" id="nama_pengumuman" class="form-control" placeholder="Example: Rapat Asisten Laboratorium, Sharing Knowledge PLC" required>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                              <div class="form-group" id="date_picker">
+                                <label class="font-bold">Date</label>
+                                <div class="input-group date">
+                                  <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                  </span>
+                                  <input type="text" name="tanggal_pengumuman" id="tanggal_pengumuman" class="form-control" value="<?= date('m/d/Y') ?>" required>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                          <label class="font-bold">Content of Announcement</label>
-                          <textarea name="isi_pengumuman" id="isi_pengumuman" class="form-control" rows="3"></textarea required>
+                          <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                              <div class="form-group">
+                                <label class="font-bold">Content of Announcement</label>
+                                <textarea name="isi_pengumuman" id="isi_pengumuman" class="form-control" rows="3"></textarea required>
                         </div>
                       </div>
                       <div class="col-md-6 col-sm-12">
@@ -171,7 +171,7 @@
                   <div class="modal-header">
                     <h4 class="modal-title">Edit Announcement</h4>
                   </div>
-                  <form method="post" action="<?= base_url('Laboran/UpdateAnnouncement/' . $p->idPengumuman) ?>">
+                  <form method="post" action="<?= base_url('Dashboard/UpdateAnnouncement/' . $p->idPengumuman) ?>">
                     <div class="modal-body">
                       <div class="row">
                         <div class="col-md-6 col-sm-12">
@@ -262,7 +262,7 @@
 <script>
   function hapus_pengumuman(id) {
     $.ajax({
-      url: '<?= base_url('Laboran/ajaxPengumuman') ?>',
+      url: '<?= base_url('Dashboard/ajaxPengumuman') ?>',
       method: 'post',
       data: {
         id: id
@@ -285,7 +285,7 @@
             type: 'success',
             showConfirmButton: false
           }, function() {
-            window.location.href = '<?= base_url('Laboran/DeleteAnnouncement/') ?>'+id;
+            window.location.href = '<?= base_url('Dashboard/DeleteAnnouncement/') ?>'+id;
           });
         });
       }

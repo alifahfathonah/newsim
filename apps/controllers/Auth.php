@@ -12,7 +12,7 @@ class Auth extends CI_Controller
   public function index()
   {
     if (userdata('login') == 'laboran') {
-      redirect('Laboran/Dashboard');
+      redirect('Dashboard');
     } elseif (userdata('login') == 'aslab') {
       #
     } elseif (userdata('login') == 'asprak') {
@@ -50,9 +50,17 @@ class Auth extends CI_Controller
               'jabatan'   => $cekData->jabatan
             );
             set_userdata($session);
-            redirect('Laboran/Dashboard');
+            redirect('Dashboard');
           } elseif ($cekData->jenisAkses == 'aslab') {
-            echo 2;
+            $session = array(
+              'login'     => $cekData->jenisAkses,
+              'id'        => $cekData->idUser,
+              'username'  => $cekData->username,
+              'nama'      => 'Staff Laboratory',
+              'jabatan'   => $cekData->jabatan
+            );
+            set_userdata($session);
+            redirect('Dashboard');
           } elseif ($cekData->jenisAkses == 'asprak') {
             $session = array(
               'login'     => $cekData->jenisAkses,

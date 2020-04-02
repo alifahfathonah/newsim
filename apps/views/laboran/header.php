@@ -49,13 +49,13 @@
             </div>
           </li>
           <?php
-          if (uri('2') == 'Dashboard') {
+          if (uri('1') == 'Dashboard') {
             echo '<li class="active">';
           } else {
             echo '<li>';
           }
           ?>
-          <a href="<?= base_url('Laboran/Dashboard') ?>">
+          <a href="<?= base_url('Dashboard') ?>">
             <i class="fa fa-dashboard"></i>
             <span class="nav-label">Dashboard</span>
           </a>
@@ -80,14 +80,14 @@
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('Laboran/StockLists') ?>">Stock Lists</a>
+            <a href="<?= base_url('StockLists') ?>">Stock Lists</a>
             </li>
             <li>
-              <!-- <a href="<?= base_url('Laboran/AdditionalStock') ?>">Additional Stock</a> -->
+              <!-- <a href="<?= base_url('StockLists/AdditionalStock') ?>">Additional Stock</a> -->
               <a href="#">Additional Stock</a>
             </li>
             <li>
-              <!-- <a href="<?= base_url('Laboran/ReductionStock') ?>">Reduction Stock</a> -->
+              <!-- <a href="<?= base_url('StockLists/ReductionStock') ?>">Reduction Stock</a> -->
               <a href="#">Reduction Stock</a>
             </li>
           </ul>
@@ -112,7 +112,7 @@
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('Laboran/PracticumLaboratory') ?>">Practicum Laboratory</a>
+            <a href="<?= base_url('PracticumLaboratory') ?>">Practicum Laboratory</a>
             </li>
             <?php
             if (uri('2') == 'ResearchLaboratory') {
@@ -121,7 +121,7 @@
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('Laboran/ResearchLaboratory') ?>">Research Laboratory</a>
+            <a href="<?= base_url('ResearchLaboratory') ?>">Research Laboratory</a>
             </li>
           </ul>
           </li>
@@ -145,7 +145,7 @@
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('Laboran/Courses') ?>">Courses</a>
+            <a href="<?= base_url('Courses') ?>">Courses</a>
             </li>
             <li>
               <a href="<?= base_url('Laboran/#') ?>">Practicum Assistant</a>
@@ -175,7 +175,7 @@
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('Laboran/LaboratoryAssistant') ?>">Profile Assistant</a>
+            <a href="<?= base_url('LaboratoryAssistant') ?>">Profile Assistant</a>
             </li>
             <?php
             if (uri('2') == 'JournalAssistant') {
@@ -184,7 +184,7 @@
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('Laboran/JournalAssistant') ?>">Journal Assistant</a>
+            <a href="<?= base_url('LaboratoryAssistant/JournalAssistant') ?>">Journal Assistant</a>
             </li>
           </ul>
           </li>
@@ -195,7 +195,7 @@
             echo '<li>';
           }
           ?>
-          <a href="<?= base_url('Laboran/Schedule') ?>">
+          <a href="<?= base_url('Schedule') ?>">
             <i class="fa fa-calendar"></i>
             <span class="nav-label">Schedule</span>
           </a>
@@ -208,21 +208,21 @@
             </a>
             <ul class="nav nav-second-level collapse">
               <li>
-                <a href="<?= base_url('Laboran/BorrowingEquipment') ?>">Equipment</a>
+                <a href="<?= base_url('Borrowing/Equipment') ?>">Equipment</a>
               </li>
               <li>
-                <a href="<?= base_url('Laboran/BorrowingLaboratory') ?>">Laboratory</a>
+                <a href="<?= base_url('Borrowing/Laboratory') ?>">Laboratory</a>
               </li>
             </ul>
           </li>
           <li>
-            <a href="<?= base_url('Laboran/Complaint') ?>">
+            <a href="<?= base_url('Complaint') ?>">
               <i class="fa fa-thumbs-down"></i>
               <span class="nav-label">Complaint</span>
             </a>
           </li>
           <li>
-            <a href="<?= base_url('Laboran/Option') ?>">
+            <a href="<?= base_url('Option') ?>">
               <i class="fa fa-gears"></i>
               <span class="nav-label">Option SIMLAB</span>
             </a>
@@ -241,29 +241,30 @@
           <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
               <a class="dropdown-toggle count-info" data-toggle="dropdown" href="<?= base_url('assets/inspinia/') ?>#">
-                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                <i class="fa fa-bell"></i>
+                <span class="label label-primary"><?= $jumlah_komplain + $jumlah_pinjam_alat + $jumlah_pinjam_lab ?></span>
               </a>
               <ul class="dropdown-menu dropdown-alerts">
                 <li>
-                  <a href="<?= base_url('Laboran/Complaint') ?>" class="dropdown-item">
+                  <a href="<?= base_url('Complaint') ?>" class="dropdown-item">
                     <div>
-                      <i class="fa fa-thumbs-down fa-fw"></i> You have 16 complaint(s)
+                      <i class="fa fa-thumbs-down fa-fw"></i> You have <?= $jumlah_komplain ?> complaint(s)
                     </div>
                   </a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a href="<?= base_url('assets/inspinia/') ?>profile.html" class="dropdown-item">
+                  <a href="<?= base_url('Borrowing/Equipment') ?>" class="dropdown-item">
                     <div>
-                      <i class="fa fa-hdd-o fa-fw"></i> You have 3 borrowing equipment(s)
+                      <i class="fa fa-hdd-o fa-fw"></i> You have <?= $jumlah_pinjam_alat ?> borrowing equipment(s)
                     </div>
                   </a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li>
-                  <a href="<?= base_url('assets/inspinia/') ?>grid_options.html" class="dropdown-item">
+                  <a href="<?= base_url('Borrowing/Laboratory') ?>" class="dropdown-item">
                     <div>
-                      <i class="fa fa-hotel fa-fw"></i> You have 3 borrowing laboratory(s)
+                      <i class="fa fa-hotel fa-fw"></i> You have <?= $jumlah_pinjam_lab ?> borrowing laboratory(s)
                     </div>
                   </a>
                 </li>

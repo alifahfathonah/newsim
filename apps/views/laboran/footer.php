@@ -185,31 +185,37 @@
       $(this).next('.custom-file-label').addClass("selected").html(fileName);
     });
 
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
+    <?php
+    if (uri('2') == 'Schedule') {
+    ?>
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
 
-    $('#calendar').fullCalendar({
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-      },
-      editable: false,
-      droppable: false,
-      eventSources: [
-        <?php
-        if ($id_lab) {
-          echo "'" . base_url('Laboran/ajaxJadwal/' . $id_lab) . "'";
-        } else {
-          echo "'" . base_url('Laboran/ajaxJadwal') . "'";
-        }
-        ?>
-      ]
-    });
+      $('#calendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay'
+        },
+        editable: false,
+        droppable: false,
+        eventSources: [
+          <?php
+          if ($id_lab) {
+            echo "'" . base_url('Laboran/ajaxJadwal/' . $id_lab) . "'";
+          } else {
+            echo "'" . base_url('Laboran/ajaxJadwal') . "'";
+          }
+          ?>
+        ]
+      });
 
-    $('#calendar').fullCalendar('changeView', 'agendaDay');
+      $('#calendar').fullCalendar('changeView', 'agendaDay');
+    <?php
+    }
+    ?>
   });
 </script>
 </body>
