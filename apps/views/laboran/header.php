@@ -14,6 +14,8 @@
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/iCheck/custom.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
@@ -146,10 +148,10 @@
             <a href="<?= base_url('Laboran/Courses') ?>">Courses</a>
             </li>
             <li>
-              <a href="<?= base_url('Laboran/PracticumAssistant') ?>">Practicum Assistant</a>
+              <a href="<?= base_url('Laboran/#') ?>">Practicum Assistant</a>
             </li>
             <li>
-              <a href="<?= base_url('Laboran/PresenceAsprak') ?>">Presence Asprak</a>
+              <a href="<?= base_url('Laboran/#') ?>">Presence Asprak</a>
             </li>
           </ul>
           </li>
@@ -186,11 +188,17 @@
             </li>
           </ul>
           </li>
-          <li>
-            <a href="<?= base_url('Laboran/Schedule') ?>">
-              <i class="fa fa-calendar"></i>
-              <span class="nav-label">Schedule</span>
-            </a>
+          <?php
+          if (uri('2') == 'Schedule') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Laboran/Schedule') ?>">
+            <i class="fa fa-calendar"></i>
+            <span class="nav-label">Schedule</span>
+          </a>
           </li>
           <li>
             <a href="#">

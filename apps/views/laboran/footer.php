@@ -6,6 +6,7 @@
 </div>
 </div>
 <!-- Mainly scripts -->
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/moment.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/jquery-3.1.1.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/popper.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/bootstrap.js"></script>
@@ -21,6 +22,7 @@
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/touchspin/jquery.bootstrap-touchspin.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/sweetalert/sweetalert.min.js"></script>
 <script>
   window.setTimeout(function() {
@@ -182,6 +184,32 @@
       let fileName = $(this).val().split('\\').pop();
       $(this).next('.custom-file-label').addClass("selected").html(fileName);
     });
+
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      editable: false,
+      droppable: false,
+      eventSources: [
+        <?php
+        if ($id_lab) {
+          echo "'" . base_url('Laboran/ajaxJadwal/' . $id_lab) . "'";
+        } else {
+          echo "'" . base_url('Laboran/ajaxJadwal') . "'";
+        }
+        ?>
+      ]
+    });
+
+    $('#calendar').fullCalendar('changeView', 'agendaDay');
   });
 </script>
 </body>
