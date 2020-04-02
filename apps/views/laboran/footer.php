@@ -124,6 +124,33 @@
     }
     ?>
 
+    <?php
+    if (uri('2') == 'JournalAssistant') {
+    ?>
+      $('.kegiatan_aslab_full').DataTable({
+        pageLength: 10,
+        responsive: true,
+        'ajax': '<?= base_url('Laboran/ajaxKegiatanAslab') ?>',
+        'columns': [{
+            'data': 'no'
+          },
+          {
+            'data': 'tanggal'
+          },
+          {
+            'data': 'nama'
+          },
+          {
+            'data': 'aktivitas'
+          }
+        ],
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+    <?php
+    }
+    ?>
+
     $(".laboratorium").select2({
       placeholder: "Select a Laboratory",
     });

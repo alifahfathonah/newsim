@@ -154,7 +154,7 @@
           </ul>
           </li>
           <?php
-          if (uri('2') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant') {
+          if (uri('2') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant' || uri('2') == 'JournalAssistant') {
             echo '<li class="active">';
           } else {
             echo '<li>';
@@ -175,8 +175,14 @@
             ?>
             <a href="<?= base_url('Laboran/LaboratoryAssistant') ?>">Profile Assistant</a>
             </li>
-            <li>
-              <a href="<?= base_url('Laboran/JournalAssistant') ?>">Journal Assistant</a>
+            <?php
+            if (uri('2') == 'JournalAssistant') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Laboran/JournalAssistant') ?>">Journal Assistant</a>
             </li>
           </ul>
           </li>

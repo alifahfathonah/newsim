@@ -511,6 +511,33 @@ class Laboran extends CI_Controller
     view('laboran/footer');
   }
 
+  public function JournalAssistant()
+  {
+    $data['title']  = 'Journal Assistant | SIM Laboratorium';
+    view('laboran/header', $data);
+    view('laboran/journal_assistant', $data);
+    view('laboran/footer');
+  }
+
+  public function ajaxKegiatanAslab()
+  {
+    $hasil  = array();
+    $tampil = array();
+    $periode  = $this->db->get('optionsim')->row()->tahunAjaran;
+    $data     = $this->db->select('date_format(jurnalaslab.aslabMasuk, "%Y-%m-%d") hari, date_format(jurnalaslab.aslabMasuk, "%H:%i") masuk, if (jurnalaslab.aslabKeluar, date_format(jurnalaslab.aslabKeluar, "%H:%i"), "-") keluar, jurnalaslab.jurnal, aslab.namaLengkap')->from('jurnalaslab')->join('aslab', 'jurnalaslab.idAslab = aslab.idAslab')->where('aslab.tahunAjaran', $periode)->order_by('jurnalaslab.aslabMasuk', 'desc')->get()->result();
+    $no     = 1;
+    foreach ($data as $d) {
+      $hasil[]  = array(
+        'no'        => $no++,
+        'tanggal'   => tanggalInggris($d->hari),
+        'nama'      => $d->namaLengkap,
+        'aktivitas' => $d->jurnal
+      );
+    }
+    $tampil = array('data' => $hasil);
+    echo json_encode($tampil);
+  }
+
   public function ProfileAssistant()
   {
     $id_aslab       = uri('3');
