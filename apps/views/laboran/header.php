@@ -17,6 +17,16 @@
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
+  <style>
+    .select2-dropdown {
+      z-index: 10060 !important;
+      /*1051;*/
+    }
+
+    .select2 {
+      width: 100% !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -143,20 +153,32 @@
             </li>
           </ul>
           </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-users"></i>
-              <span class="nav-label">Laboratory Assistant</span>
-              <span class="fa arrow"></span>
-            </a>
-            <ul class="nav nav-second-level collapse">
-              <li>
-                <a href="<?= base_url('Laboran/LaboratoryAssistant') ?>">Profile Assistant</a>
-              </li>
-              <li>
-                <a href="<?= base_url('Laboran/JournalAssistant') ?>">Journal Assistant</a>
-              </li>
-            </ul>
+          <?php
+          if (uri('2') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="#">
+            <i class="fa fa-users"></i>
+            <span class="nav-label">Laboratory Assistant</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <?php
+            if (uri('2') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Laboran/LaboratoryAssistant') ?>">Profile Assistant</a>
+            </li>
+            <li>
+              <a href="<?= base_url('Laboran/JournalAssistant') ?>">Journal Assistant</a>
+            </li>
+          </ul>
           </li>
           <li>
             <a href="<?= base_url('Laboran/Schedule') ?>">

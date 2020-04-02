@@ -128,12 +128,23 @@
       placeholder: "Select a Laboratory",
     });
 
+    $(".periode").select2({
+      placeholder: "Select a Periode of Journal",
+    });
+
     $(".touchspin1").TouchSpin({
       buttondown_class: 'btn btn-white',
       buttonup_class: 'btn btn-white'
     });
 
     $('.daftar_lab').DataTable({
+      pageLength: 10,
+      responsive: true,
+      dom: '<"html5buttons"B>lTfgitp',
+      buttons: []
+    });
+
+    $('.kegiatan_aslab').DataTable({
       pageLength: 10,
       responsive: true,
       dom: '<"html5buttons"B>lTfgitp',
