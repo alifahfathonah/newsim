@@ -108,23 +108,44 @@
         } else {
           echo "'ajax': '" . base_url('StockLists/ajaxStockLists') . "',";
         }
+        if (userdata('login') == 'laboran') {
         ?> 'columns': [{
-          "data": "no"
-        }, {
-          "data": "barcode"
-        }, {
-          "data": "tools"
-        }, {
-          "data": "lab"
-        }, {
-          "data": "qty"
-        }, {
-          "data": "condition"
-        }, {
-          "data": "spesification"
-        }, {
-          "data": "action"
-        }],
+            "data": "no"
+          }, {
+            "data": "barcode"
+          }, {
+            "data": "tools"
+          }, {
+            "data": "lab"
+          }, {
+            "data": "qty"
+          }, {
+            "data": "condition"
+          }, {
+            "data": "spesification"
+          }, {
+            "data": "action"
+          }],
+        <?php
+        } elseif (userdata('login') == 'aslab') {
+        ?> 'columns': [{
+            "data": "no"
+          }, {
+            "data": "barcode"
+          }, {
+            "data": "tools"
+          }, {
+            "data": "lab"
+          }, {
+            "data": "qty"
+          }, {
+            "data": "condition"
+          }, {
+            "data": "spesification"
+          }],
+        <?php
+        }
+        ?>
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
       });
