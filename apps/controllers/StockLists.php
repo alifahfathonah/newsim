@@ -49,9 +49,15 @@ class StockLists extends CI_Controller
       $data           = $this->data;
       $data['title']  = 'Add Stock List | SIM Laboratorium';
       $data['lab']    = $this->m->daftarLaboratorium()->result();
-      view('laboran/header', $data);
-      view('laboran/add_stock_list', $data);
-      view('laboran/footer');
+      if (userdata('login') == 'laboran') {
+        view('laboran/header', $data);
+        view('laboran/add_stock_list', $data);
+        view('laboran/footer');
+      } elseif (userdata('login') == 'aslab') {
+        view('aslab/header', $data);
+        view('aslab/add_stock_list', $data);
+        view('aslab/footer');
+      }
     } else {
       $barcode_inventaris     = input('barcode_inventaris');
       $nama_inventaris        = input('nama_inventaris');
@@ -91,9 +97,15 @@ class StockLists extends CI_Controller
       $data['title']  = 'Edit Stock List | SIM Laboratorium';
       $data['lab']    = $this->m->daftarLaboratorium()->result();
       $data['data']   = $this->m->dataStockList($id)->row();
-      view('laboran/header', $data);
-      view('laboran/edit_stock_list', $data);
-      view('laboran/footer');
+      if (userdata('login') == 'laboran') {
+        view('laboran/header', $data);
+        view('laboran/edit_stock_list', $data);
+        view('laboran/footer');
+      } elseif (userdata('login') == 'aslab') {
+        view('aslab/header', $data);
+        view('aslab/edit_stock_list', $data);
+        view('aslab/footer');
+      }
     } else {
       $id_alat                = input('id_alat');
       $barcode_inventaris     = input('barcode_inventaris');
@@ -171,7 +183,8 @@ class StockLists extends CI_Controller
           'lab'           => $d->namaLab,
           'qty'           => $d->jumlah,
           'condition'     => $d->kondisi,
-          'spesification' => $d->spesifikasi
+          'spesification' => $d->spesifikasi,
+          'action'        => '<center><a href="' . base_url('StockLists/EditStockList/' . substr(sha1($d->idAlat), 6, 4)) . '"><button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button></a></center>'
         );
       }
     }
