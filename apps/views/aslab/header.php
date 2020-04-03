@@ -89,7 +89,7 @@
           }
           ?>
           <a href="<?= base_url('StockLists') ?>">
-            <i class="fa fa-calendar"></i>
+            <i class="fa fa-barcode"></i>
             <span class="nav-label">Stock Lists</span>
           </a>
           </li>
