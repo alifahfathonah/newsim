@@ -14,7 +14,7 @@ class Auth extends CI_Controller
     if (userdata('login') == 'laboran') {
       redirect('Dashboard');
     } elseif (userdata('login') == 'aslab') {
-      #
+      redirect('Dashboard');
     } elseif (userdata('login') == 'asprak') {
       redirect('Asprak/Dashboard');
     } elseif (userdata('login') == 'grant') {
