@@ -179,4 +179,51 @@ class M_Model extends CI_Model
   {
     return $this->db->order_by('kode_mk')->get('matakuliah');
   }
+
+  function daftarAslab($tahun)
+  {
+    return $this->db->order_by('namaLengkap', 'asc')->get_where('aslab', array('tahunAjaran' => $tahun));
+  }
+
+  function daftarPJAslab()
+  {
+    $this->db->select('laboratorium.namaLab, asistenlab.idAslab');
+    $this->db->from('laboratorium');
+    $this->db->join('asistenlab', 'laboratorium.idLab = asistenlab.idLab');
+    return $this->db->get();
+  }
+
+  function kegiatanAslab($id)
+  {
+    $this->db->select('date_format(aslabMasuk, "%Y-%m-%d") aslabMasuk, date_format(aslabMasuk, "%H:%i") masuk, if (aslabKeluar, date_format(aslabKeluar, "%H:%i"), "-") keluar, jurnal');
+    $this->db->from('jurnalaslab');
+    $this->db->where('substring(sha1(idAslab), 7, 4) = "' . $id . '"');
+    $this->db->order_by('aslabMasuk', 'desc');
+    return $this->db->get();
+  }
+
+  function kegiatanAslabBulan($id, $periode)
+  {
+    $this->db->select('date_format(aslabMasuk, "%Y-%m-%d") aslabMasuk, date_format(aslabMasuk, "%H:%i") masuk, if (aslabKeluar, date_format(aslabKeluar, "%H:%i"), "-") keluar, jurnal');
+    $this->db->from('jurnalaslab');
+    $this->db->where('substring(sha1(idAslab), 7, 4) = "' . $id . '"');
+    $this->db->where($periode);
+    $this->db->order_by('aslabMasuk', 'desc');
+    return $this->db->get();
+  }
+
+  function detailAslab($id)
+  {
+    $this->db->where('substring(sha1(idAslab), 7, 4) = "' . $id . '"');
+    return $this->db->get('aslab');
+  }
+
+  function detailPJAslab($id)
+  {
+    $this->db->select('laboratorium.namaLab, laboratorium.idLab, substring(sha1(asistenlab.idAslab), 7, 4) idAslab, asistenlab.idLab');
+    $this->db->from('laboratorium');
+    $this->db->join('asistenlab', 'laboratorium.idLab = asistenlab.idLab');
+    $this->db->where('substring(sha1(asistenlab.idAslab), 7, 4) = "' . $id . '"');
+    return $this->db->get();
+  }
 }

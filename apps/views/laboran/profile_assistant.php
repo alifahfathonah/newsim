@@ -52,7 +52,7 @@
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                     <h4 class="modal-title">Edit Laboratory Assistant</h4>
                   </div>
-                  <form method="post" action="<?= base_url('Laboran/EditLaboratoryAssistant') ?>" enctype="multipart/form-data">
+                  <form method="post" action="<?= base_url('LaboratoryAssistant/EditLaboratoryAssistant') ?>" enctype="multipart/form-data">
                     <div class="modal-body">
                       <div class="row">
                         <div class="col-md-6 col-sm-12">
@@ -90,14 +90,24 @@
                         <div class="col-md-6 col-sm-12">
                           <div class="form-group">
                             <label class="font-bold">Laboratory</label>
-                            <select name="pj_lab[]" id="pj_lab" class="form-control laboratorium" multiple disabled>
+                            <select name="pj_lab[]" id="pj_lab" class="form-control laboratorium" multiple>
                               <option></option>
                               <?php
+                              $pj_lab = array();
+                              $i      = 0;
+                              foreach ($pj as $p) {
+                                array_push($pj_lab, $p->idLab);
+                              }
+                              $count  = count($pj_lab);
                               foreach ($lab as $l) {
-                                foreach ($pj as $p) {
-                                  if ($p->idLab == $l->idLab) {
-                                    echo '<option value="' . $l->idLab . '" selected>' . $l->namaLab . '</option>';
+                                $tmp  = $pj_lab[$i];
+                                if ($l->idLab == $tmp) {
+                                  echo '<option value="' . $l->idLab . '" selected>' . $l->namaLab . '</option>';
+                                  if ($i < ($count - 1)) {
+                                    $i++;
                                   }
+                                } else {
+                                  echo '<option value="' . $l->idLab . '">' . $l->namaLab . '</option>';
                                 }
                               }
                               ?>
@@ -138,19 +148,19 @@
           <div class="col-md-4 offset-md-2" style="margin-bottom: 5px">
             <select class="form-control periode" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
               <option></option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3')) ?>">All Periode</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/January') ?>">January</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/February') ?>">February</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/March') ?>">March</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/April') ?>">April</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/May') ?>">May</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/June') ?>">June</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/July') ?>">July</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/August') ?>">August</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/September') ?>">September</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/October') ?>">October</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/November') ?>">November</option>
-              <option value="<?= base_url('Laboran/ProfileAssistant/' . uri('3') . '/December') ?>">December</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3')) ?>">All Periode</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/January') ?>">January</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/February') ?>">February</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/March') ?>">March</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/April') ?>">April</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/May') ?>">May</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/June') ?>">June</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/July') ?>">July</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/August') ?>">August</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/September') ?>">September</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/October') ?>">October</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/November') ?>">November</option>
+              <option value="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . uri('3') . '/December') ?>">December</option>
             </select>
           </div>
         </div>

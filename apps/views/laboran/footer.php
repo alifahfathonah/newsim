@@ -138,7 +138,7 @@
       $('.kegiatan_aslab_full').DataTable({
         pageLength: 10,
         responsive: true,
-        'ajax': '<?= base_url('Laboran/ajaxKegiatanAslab') ?>',
+        'ajax': '<?= base_url('LaboratoryAssistant/ajaxKegiatanAslab') ?>',
         'columns': [{
             'data': 'no'
           },

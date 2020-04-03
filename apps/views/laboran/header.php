@@ -157,7 +157,7 @@
           </ul>
           </li>
           <?php
-          if (uri('2') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant' || uri('2') == 'JournalAssistant') {
+          if (uri('1') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant' || uri('2') == 'JournalAssistant') {
             echo '<li class="active">';
           } else {
             echo '<li>';
@@ -170,7 +170,7 @@
           </a>
           <ul class="nav nav-second-level collapse">
             <?php
-            if (uri('2') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant') {
+            if (uri('1') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant') {
               echo '<li class="active">';
             } else {
               echo '<li>';

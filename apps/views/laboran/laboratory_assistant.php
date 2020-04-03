@@ -21,7 +21,7 @@
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                         <h4 class="modal-title">Add Laboratory Assistant</h4>
                       </div>
-                      <form method="post" action="<?= base_url('Laboran/SaveLaboratoryAssistant') ?>" enctype="multipart/form-data">
+                      <form method="post" action="<?= base_url('LaboratoryAssistant/SaveLaboratoryAssistant') ?>" enctype="multipart/form-data">
                         <div class="modal-body">
                           <div class="row">
                             <div class="col-md-6 col-sm-12">
@@ -96,11 +96,11 @@
               <div class="col-md-4 offset-md-2" style="margin-bottom: 5px">
                 <select class="form-control laboratorium" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                   <option></option>
-                  <option value="<?= base_url() ?>Laboran/LaboratoryAssistant/2016/2017">2016/2017</option>
-                  <option value="<?= base_url() ?>Laboran/LaboratoryAssistant/2017/2018">2017/2018</option>
-                  <option value="<?= base_url() ?>Laboran/LaboratoryAssistant/2018/2019">2018/2019</option>
-                  <option value="<?= base_url() ?>Laboran/LaboratoryAssistant/2019/2020">2019/2020</option>
-                  <option value="<?= base_url() ?>Laboran/LaboratoryAssistant/2020/2021">2020/2021</option>
+                  <option value="<?= base_url('LaboratoryAssistant/index/2016/2017') ?>">2016/2017</option>
+                  <option value="<?= base_url('LaboratoryAssistant/index/2017/2018') ?>">2017/2018</option>
+                  <option value="<?= base_url('LaboratoryAssistant/index/2018/2019') ?>">2018/2019</option>
+                  <option value="<?= base_url('LaboratoryAssistant/index/2019/2020') ?>">2019/2020</option>
+                  <option value="<?= base_url('LaboratoryAssistant/index/2020/2021') ?>">2020/2021</option>
                 </select>
               </div>
             </div>
@@ -110,7 +110,7 @@
               ?>
                 <div class="col-md-3">
                   <div class=" contact-box center-version" style="height: 500px">
-                    <a href="<?= base_url('Laboran/ProfileAssistant/' . substr(sha1($d->idAslab), 6, 4)) ?>">
+                    <a href="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . substr(sha1($d->idAslab), 6, 4)) ?>">
                       <?php
                       if ($d->fotoAslab == null) {
                         $foto = base_url('assets/img/person-flat.png');
@@ -148,36 +148,3 @@
           </div>
         </div>
       </div>
-      <script>
-        function hapus_inventaris(id) {
-          $.ajax({
-            url: '<?= base_url('Laboran/ajaxNamaStockList') ?>',
-            method: 'post',
-            data: {
-              id: id
-            },
-            success: function(response) {
-              swal({
-                title: 'Are you sure?',
-                text: 'Do you want to delete "' + response + '"',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-                closeOnConfirm: false
-              }, function() {
-                swal({
-                  title: 'Deleted!',
-                  text: 'Your stock list has been deleted',
-                  timer: 1500,
-                  type: 'success',
-                  showConfirmButton: false
-                }, function() {
-                  window.location.href = '<?= base_url('Laboran/DeleteStockList/') ?>' + id;
-                });
-              });
-            }
-          });
-        }
-      </script>
