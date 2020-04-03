@@ -35,6 +35,10 @@ class Dashboard extends CI_Controller
       view('laboran/header', $data);
       view('laboran/dashboard', $data);
       view('laboran/footer');
+    } elseif (userdata('login') == 'aslab') {
+      view('aslab/header', $data);
+      view('aslab/dashboard', $data);
+      view('aslab/footer');
     }
   }
 
