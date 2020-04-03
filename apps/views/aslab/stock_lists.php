@@ -42,7 +42,11 @@
                         <th>Qty</th>
                         <th>Condition</th>
                         <th>Specification</th>
-                        <th width="10%">Action</th>
+                        <?php
+                        if (userdata('login') == 'laboran') {
+                          echo '<th width="10%">Action</th>';
+                        }
+                        ?>
                       </tr>
                     </thead>
                     <tbody>
