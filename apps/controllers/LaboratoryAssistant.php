@@ -34,9 +34,15 @@ class LaboratoryAssistant extends CI_Controller
     $data['pj']     = $this->m->daftarPJAslab()->result();
     $data['lab']   = $this->m->daftarLabPraktikum()->result();
     $data['title']  = 'Laboratory Assistant | SIM Laboratorium';
-    view('laboran/header', $data);
-    view('laboran/laboratory_assistant', $data);
-    view('laboran/footer');
+    if (userdata('login') == 'laboran') {
+      view('laboran/header', $data);
+      view('laboran/laboratory_assistant', $data);
+      view('laboran/footer');
+    } elseif (userdata('login') == 'aslab') {
+      view('aslab/header', $data);
+      view('aslab/laboratory_assistant', $data);
+      view('aslab/footer');
+    }
   }
 
   public function ProfileAssistant()
@@ -80,9 +86,15 @@ class LaboratoryAssistant extends CI_Controller
     $data['pj']     = $this->m->detailPJAslab($id_aslab)->result();
     $data['lab']    = $this->m->daftarLabPraktikum()->result();
     $data['title']  = $data['profil']->namaLengkap . "'s Profile | SIM Laboratorium";
-    view('laboran/header', $data);
-    view('laboran/profile_assistant', $data);
-    view('laboran/footer');
+    if (userdata('login') == 'laboran') {
+      view('laboran/header', $data);
+      view('laboran/profile_assistant', $data);
+      view('laboran/footer');
+    } elseif (userdata('login') == 'aslab') {
+      view('aslab/header', $data);
+      view('aslab/profile_assistant', $data);
+      view('aslab/footer');
+    }
   }
 
   public function SaveLaboratoryAssistant()
@@ -180,9 +192,13 @@ class LaboratoryAssistant extends CI_Controller
   {
     $data           = $this->data;
     $data['title']  = 'Journal Assistant | SIM Laboratorium';
-    view('laboran/header', $data);
-    view('laboran/journal_assistant', $data);
-    view('laboran/footer');
+    if (userdata('login') == 'laboran') {
+      view('laboran/header', $data);
+      view('laboran/journal_assistant', $data);
+      view('laboran/footer');
+    } else {
+      redirect();
+    }
   }
 
   public function ajaxKegiatanAslab()
