@@ -25,9 +25,15 @@ class StockLists extends CI_Controller
     $data['title']  = 'Stock Lists | SIM Laboratorium';
     $data['id_lab'] = uri('3');
     $data['lab']    = $this->m->daftarLaboratorium()->result();
-    view('laboran/header', $data);
-    view('laboran/stock_lists', $data);
-    view('laboran/footer');
+    if (userdata('login') == 'laboran') {
+      view('laboran/header', $data);
+      view('laboran/stock_lists', $data);
+      view('laboran/footer');
+    } elseif (userdata('login') == 'aslab') {
+      view('aslab/header', $data);
+      view('aslab/stock_lists', $data);
+      view('aslab/footer');
+    }
   }
 
   public function AddStockList()
@@ -146,16 +152,28 @@ class StockLists extends CI_Controller
     }
     $no     = 1;
     foreach ($data as $d) {
-      $hasil[]  = array(
-        'no'            => $no++,
-        'barcode'       => $d->barcode,
-        'tools'         => $d->namaAlat,
-        'lab'           => $d->namaLab,
-        'qty'           => $d->jumlah,
-        'condition'     => $d->kondisi,
-        'spesification' => $d->spesifikasi,
-        'action'        => '<center><a href="' . base_url('StockLists/EditStockList/' . substr(sha1($d->idAlat), 6, 4)) . '"><button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button></a><button class="btn btn-danger btn-sm" style="margin-left: 5px" onclick="hapus_inventaris(' . $d->idAlat . ')"><i class="fa fa-trash"></i></button></center>'
-      );
+      if (userdata('login') == 'laboran') {
+        $hasil[]  = array(
+          'no'            => $no++,
+          'barcode'       => $d->barcode,
+          'tools'         => $d->namaAlat,
+          'lab'           => $d->namaLab,
+          'qty'           => $d->jumlah,
+          'condition'     => $d->kondisi,
+          'spesification' => $d->spesifikasi,
+          'action'        => '<center><a href="' . base_url('StockLists/EditStockList/' . substr(sha1($d->idAlat), 6, 4)) . '"><button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button></a><button class="btn btn-danger btn-sm" style="margin-left: 5px" onclick="hapus_inventaris(' . $d->idAlat . ')"><i class="fa fa-trash"></i></button></center>'
+        );
+      } elseif (userdata('login') == 'aslab') {
+        $hasil[]  = array(
+          'no'            => $no++,
+          'barcode'       => $d->barcode,
+          'tools'         => $d->namaAlat,
+          'lab'           => $d->namaLab,
+          'qty'           => $d->jumlah,
+          'condition'     => $d->kondisi,
+          'spesification' => $d->spesifikasi
+        );
+      }
     }
     $tampil = array('data' => $hasil);
     echo json_encode($tampil);
