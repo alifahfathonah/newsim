@@ -24,9 +24,15 @@ class Laboratory extends CI_Controller
     $data           = $this->data;
     $data['title']  = 'Practicum Laboratory | SIM Laboratorium';
     $data['data']   = $this->m->daftarLabPraktikum()->result();
-    view('laboran/header', $data);
-    view('laboran/practicum_laboratory', $data);
-    view('laboran/footer');
+    if (userdata('login') == 'laboran') {
+      view('laboran/header', $data);
+      view('laboran/practicum_laboratory', $data);
+      view('laboran/footer');
+    } elseif (userdata('login') == 'aslab') {
+      view('aslab/header', $data);
+      view('aslab/practicum_laboratory', $data);
+      view('aslab/footer');
+    }
   }
 
   public function ViewLaboratory()
@@ -38,9 +44,15 @@ class Laboratory extends CI_Controller
     $data['aslab']      = $this->m->pjAslab($id, $periode)->result();
     $data['inventaris'] = $this->m->daftarInventarisLab($id)->result();
     $data['title']      = $data['data']->namaLab . ' Laboratory | SIM Laboratorium';
-    view('laboran/header', $data);
-    view('laboran/view_laboratory', $data);
-    view('laboran/footer');
+    if (userdata('login') == 'laboran') {
+      view('laboran/header', $data);
+      view('laboran/view_laboratory', $data);
+      view('laboran/footer');
+    } elseif (userdata('login') == 'aslab') {
+      view('aslab/header', $data);
+      view('aslab/view_laboratory', $data);
+      view('aslab/footer');
+    }
   }
 
   public function SavePracticumLaboratory()
@@ -119,9 +131,15 @@ class Laboratory extends CI_Controller
     $data           = $this->data;
     $data['title']  = 'Research Laboratory | SIM Laboratorium';
     $data['data']   = $this->m->daftarLabRiset()->result();
-    view('laboran/header', $data);
-    view('laboran/research_laboratory', $data);
-    view('laboran/footer');
+    if (userdata('login') == 'laboran') {
+      view('laboran/header', $data);
+      view('laboran/research_laboratory', $data);
+      view('laboran/footer');
+    } elseif (userdata('login') == 'aslab') {
+      view('aslab/header', $data);
+      view('aslab/research_laboratory', $data);
+      view('aslab/footer');
+    }
   }
 
   public function SaveResearchLaboratory()
