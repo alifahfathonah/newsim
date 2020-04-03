@@ -170,7 +170,7 @@
           </a>
           <ul class="nav nav-second-level collapse">
             <?php
-            if (uri('1') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant') {
+            if ((uri('1') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant') && uri('2') != 'JournalAssistant') {
               echo '<li class="active">';
             } else {
               echo '<li>';
