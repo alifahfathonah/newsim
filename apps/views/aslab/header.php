@@ -39,11 +39,31 @@
         <ul class="nav metismenu" id="side-menu">
           <li class="nav-header">
             <div class="dropdown profile-element">
-              <img alt="image" class="rounded-circle" src="<?= base_url('assets/') ?>img/302383.jpg" height="48px" width="48px" />
-              <a data-toggle="dropdown" class="dropdown-toggle" href="<?= base_url('assets/inspinia/') ?>#">
-                <span class="block m-t-xs font-bold"><?= userdata('nama') ?></span>
-                <span class="text-muted text-xs block"><?= userdata('jabatan') ?></span>
-              </a>
+              <?php
+              if (userdata('login') == 'laboran') {
+              ?>
+                <img alt="image" class="rounded-circle" src="<?= base_url('assets/') ?>img/302383.jpg" height="48px" width="48px" />
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                  <span class="block m-t-xs font-bold"><?= userdata('nama') ?></span>
+                  <span class="text-muted text-xs block"><?= userdata('jabatan') ?></span>
+                </a>
+              <?php
+              } elseif (userdata('login') == 'aslab') {
+                $data_aslab = $this->db->get_where('aslab', array('idAslab' => userdata('id_aslab')))->row();
+                if ($data_aslab->fotoAslab == null) {
+                  $foto = base_url('assets/img/person-flat.png');
+                } else {
+                  $foto = base_url($data_aslab->fotoAslab);
+                }
+              ?>
+                <img alt="image" class="rounded-circle" src="<?= $foto ?>" height="48px" width="48px" />
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                  <span class="block m-t-xs font-bold"><?= $data_aslab->namaLengkap ?></span>
+                  <span class="text-muted text-xs block"><?= userdata('jabatan') ?></span>
+                </a>
+              <?php
+              }
+              ?>
             </div>
             <div class="logo-element">
               <img alt="image" class="rounded-circle" src="<?= base_url('assets/') ?>img/favicon.png" height="50px" height="50px">
@@ -62,36 +82,16 @@
           </a>
           </li>
           <?php
-          if (uri('1') == 'StockLists' || uri('1') == 'AddStockList' || uri('1') == 'EditStockList') {
+          if (uri('1') == 'StockLists') {
             echo '<li class="active">';
           } else {
             echo '<li>';
           }
           ?>
-          <a href="#">
-            <i class="fa fa-barcode"></i>
-            <span class="nav-label">Stock Opname</span>
-            <span class="fa arrow"></span>
+          <a href="<?= base_url('StockLists') ?>">
+            <i class="fa fa-calendar"></i>
+            <span class="nav-label">Stock Lists</span>
           </a>
-          <ul class="nav nav-second-level collapse">
-            <?php
-            if (uri('1') == 'StockLists' || uri('1') == 'AddStockList' || uri('1') == 'EditStockList') {
-              echo '<li class="active">';
-            } else {
-              echo '<li>';
-            }
-            ?>
-            <a href="<?= base_url('StockLists') ?>">Stock Lists</a>
-            </li>
-            <li>
-              <!-- <a href="<?= base_url('StockLists/AdditionalStock') ?>">Additional Stock</a> -->
-              <a href="#">Additional Stock</a>
-            </li>
-            <li>
-              <!-- <a href="<?= base_url('StockLists/ReductionStock') ?>">Reduction Stock</a> -->
-              <a href="#">Reduction Stock</a>
-            </li>
-          </ul>
           </li>
           <?php
           if (uri('2') == 'Practicum' || uri('2') == 'ViewLaboratory' || uri('2') == 'Research') {
@@ -127,67 +127,16 @@
           </ul>
           </li>
           <?php
-          if (uri('2') == 'Courses') {
+          if (uri('1') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant') {
             echo '<li class="active">';
           } else {
             echo '<li>';
           }
           ?>
-          <a href="#">
-            <i class="fa fa-users"></i>
-            <span class="nav-label">Practicum</span>
-            <span class="fa arrow"></span>
-          </a>
-          <ul class="nav nav-second-level collapse">
-            <?php
-            if (uri('2') == 'Courses') {
-              echo '<li class="active">';
-            } else {
-              echo '<li>';
-            }
-            ?>
-            <a href="<?= base_url('Practicum/Courses') ?>">Courses</a>
-            </li>
-            <li>
-              <a href="<?= base_url('Laboran/#') ?>">Practicum Assistant</a>
-            </li>
-            <li>
-              <a href="<?= base_url('Laboran/#') ?>">Presence Asprak</a>
-            </li>
-          </ul>
-          </li>
-          <?php
-          if (uri('1') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant' || uri('2') == 'JournalAssistant') {
-            echo '<li class="active">';
-          } else {
-            echo '<li>';
-          }
-          ?>
-          <a href="#">
+          <a href="<?= base_url('LaboratoryAssistant') ?>">
             <i class="fa fa-users"></i>
             <span class="nav-label">Laboratory Assistant</span>
-            <span class="fa arrow"></span>
           </a>
-          <ul class="nav nav-second-level collapse">
-            <?php
-            if ((uri('1') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant') && uri('2') != 'JournalAssistant') {
-              echo '<li class="active">';
-            } else {
-              echo '<li>';
-            }
-            ?>
-            <a href="<?= base_url('LaboratoryAssistant') ?>">Profile Assistant</a>
-            </li>
-            <?php
-            if (uri('2') == 'JournalAssistant') {
-              echo '<li class="active">';
-            } else {
-              echo '<li>';
-            }
-            ?>
-            <a href="<?= base_url('LaboratoryAssistant/JournalAssistant') ?>">Journal Assistant</a>
-            </li>
-          </ul>
           </li>
           <?php
           if (uri('1') == 'Schedule') {
