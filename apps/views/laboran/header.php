@@ -190,7 +190,7 @@
           </ul>
           </li>
           <?php
-          if (uri('2') == 'Schedule') {
+          if (uri('1') == 'Schedule') {
             echo '<li class="active">';
           } else {
             echo '<li>';

@@ -187,7 +187,7 @@
     });
 
     <?php
-    if (uri('2') == 'Schedule') {
+    if (uri('1') == 'Schedule') {
     ?>
       var date = new Date();
       var d = date.getDate();
@@ -205,9 +205,9 @@
         eventSources: [
           <?php
           if ($id_lab) {
-            echo "'" . base_url('Laboran/ajaxJadwal/' . $id_lab) . "'";
+            echo "'" . base_url('Schedule/ajaxJadwal/' . $id_lab) . "'";
           } else {
-            echo "'" . base_url('Laboran/ajaxJadwal') . "'";
+            echo "'" . base_url('Schedule/ajaxJadwal') . "'";
           }
           ?>
         ]

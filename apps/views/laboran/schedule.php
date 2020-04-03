@@ -20,10 +20,10 @@
               <div class="col-md-4 offset-md-4" style="margin-bottom: 5px">
                 <select class="form-control laboratorium" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                   <option></option>
-                  <option value="<?= base_url('Laboran/Schedule') ?>">All Laboratory</option>
+                  <option value="<?= base_url('Schedule') ?>">All Laboratory</option>
                   <?php
                   foreach ($data as $d) {
-                    echo '<option value="' . base_url('Laboran/Schedule/' . substr(sha1($d->idLab), 6, 4)) . '">' . $d->namaLab . '</option>';
+                    echo '<option value="' . base_url('Schedule/index/' . substr(sha1($d->idLab), 6, 4)) . '">' . $d->namaLab . '</option>';
                   }
                   ?>
                 </select>

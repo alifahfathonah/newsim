@@ -21,36 +21,6 @@ class Laboran extends CI_Controller
     // );
   }
 
-  public function Schedule()
-  {
-    $data['title']  = 'Schedule | SIM Laboratorium';
-    $data['id_lab'] = uri('3');
-    $data['data']   = $this->laboran->daftarLabPraktikum()->result();
-    view('laboran/header', $data);
-    view('laboran/schedule', $data);
-    view('laboran/footer');
-  }
-
-  public function ajaxJadwal()
-  {
-    $hasil  = array();
-    $id_lab = uri('3');
-    if ($id_lab) {
-      $data = $this->laboran->jadwalPerLab($id_lab)->result();
-    } else {
-      $data = $this->laboran->jadwalLab()->result();
-    }
-    foreach ($data as $d) {
-      $tmp['title']           = $d->title;
-      $tmp['start']           = $d->start;
-      $tmp['end']             = $d->end;
-      $tmp['dow']             = $d->hari_ke;
-      $tmp['backgroundColor'] = $d->color;
-      array_push($hasil, $tmp);
-    }
-    echo json_encode($hasil);
-  }
-
   public function uploadJadwalCSV()
   {
     view('Laboran/csv');
