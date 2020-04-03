@@ -146,7 +146,7 @@
               echo '<li>';
             }
             ?>
-            <a href="<?= base_url('Courses') ?>">Courses</a>
+            <a href="<?= base_url('Practicum/Courses') ?>">Courses</a>
             </li>
             <li>
               <a href="<?= base_url('Laboran/#') ?>">Practicum Assistant</a>

@@ -20,7 +20,7 @@
                       <div class="modal-header">
                         <h4 class="modal-title">Add Courses</h4>
                       </div>
-                      <form method="post" action="<?= base_url('Laboran/SaveCourses') ?>">
+                      <form method="post" action="<?= base_url('Practicum/SaveCourses') ?>">
                         <div class="modal-body">
                           <div class="row">
                             <div class="col-md-6 col-sm-12">
@@ -89,7 +89,7 @@
                               <div class="modal-header">
                                 <h4 class="modal-title">Edit Courses</h4>
                               </div>
-                              <form method="post" action="<?= base_url('Laboran/EditCourses') ?>">
+                              <form method="post" action="<?= base_url('Practicum/EditCourses') ?>">
                                 <div class="modal-body">
                                   <div class="row">
                                     <div class="col-md-6 col-sm-12">
@@ -144,7 +144,7 @@
 
         function hapus_matakuliah(id) {
           $.ajax({
-            url: '<?= base_url('Laboran/ajaxMataKuliah') ?>',
+            url: '<?= base_url('Practicum/ajaxMataKuliah') ?>',
             method: 'post',
             data: {
               id: id
@@ -167,7 +167,7 @@
                   type: 'success',
                   showConfirmButton: false
                 }, function() {
-                  window.location.href = '<?= base_url('Laboran/DeleteCourses/') ?>' + id;
+                  window.location.href = '<?= base_url('Practicum/DeleteCourses/') ?>' + id;
                 });
               });
             }

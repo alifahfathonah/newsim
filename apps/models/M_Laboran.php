@@ -3,11 +3,6 @@
 class M_Laboran extends CI_Model
 {
 
-  function daftarMataKuliah()
-  {
-    return $this->db->order_by('kode_mk')->get('matakuliah');
-  }
-
   function daftarAslab($tahun)
   {
     return $this->db->order_by('namaLengkap', 'asc')->get_where('aslab', array('tahunAjaran' => $tahun));

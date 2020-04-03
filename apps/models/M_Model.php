@@ -174,4 +174,9 @@ class M_Model extends CI_Model
     $this->db->group_by('alatlab.namaAlat');
     return $this->db->get();
   }
+
+  function daftarMataKuliah()
+  {
+    return $this->db->order_by('kode_mk')->get('matakuliah');
+  }
 }
