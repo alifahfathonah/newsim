@@ -195,7 +195,7 @@ class M_Model extends CI_Model
 
   function kegiatanAslab($id)
   {
-    $this->db->select('date_format(aslabMasuk, "%Y-%m-%d") aslabMasuk, date_format(aslabMasuk, "%H:%i") masuk, if (aslabKeluar, date_format(aslabKeluar, "%H:%i"), "-") keluar, jurnal');
+    $this->db->select('idJurnal, date_format(aslabMasuk, "%Y-%m-%d") aslabMasuk, date_format(aslabMasuk, "%H:%i") masuk, if (aslabKeluar, date_format(aslabKeluar, "%H:%i"), "-") keluar, jurnal');
     $this->db->from('jurnalaslab');
     $this->db->where('substring(sha1(idAslab), 7, 4) = "' . $id . '"');
     $this->db->order_by('aslabMasuk', 'desc');
@@ -204,7 +204,7 @@ class M_Model extends CI_Model
 
   function kegiatanAslabBulan($id, $periode)
   {
-    $this->db->select('date_format(aslabMasuk, "%Y-%m-%d") aslabMasuk, date_format(aslabMasuk, "%H:%i") masuk, if (aslabKeluar, date_format(aslabKeluar, "%H:%i"), "-") keluar, jurnal');
+    $this->db->select('idJurnal, date_format(aslabMasuk, "%Y-%m-%d") aslabMasuk, date_format(aslabMasuk, "%H:%i") masuk, if (aslabKeluar, date_format(aslabKeluar, "%H:%i"), "-") keluar, jurnal');
     $this->db->from('jurnalaslab');
     $this->db->where('substring(sha1(idAslab), 7, 4) = "' . $id . '"');
     $this->db->where($periode);
@@ -229,7 +229,7 @@ class M_Model extends CI_Model
 
   function jadwalLab()
   {
-    $this->db->select('concat(matakuliah.kode_mk, " | ", matakuliah.nama_mk, " | ", jadwal_lab.kelas, " / ", jadwal_lab.kode_dosen) title, jadwal_lab.jam_masuk start, jadwal_lab.jam_selesai end, jadwal_lab.hari_ke, prodi.color');
+    $this->db->select('concat(matakuliah.kode_mk, "\n", matakuliah.nama_mk, "\n", jadwal_lab.kelas, " / ", jadwal_lab.kode_dosen) title, jadwal_lab.jam_masuk start, jadwal_lab.jam_selesai end, jadwal_lab.hari_ke, prodi.color');
     $this->db->from('jadwal_lab');
     $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
     $this->db->join('prodi', 'jadwal_lab.id_prodi = prodi.id_prodi');
@@ -238,7 +238,7 @@ class M_Model extends CI_Model
 
   function jadwalPerLab($id)
   {
-    $this->db->select('concat(matakuliah.kode_mk, " | ", matakuliah.nama_mk, " | ", jadwal_lab.kelas, " / ", jadwal_lab.kode_dosen) title, jadwal_lab.jam_masuk start, jadwal_lab.jam_selesai end, jadwal_lab.hari_ke, prodi.color');
+    $this->db->select('concat(matakuliah.kode_mk, "\n", matakuliah.nama_mk, "\n", jadwal_lab.kelas, " / ", jadwal_lab.kode_dosen) title, jadwal_lab.jam_masuk start, jadwal_lab.jam_selesai end, jadwal_lab.hari_ke, prodi.color');
     $this->db->from('jadwal_lab');
     $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
     $this->db->join('prodi', 'jadwal_lab.id_prodi = prodi.id_prodi');
