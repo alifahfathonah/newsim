@@ -201,6 +201,22 @@ class LaboratoryAssistant extends CI_Controller
     }
   }
 
+  public function EditActivity()
+  {
+    set_rules('id_jurnal', 'ID', 'required|trim');
+    set_rules('aktivitas_aslab', 'Activity', 'required|trim');
+    if (validation_run() == false) {
+      redirect();
+    } else {
+      $id_jurnal = input('id_jurnal');
+      $aktivitas_aslab  = nl2br(htmlspecialchars_decode(input('aktivitas_aslab'), ENT_HTML5));
+      $input            = array('jurnal' => $aktivitas_aslab);
+      $this->m->updateData('jurnalaslab', $input, 'idJurnal', $id_jurnal);
+      set_flashdata('msg', '<div class="alert alert-success msg">Your Activity Successfully Saved</div>');
+      redirect('LaboratoryAssistant/ProfileAssistant/' . substr(sha1(userdata('id_aslab')), 6, 4));
+    }
+  }
+
   public function ajaxKegiatanAslab()
   {
     $hasil  = array();

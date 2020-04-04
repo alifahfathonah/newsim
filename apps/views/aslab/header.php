@@ -127,7 +127,8 @@
           </ul>
           </li>
           <?php
-          if (uri('1') == 'LaboratoryAssistant' || uri('2') == 'ProfileAssistant') {
+          $id_aslab = substr(sha1(userdata('id_aslab')), 6, 4);
+          if ((uri('1') == 'LaboratoryAssistant' && uri('3') != $id_aslab) || uri('2') == 'ProfileAssistant' && uri('3') != $id_aslab) {
             echo '<li class="active">';
           } else {
             echo '<li>';
@@ -136,6 +137,18 @@
           <a href="<?= base_url('LaboratoryAssistant') ?>">
             <i class="fa fa-users"></i>
             <span class="nav-label">Laboratory Assistant</span>
+          </a>
+          </li>
+          <?php
+          if (uri('2') == 'ProfileAssistant' && uri('3') == $id_aslab) {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . $id_aslab) ?>">
+            <i class="fa fa-users"></i>
+            <span class="nav-label">Your Profile</span>
           </a>
           </li>
           <?php
