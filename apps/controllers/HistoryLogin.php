@@ -27,7 +27,7 @@ class HistoryLogin extends CI_Controller
     $data['data']   = $this->db->order_by('tanggal_login', 'desc')->get_where('history_login', array('username' => $username))->result();
     if (userdata('login') == 'laboran') {
       view('laboran/header', $data);
-      view('laboran/stock_lists', $data);
+      view('laboran/history_login', $data);
       view('laboran/footer');
     } elseif (userdata('login') == 'aslab') {
       view('aslab/header', $data);
