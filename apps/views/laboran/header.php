@@ -228,11 +228,17 @@
               <span class="nav-label">Option SIMLAB</span>
             </a>
           </li>
-          <li>
-            <a href="<?= base_url('HistoryLogin') ?>">
-              <i class="fa fa-history"></i>
-              <span class="nav-label">History Login</span>
-            </a>
+          <?php
+          if (uri('1') == 'HistoryLogin') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('HistoryLogin') ?>">
+            <i class="fa fa-history"></i>
+            <span class="nav-label">History Login</span>
+          </a>
           </li>
         </ul>
       </div>
