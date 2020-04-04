@@ -6,17 +6,7 @@
       <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
           <div class="col-md-12 col-sm-12">
-            <?php
-            if (flashdata('msg')) {
-              echo flashdata('msg');
-            }
-            ?>
             <div class="row">
-              <!-- <div class="col-md-2 col-sm-2" style="margin-bottom: 5px">
-                <a href="<?= base_url('Laboran/AddStockList') ?>">
-                  <button class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Stock List</button>
-                </a>
-              </div> -->
               <div class="col-md-4 offset-md-4" style="margin-bottom: 5px">
                 <select class="form-control laboratorium" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                   <option></option>

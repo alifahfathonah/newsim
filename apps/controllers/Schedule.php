@@ -25,9 +25,15 @@ class Schedule extends CI_Controller
     $data['title']  = 'Schedule | SIM Laboratorium';
     $data['id_lab'] = uri('3');
     $data['data']   = $this->m->daftarLabPraktikum()->result();
-    view('laboran/header', $data);
-    view('laboran/schedule', $data);
-    view('laboran/footer');
+    if (userdata('login') == 'laboran') {
+      view('laboran/header', $data);
+      view('laboran/schedule', $data);
+      view('laboran/footer');
+    } elseif (userdata('login') == 'aslab') {
+      view('aslab/header', $data);
+      view('aslab/schedule', $data);
+      view('aslab/footer');
+    }
   }
 
   public function ajaxJadwal()
