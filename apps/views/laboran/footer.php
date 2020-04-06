@@ -91,6 +91,14 @@
       startDate: tanggal_sekarang
     });
 
+    $('#tanggal_pinjam .input-group.date').datepicker({
+      todayBtn: "linked",
+      keyboardNavigation: false,
+      forceParse: false,
+      calendarWeeks: true,
+      autoclose: true
+    });
+
     $('.i-checks').iCheck({
       checkboxClass: 'icheckbox_square-green',
       radioClass: 'iradio_square-green',
@@ -167,6 +175,10 @@
       placeholder: "Select a Periode of Journal",
     });
 
+    $(".alat").select2({
+      placeholder: "Select an Equipment",
+    });
+
     $('.daftar_lab').DataTable({
       pageLength: 10,
       responsive: true,
@@ -175,6 +187,13 @@
     });
 
     $('.kegiatan_aslab').DataTable({
+      pageLength: 10,
+      responsive: true,
+      dom: '<"html5buttons"B>lTfgitp',
+      buttons: []
+    });
+
+    $('.peminjaman').DataTable({
       pageLength: 10,
       responsive: true,
       dom: '<"html5buttons"B>lTfgitp',

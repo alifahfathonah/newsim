@@ -245,4 +245,31 @@ class M_Model extends CI_Model
     $this->db->where('substring(sha1(jadwal_lab.id_lab), 7, 4) = "' . $id . '"');
     return $this->db->get();
   }
+
+  function daftarInventaris()
+  {
+    // $this->db->select('alatlab.idAlat, alatlab.namaAlat, laboratorium.namaLab');
+    // $this->db->from('alatlab');
+    // $this->db->from('laboratorium', 'alatlab.idLab = laboratorium.idLab');
+    // $this->db->order_by('alatlab.namaAlat');
+    // return $this->db->get();
+    $data = $this->db->query("select a.idAlat, a.namaAlat, b.namaLab from alatlab a join laboratorium b on a.idLab = b.idLab order by a.namaAlat");
+    return $data;
+  }
+
+  function peminjamanAlat()
+  {
+    $this->db->select('peminjamanalat.idPinjamAlat, peminjamanalat.namaPeminjam, alatlab.namaAlat, peminjamanalat.alasan, peminjamanalat.tglPinjam, peminjamanalat.tglKembali, peminjamanalat.catatan, peminjamanalat.status');
+    $this->db->from('peminjamanalat');
+    $this->db->join('alatlab', 'peminjamanalat.idAlat = alatlab.idAlat');
+    $this->db->order_by('peminjamanalat.status');
+    $this->db->order_by('peminjamanalat.tglPinjam', 'desc');
+    return $this->db->get();
+  }
+
+  function detailPeminjamanAlat($id)
+  {
+    $this->db->where('substring(sha1(idPinjamAlat), 7, 4) = "' . $id . '"');
+    return $this->db->get('peminjamanalat');
+  }
 }

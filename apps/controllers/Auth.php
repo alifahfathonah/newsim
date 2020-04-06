@@ -182,6 +182,31 @@ class Auth extends CI_Controller
     }
   }
 
+  public function email()
+  {
+    $this->load->library('email');
+    $config['protocol']   = "smtp";
+    $config['smtp_host']  = "ssl://smtp.gmail.com";
+    $config['smtp_port']  = "465";
+    $config['smtp_user']  = "simlabfit@gmail.com";
+    $config['smtp_pass']  = "superlab5f1t";
+    $config['charset']    = 'utf-8';
+    $config['mailtype']   = "html";
+    $config['newline']    = "\r\n";
+    $this->email->initialize($config);
+    $data['nama'] = 'Bayu Setya Ajie Perdana Putra';
+    $isi = view('auth/email', $data, true);
+    $this->email->from('simlabfit@gmail.com', 'SIM Laboratorium');
+    $this->email->to('bsapp.1207@gmail.com');
+    $this->email->subject('Reset Your SIM Laboratorium Password');
+    $this->email->message($isi);
+    if (!$this->email->send()) {
+      show_error($this->email->print_debugger());
+    } else {
+      redirect('Auth/LupaPassword');
+    }
+  }
+
   private function cekIP()
   {
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {

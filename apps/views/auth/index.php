@@ -42,6 +42,7 @@
             </div>
             <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
           </form>
+          <a href=""><small>Forgot Password?</small></a>
           <p class="text-muted text-center">
             <small>Do not have an account? Register Here as:</small>
           </p>
