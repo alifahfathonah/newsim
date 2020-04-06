@@ -1,12 +1,18 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class Auth extends CI_Controller
 {
 
   public function __construct()
   {
     parent::__construct();
+    require APPPATH . 'libraries/phpmailer/src/Exception.php';
+    require APPPATH . 'libraries/phpmailer/src/PHPMailer.php';
+    require APPPATH . 'libraries/phpmailer/src/SMTP.php';
   }
 
   public function index()
@@ -184,26 +190,29 @@ class Auth extends CI_Controller
 
   public function email()
   {
-    $this->load->library('email');
-    $config['protocol']   = "smtp";
-    $config['smtp_host']  = "ssl://smtp.gmail.com";
-    $config['smtp_port']  = "465";
-    $config['smtp_user']  = "simlabfit@gmail.com";
-    $config['smtp_pass']  = "superlab5f1t";
-    $config['charset']    = 'utf-8';
-    $config['mailtype']   = "html";
-    $config['newline']    = "\r\n";
-    $this->email->initialize($config);
+    $response = false;
+    $mail             = new PHPMailer();
+    $mail->isSMTP();
+    $mail->Host       = 'simlabfit.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'admin@simlabfit.com';
+    $mail->Password   = 'superlab5f1t';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port       = 465;
+    $mail->setFrom('admin@simlabfit.com', 'SIM Laboratorium FIT');
+    $mail->addReplyTo('admin@simlabfit.com', '');
+    $mail->addAddress('bsapp.1207@gmail.com');
+    $mail->Subject    = 'Reset Your SIM Laboratorium Password';
+    $mail->isHTML(true);
     $data['nama'] = 'Bayu Setya Ajie Perdana Putra';
     $isi = view('auth/email', $data, true);
-    $this->email->from('simlabfit@gmail.com', 'SIM Laboratorium');
-    $this->email->to('bsapp.1207@gmail.com');
-    $this->email->subject('Reset Your SIM Laboratorium Password');
-    $this->email->message($isi);
-    if (!$this->email->send()) {
-      show_error($this->email->print_debugger());
+    $mailContent  = $isi;
+    $mail->Body = $mailContent;
+    if (!$mail->send()) {
+      echo 'Message could not be sent.';
+      echo 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
-      redirect('Auth/LupaPassword');
+      echo 'Message has been sent';
     }
   }
 

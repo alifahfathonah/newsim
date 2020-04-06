@@ -348,7 +348,7 @@
                       Bandung, 40257
                     </td>
                     <td class="content-block" width="50%" style="text-align: right; font-size: 12px">
-                      Website: <a href="http://fit.labs.telkomuniversity.ac.id/" style="font-size: 12px">fit.labs.telkomuniversity.ac.id</a>
+                      Website: <a href="https://fit.labs.telkomuniversity.ac.id/" style="font-size: 12px">fit.labs.telkomuniversity.ac.id</a>
                       Email: <a href="mailto:lab@tass.telkomuniversity.ac.id" style="font-size: 12px">lab@tass.telkomuniversity.ac.id</a><br>
                       <p style="text-align: right; font-size: 12px">Follow Our Social Media</p>
                       <table width="90%" cellpadding="0" cellspacing="0" align="right">
