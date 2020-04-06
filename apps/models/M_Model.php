@@ -272,4 +272,20 @@ class M_Model extends CI_Model
     $this->db->where('substring(sha1(idPinjamAlat), 7, 4) = "' . $id . '"');
     return $this->db->get('peminjamanalat');
   }
+
+  function peminjamanLab()
+  {
+    $this->db->select('peminjamanlab.idPinjamLab, laboratorium.namaLab, peminjamanlab.namaPeminjam, peminjamanlab.alasan, peminjamanlab.tglPinjam, peminjamanlab.tglKembali, peminjamanlab.catatan, peminjamanlab.status');
+    $this->db->from('peminjamanlab');
+    $this->db->join('laboratorium', 'peminjamanlab.idLab = laboratorium.idLab');
+    $this->db->order_by('peminjamanlab.status');
+    $this->db->order_by('peminjamanlab.tglPinjam', 'desc');
+    return $this->db->get();
+  }
+
+  function detailPeminjamanLab($id)
+  {
+    $this->db->where('substring(sha1(idPinjamLab), 7, 4) = "' . $id . '"');
+    return $this->db->get('peminjamanlab');
+  }
 }

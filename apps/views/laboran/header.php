@@ -202,7 +202,7 @@
           </a>
           </li>
           <?php
-          if (uri('2') == 'Equipment' || uri('2') == 'AddBorrowingEquipment' || uri('2') == 'EditBorrowingEquipment') {
+          if (uri('2') == 'Equipment' || uri('2') == 'AddBorrowingEquipment' || uri('2') == 'EditBorrowingEquipment' || uri('2') == 'Laboratory' || uri('2') == 'AddBorrowingLaboratory' || uri('2') == 'EditBorrowingLaboratory') {
             echo '<li class="active">';
           } else {
             echo '<li>';
@@ -223,8 +223,14 @@
             ?>
             <a href="<?= base_url('Borrowing/Equipment') ?>">Equipment</a>
             </li>
-            <li>
-              <a href="<?= base_url('Borrowing/Laboratory') ?>">Laboratory</a>
+            <?php
+            if (uri('2') == 'Laboratory' || uri('2') == 'AddBorrowingLaboratory' || uri('2') == 'EditBorrowingLaboratory') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Borrowing/Laboratory') ?>">Laboratory</a>
             </li>
           </ul>
           </li>
