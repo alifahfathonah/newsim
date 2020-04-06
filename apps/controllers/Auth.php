@@ -38,13 +38,17 @@ class Auth extends CI_Controller
         $password = sha1(input('password_user'));
         $where    = array('username' => $username, 'password' => $password);
         $cekData  = $this->auth->cekUser($where)->row();
+        $geolocation  = $this->geolocation('114.142.169.36');
+        // $geolocation  = $this->geolocation($this->cekIP());
         if ($cekData) {
           $history = array(
             'ip'            => $this->cekIP(),
             'browser'       => $this->cekUserAgent(),
             'platform'      => $this->agent->platform(),
             'username'      => $username,
-            'tanggal_login' => date('Y-m-d H:i:s')
+            'tanggal_login' => date('Y-m-d H:i:s'),
+            'kota'          => $geolocation['city'],
+            'provinsi'      => $geolocation['region']
           );
           $this->auth->insertData('history_login', $history);
           if ($cekData->jenisAkses == 'laboran') {
@@ -240,6 +244,13 @@ class Auth extends CI_Controller
       $agent = 'Unidentified User Agent';
     }
     return $agent;
+  }
+
+  private function geolocation($ip)
+  {
+    $json = file_get_contents("http://ipinfo.io/{$ip}/geo");
+    $details = json_decode($json, true);
+    return $details;
   }
 
   public function Logout()

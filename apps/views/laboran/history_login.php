@@ -12,9 +12,10 @@
                   <table class="table table-striped table-bordered table-hover history_login" width="100%">
                     <thead>
                       <tr>
-                        <th>No</th>
-                        <th>Time</th>
-                        <th>IP</th>
+                        <th width="5%">No</th>
+                        <th width="27%">Time</th>
+                        <th width="13%">IP</th>
+                        <th>Location</th>
                         <th>Browser</th>
                         <th>Platform</th>
                       </tr>
@@ -30,6 +31,7 @@
                           <td><?= $no++ ?></td>
                           <td><?= tanggalInggris($tanggal) . ' ' . $tmp[1] ?></td>
                           <td><?= $d->ip ?></td>
+                          <td><?= $d->kota . ', ' . $d->provinsi ?></td>
                           <td><?= $d->browser ?></td>
                           <td><?= $d->platform ?></td>
                         </tr>
