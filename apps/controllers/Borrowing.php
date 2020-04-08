@@ -30,7 +30,7 @@ class Borrowing extends CI_Controller
       view('laboran/footer');
     } elseif (userdata('login') == 'aslab') {
       view('aslab/header', $data);
-      view('aslab/schedule', $data);
+      view('aslab/borrowing_equipment', $data);
       view('aslab/footer');
     }
   }
@@ -59,7 +59,7 @@ class Borrowing extends CI_Controller
         view('laboran/add_borrowing_equipment', $data);
         view('laboran/footer');
       } else {
-        redirect();
+        redirect('Borrowing/Equipment');
       }
     } else {
       $nama_peminjam      = input('nama_peminjam');
@@ -123,7 +123,7 @@ class Borrowing extends CI_Controller
         view('laboran/edit_borrowing_equipment', $data);
         view('laboran/footer');
       } else {
-        redirect();
+        redirect('Borrowing/Equipment');
       }
     } else {
       $nama_peminjam      = input('nama_peminjam');
@@ -173,7 +173,7 @@ class Borrowing extends CI_Controller
       view('laboran/footer');
     } elseif (userdata('login') == 'aslab') {
       view('aslab/header', $data);
-      view('aslab/schedule', $data);
+      view('aslab/borrowing_laboratory', $data);
       view('aslab/footer');
     }
   }

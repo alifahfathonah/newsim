@@ -181,6 +181,13 @@
       buttons: []
     });
 
+    $('.peminjaman').DataTable({
+      pageLength: 10,
+      responsive: true,
+      dom: '<"html5buttons"B>lTfgitp',
+      buttons: []
+    });
+
     $('.history_login').DataTable({
       pageLength: 10,
       responsive: true,

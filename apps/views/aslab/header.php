@@ -163,20 +163,38 @@
             <span class="nav-label">Schedule</span>
           </a>
           </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-legal"></i>
-              <span class="nav-label">Borrowing</span>
-              <span class="fa arrow"></span>
-            </a>
-            <ul class="nav nav-second-level collapse">
-              <li>
-                <a href="<?= base_url('Borrowing/Equipment') ?>">Equipment</a>
-              </li>
-              <li>
-                <a href="<?= base_url('Borrowing/Laboratory') ?>">Laboratory</a>
-              </li>
-            </ul>
+          <?php
+          if (uri('2') == 'Equipment' || uri('2') == 'Laboratory') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="#">
+            <i class="fa fa-legal"></i>
+            <span class="nav-label">Borrowing</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <?php
+            if (uri('2') == 'Equipment') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Borrowing/Equipment') ?>">Equipment</a>
+            </li>
+            <?php
+            if (uri('2') == 'Laboratory') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Borrowing/Laboratory') ?>">Laboratory</a>
+            </li>
+          </ul>
           </li>
           <li>
             <a href="<?= base_url('Complaint') ?>">
