@@ -97,7 +97,7 @@ class Laboratory extends CI_Controller
     set_rules('kode_ruang', 'Room', 'required|trim');
     // set_rules('lokasi_lab', 'Location', 'required|trim');
     if (validation_run() == false) {
-      redirect('Laboran/PracticumLaboratory');
+      redirect('Laboratory/Practicum');
     } else {
       $id_lab     = input('id_lab');
       $nama_lab   = input('nama_lab');
@@ -149,7 +149,7 @@ class Laboratory extends CI_Controller
     set_rules('kode_ruang', 'Room', 'required|trim');
     set_rules('lokasi_lab', 'Location', 'required|trim');
     if (validation_run() == false) {
-      redirect('Laboran/PracticumLaboratory');
+      redirect('Laboratory/Research');
     } else {
       $nama_lab   = input('nama_lab');
       $pic_lab    = input('pic_lab');
@@ -184,7 +184,7 @@ class Laboratory extends CI_Controller
     set_rules('kode_ruang', 'Room', 'required|trim');
     // set_rules('lokasi_lab', 'Location', 'required|trim');
     if (validation_run() == false) {
-      redirect('Laboran/PracticumLaboratory');
+      redirect('Laboratory/Research');
     } else {
       $id_lab     = input('id_lab');
       $nama_lab   = input('nama_lab');
