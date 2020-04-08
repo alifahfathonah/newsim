@@ -196,11 +196,17 @@
             </li>
           </ul>
           </li>
-          <li>
-            <a href="<?= base_url('Complaint') ?>">
-              <i class="fa fa-thumbs-down"></i>
-              <span class="nav-label">Complaint</span>
-            </a>
+          <?php
+          if (uri('1') == 'Complaint') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Complaint') ?>">
+            <i class="fa fa-thumbs-down"></i>
+            <span class="nav-label">Complaint</span>
+          </a>
           </li>
           <?php
           if (uri('1') == 'HistoryLogin') {

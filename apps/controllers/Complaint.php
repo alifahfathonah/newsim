@@ -30,7 +30,7 @@ class Complaint extends CI_Controller
       view('laboran/footer');
     } elseif (userdata('login') == 'aslab') {
       view('aslab/header', $data);
-      view('aslab/schedule', $data);
+      view('aslab/complaint', $data);
       view('aslab/footer');
     }
   }
@@ -47,6 +47,13 @@ class Complaint extends CI_Controller
         view('laboran/header', $data);
         view('laboran/add_complaint', $data);
         view('laboran/footer');
+      } elseif (userdata('login') == 'aslab') {
+        $data           = $this->data;
+        $data['title']  = 'Add Complaint | SIM Laboratorium';
+        $data['lab']    = $this->m->daftarLaboratorium()->result();
+        view('aslab/header', $data);
+        view('aslab/add_complaint', $data);
+        view('aslab/footer');
       } else {
         redirect();
       }
@@ -90,6 +97,14 @@ class Complaint extends CI_Controller
         view('laboran/header', $data);
         view('laboran/edit_complaint', $data);
         view('laboran/footer');
+      } elseif (userdata('login') == 'aslab') {
+        $data           = $this->data;
+        $data['title']  = 'Edit Complaint | SIM Laboratorium';
+        $data['lab']    = $this->m->daftarLaboratorium()->result();
+        $data['data']   = $this->m->detailKomplain($id)->row();
+        view('aslab/header', $data);
+        view('aslab/edit_complaint', $data);
+        view('aslab/footer');
       } else {
         redirect();
       }
