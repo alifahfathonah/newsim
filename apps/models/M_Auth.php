@@ -21,6 +21,16 @@ class M_Auth extends CI_Model
     return $this->db->get();
   }
 
+  function daftarStaffLaboran()
+  {
+    $this->db->select('laboran.id_laboran, laboran.nip_laboran');
+    $this->db->from('laboran');
+    $this->db->join('users', 'laboran.id_laboran = users.id_laboran', 'left outer');
+    $this->db->where('users.id_laboran', null);
+    $this->db->order_by('laboran.nip_laboran', 'asc');
+    return $this->db->get();
+  }
+
   function daftarAslab($periode)
   {
     $this->db->select('aslab.idAslab, aslab.nim, aslab.namaLengkap');

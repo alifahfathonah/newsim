@@ -52,13 +52,23 @@ class Auth extends CI_Controller
           );
           $this->auth->insertData('history_login', $history);
           if ($cekData->jenisAkses == 'laboran') {
-            $session = array(
-              'login'     => $cekData->jenisAkses,
-              'id'        => $cekData->idUser,
-              'username'  => $cekData->username,
-              'nama'      => 'Staff Laboratory',
-              'jabatan'   => $cekData->jabatan
-            );
+            if ($cekData->username == 'superadmin') {
+              $session = array(
+                'login'     => $cekData->jenisAkses,
+                'id'        => $cekData->idUser,
+                'username'  => $cekData->username,
+                'nama'      => 'Staff Laboratory',
+                'jabatan'   => $cekData->jabatan
+              );
+            } else {
+              $data_laboran = $this->db->get_where('laboran', array('id_laboran' => $cekData->id_laboran))->row();
+              $session = array(
+                'login'     => $cekData->jenisAkses,
+                'id'        => $cekData->idUser,
+                'username'  => $cekData->username,
+                'jabatan'   => $cekData->jabatan
+              );
+            }
             set_userdata($session);
             redirect('Dashboard');
           } elseif ($cekData->jenisAkses == 'aslab') {
@@ -177,7 +187,29 @@ class Auth extends CI_Controller
 
   public function RegisterStaff()
   {
-    #
+    set_rules('nip_laboran', 'NIP', 'required|trim');
+    set_rules('username_user', 'Username', 'required|trim');
+    set_rules('password_user', 'Password', 'required|trim');
+    if (validation_run() == false) {
+      $data['title']  = 'Register Staff Laboratory | SIM Laboratorium';
+      $data['data']   = $this->auth->daftarStaffLaboran()->result();
+      view('auth/register_staff', $data);
+    } else {
+      $nip_laboran    = input('nip_laboran');
+      $username_user  = input('username_user');
+      $password_user  = sha1(input('password_user'));
+      $input          = array(
+        'username'    => $username_user,
+        'password'    => $password_user,
+        'id_laboran'  => $nip_laboran,
+        'jenisAkses'  => 'laboran',
+        'jabatan'     => 'Staff Laboratory',
+        'status'      => '1'
+      );
+      $this->auth->insertData('users', $input);
+      set_flashdata('msg', '<div class="alert alert-success msg">Thank you for register. Now you can login using your account.</div>');
+      redirect();
+    }
   }
 
   public function ajaxCekUsername()

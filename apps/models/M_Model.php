@@ -21,6 +21,11 @@ class M_Model extends CI_Model
     $this->db->delete($tabel);
   }
 
+  function profilLaboran($id)
+  {
+    return $this->db->get_where('laboran', array('id_laboran' => $id));
+  }
+
   function hitungKomplain()
   {
     $this->db->select('count(idKomplain) komplain');
