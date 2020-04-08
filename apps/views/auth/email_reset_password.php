@@ -325,12 +325,13 @@
                   </tr>
                   <tr>
                     <td class="content-block" style="text-align: center">
-                      <a href="#" class="btn-primary" style="color: #FFF">Upgrade my account</a>
+                      <a href="<?= base_url('Auth/ResetPassword?username=' . $username . '&token=' . urlencode($token)) ?>" class="btn-primary" style="color: #FFF">Reset Password</a>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      If you are unable to click the link above, you can click or copy and paste the following link in your browser.
+                      If you are unable to click the link above, you can click or copy and paste the following link in your browser.<br>
+                      <a href="<?= base_url('Auth/ResetPassword?username=' . $username . '&token=' . urlencode($token)) ?>"><?= base_url('Auth/ResetPassword?username=' . $username . '&token=' . urlencode($token)) ?></a>
                     </td>
                   </tr>
                 </table>
@@ -351,22 +352,12 @@
                       Website: <a href="https://fit.labs.telkomuniversity.ac.id/" style="font-size: 12px">fit.labs.telkomuniversity.ac.id</a>
                       Email: <a href="mailto:lab@tass.telkomuniversity.ac.id" style="font-size: 12px">lab@tass.telkomuniversity.ac.id</a><br>
                       <p style="text-align: right; font-size: 12px">Follow Our Social Media</p>
-                      <table width="90%" cellpadding="0" cellspacing="0" align="right">
-                        <tr>
-                          <td style="text-align: center">
-                            <a href="https://www.youtube.com/channel/UC4_EUSKVUeLonH7auhf_qSA" target="_blank"><img src="https://www.bayusapp.com/wp-content/uploads/2020/04/youtube-logo.png" width="28px"></a>
-                          </td>
-                          <td style="text-align: center">
-                            <a href="https://www.instagram.com/laboratory_fit/" target="_blank"><img src="https://www.bayusapp.com/wp-content/uploads/2019/10/instagram-1.png" height="28px"></a>
-                          </td>
-                          <td style="text-align: center">
-                            <a href="https://line.me/R/ti/p/labfit" target="_blank"><img src="https://www.bayusapp.com/wp-content/uploads/2019/10/line.png" height="28px"></a>
-                          </td>
-                          <td style="text-align: center">
-                            <a href="https://wa.me/628112269919" target="_blank"><img src="https://www.bayusapp.com/wp-content/uploads/2019/10/whatsapp-1.png" height="28px"></a>
-                          </td>
-                        </tr>
-                      </table>
+                      <p>
+                        <a href="https://www.youtube.com/channel/UC4_EUSKVUeLonH7auhf_qSA" target="_blank"><img src="https://www.bayusapp.com/wp-content/uploads/2020/04/youtube-logo.png" width="28px"></a>
+                        <a href="https://www.instagram.com/laboratory_fit/" target="_blank"><img src="https://www.bayusapp.com/wp-content/uploads/2019/10/instagram-1.png" height="28px"></a>
+                        <a href="https://line.me/R/ti/p/labfit" target="_blank"><img src="https://www.bayusapp.com/wp-content/uploads/2019/10/line.png" height="28px"></a>
+                        <a href="https://wa.me/628112269919" target="_blank"><img src="https://www.bayusapp.com/wp-content/uploads/2019/10/whatsapp-1.png" height="28px"></a>
+                      </p>
                     </td>
                   </tr>
                 </table>
