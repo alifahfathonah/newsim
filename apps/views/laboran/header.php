@@ -40,7 +40,7 @@
           <li class="nav-header">
             <div class="dropdown profile-element">
               <img alt="image" class="rounded-circle" src="<?= base_url('assets/') ?>img/302383.jpg" height="48px" width="48px" />
-              <a data-toggle="dropdown" class="dropdown-toggle" href="<?= base_url('assets/inspinia/') ?>#">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <span class="block m-t-xs font-bold"><?= userdata('nama') ?></span>
                 <span class="text-muted text-xs block"><?= userdata('jabatan') ?></span>
               </a>

@@ -288,4 +288,20 @@ class M_Model extends CI_Model
     $this->db->where('substring(sha1(idPinjamLab), 7, 4) = "' . $id . '"');
     return $this->db->get('peminjamanlab');
   }
+
+  function daftarKomplain()
+  {
+    $this->db->select('komplain.idKomplain, komplain.tglKomplain, komplain.tglDiatasi, laboratorium.namaLab, komplain.namaAlat, komplain.jenisInforman, komplain.catatanKomplain, komplain.solusi, komplain.diperbaikiOleh');
+    $this->db->from('komplain');
+    $this->db->join('laboratorium', 'komplain.idLab = laboratorium.idLab');
+    $this->db->order_by('komplain.statusKomplain', 'asc');
+    $this->db->order_by('komplain.tglKomplain', 'desc');
+    return $this->db->get();
+  }
+
+  function detailKomplain($id)
+  {
+    $this->db->where('substring(sha1(idKomplain), 7, 4) = "' . $id . '"');
+    return $this->db->get('komplain');
+  }
 }
