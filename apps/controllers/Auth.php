@@ -13,6 +13,9 @@ class Auth extends CI_Controller
     require APPPATH . 'libraries/phpmailer/src/Exception.php';
     require APPPATH . 'libraries/phpmailer/src/PHPMailer.php';
     require APPPATH . 'libraries/phpmailer/src/SMTP.php';
+    $update = array('status' => 'Selesai');
+    $this->db->where('tglKembali < date_add(now(), interval -1 day)')->update('peminjamanlab', $update);
+    $this->db->where('tglKembali < date_add(now(), interval -1 day)')->update('peminjamanalat', $update);
   }
 
   public function index()
