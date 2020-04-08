@@ -37,6 +37,12 @@ function input($input)
   return $ci->input->post($input, true);
 }
 
+function get($input)
+{
+  $ci = &get_instance();
+  return $ci->input->get($input, true);
+}
+
 function set_userdata($session)
 {
   $ci = &get_instance();
