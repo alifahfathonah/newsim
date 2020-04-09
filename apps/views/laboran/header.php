@@ -142,7 +142,7 @@
           </ul>
           </li>
           <?php
-          if (uri('2') == 'Courses') {
+          if (uri('2') == 'Courses' || uri('2') == 'PracticumAssistant') {
             echo '<li class="active">';
           } else {
             echo '<li>';
@@ -163,8 +163,14 @@
             ?>
             <a href="<?= base_url('Practicum/Courses') ?>">Courses</a>
             </li>
-            <li>
-              <a href="<?= base_url('Laboran/#') ?>">Practicum Assistant</a>
+            <?php
+            if (uri('2') == 'PracticumAssistant') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Practicum/PracticumAssistant') ?>">Practicum Assistant</a>
             </li>
             <li>
               <a href="<?= base_url('Laboran/#') ?>">Presence Asprak</a>

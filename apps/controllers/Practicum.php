@@ -87,6 +87,50 @@ class Practicum extends CI_Controller
     }
   }
 
+  public function PracticumAssistant()
+  {
+    $data           = $this->data;
+    $data['title']  = 'Courses | SIM Laboratorium';
+    $data['data']   = $this->m->daftarAsprak()->result();
+    view('laboran/header', $data);
+    view('laboran/practicum_assistant', $data);
+    view('laboran/footer');
+  }
+
+  public function AddAsprakCSV()
+  {
+    if (empty($_FILES['file']['name'])) {
+      redirect('Practicum/PracticumAssistant');
+    } else {
+      $file = $_FILES['file']['tmp_name'];
+      $ekstensi_file  = explode('.', $_FILES['file']['name']);
+      if (strtolower(end($ekstensi_file)) === 'csv' && $_FILES['file']['size'] > 0) {
+        $handle = fopen($file, 'r');
+        $i = 0;
+        $sama = array();
+        while (($row = fgetcsv($handle, 2048))) {
+          $i++;
+          if ($i == 1) {
+            continue;
+          }
+          $input = array(
+            'nim_asprak'  => $row[0],
+            'nama_asprak' => $row[1]
+          );
+          $cek_data = $this->db->get_where('asprak', array('nim_asprak' => $row[0]))->row();
+          if ($cek_data) {
+            array_push($sama, $input);
+          } else {
+            $this->db->insert('asprak', $input);
+          }
+        }
+        fclose($handle);
+      }
+      set_flashdata('msg', '<div class="alert alert-success msg">Practicum Assistant Successfully Saved</div>');
+      redirect('Practicum/PracticumAssistant');
+    }
+  }
+
   public function ajaxMataKuliah()
   {
     $hasil  = '';
