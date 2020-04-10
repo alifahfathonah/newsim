@@ -85,19 +85,19 @@ class Asprak extends CI_Controller
       $password_baru    = input('password_baru');
       $konfirm_password = input('konfirm_password');
       if ($password_lama == null) {
-        set_flashdata('msg', '<div class="alert alert-success msg">Data sukses diperbarui</div>');
+        set_flashdata('msg', '<div class="alert alert-success msg">Data successfully updated.</div>');
       } else {
         $cek_password = $this->asprak->cekPassword($username_asprak)->row()->password;
         if ($cek_password == sha1($password_lama)) {
           if ($password_baru == $konfirm_password) {
             $input  = array('password' => sha1($password_baru));
             $this->asprak->updateData('users', $input, 'username', $username_asprak);
-            set_flashdata('msg', '<div class="alert alert-success msg">Password Anda sukses diperbarui</div>');
+            set_flashdata('msg', '<div class="alert alert-success msg">Your password successfully updated.</div>');
           } else {
-            set_flashdata('msg', '<div class="alert alert-danger">Password baru dengan konfirmasi password tidak cocok. Silahkan coba lagi.</div>');
+            set_flashdata('msg', '<div class="alert alert-danger">New password and confirm password not match. Please try again.</div>');
           }
         } else {
-          set_flashdata('msg', '<div class="alert alert-danger">Password lama tidak cocok. Silahkan coba lagi.</div>');
+          set_flashdata('msg', '<div class="alert alert-danger">Old password not match. Please try again.</div>');
         }
       }
       redirect('Asprak/Setting');
