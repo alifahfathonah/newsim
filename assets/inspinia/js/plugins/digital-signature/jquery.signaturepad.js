@@ -616,17 +616,6 @@
 		 * @param {Object} context current context object
 		 * @param {Object} settings provided settings
 		 */
-		function onFormError(errors, context, settings) {
-			if (errors.nameInvalid) {
-				context.prepend(['<p class="', settings.errorClass, '">', settings.errorMessage, '</p>'].join(''))
-				$(settings.name, context).focus()
-				$(settings.name, context).addClass(settings.errorClass)
-				$('label[for=' + $(settings.name).attr('id') + ']', context).addClass(settings.errorClass)
-			}
-
-			if (errors.drawInvalid)
-				context.prepend(['<p class="', settings.errorClass, '">', settings.errorMessageDraw, '</p>'].join(''))
-		}
 
 		/**
 		 * Validates the form to confirm a name was typed in the field
@@ -1198,7 +1187,7 @@
 			,
 		errorMessage: 'Please enter your name' // The error message displayed on invalid submission
 			,
-		errorMessageDraw: 'Please sign the document' // The error message displayed when drawOnly and no signature is drawn
+		errorMessageDraw: 'Please sign a the document' // The error message displayed when drawOnly and no signature is drawn
 			,
 		onBeforeValidate: null // Pass a callback to be used instead of the built-in function
 			,
