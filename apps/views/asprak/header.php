@@ -14,9 +14,24 @@
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/iCheck/custom.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/digital-signature/jquery.signaturepad.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
+  <style>
+    #signArea {
+      width: 304px;
+    }
+
+    .tag-ingo {
+      font-family: cursive;
+      font-size: 12px;
+      text-align: left;
+      font-style: oblique;
+    }
+  </style>
 </head>
 
 <body>
@@ -48,11 +63,17 @@
             <span class="nav-label">Dashboard</span>
           </a>
           </li>
-          <li>
-            <a href="<?= base_url('Laboran/Schedule') ?>">
-              <i class="fa fa-calendar"></i>
-              <span class="nav-label">Jadwal</span>
-            </a>
+          <?php
+          if (uri('2') == 'Schedule') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Asprak/Schedule') ?>">
+            <i class="fa fa-calendar"></i>
+            <span class="nav-label">Schedule</span>
+          </a>
           </li>
           <li>
             <a href="<?= base_url('Laboran/Schedule') ?>">
@@ -79,15 +100,15 @@
             </a>
           </li>
           <?php
-          if (uri('2') == 'Pengaturan') {
+          if (uri('2') == 'Setting') {
             echo '<li class="active">';
           } else {
             echo '<li>';
           }
           ?>
-          <a href="<?= base_url('Asprak/Pengaturan') ?>">
+          <a href="<?= base_url('Asprak/Setting') ?>">
             <i class="fa fa-gear"></i>
-            <span class="nav-label">Pengaturan</span>
+            <span class="nav-label">Setting</span>
           </a>
           </li>
           <!-- <li>

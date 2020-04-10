@@ -21,23 +21,49 @@ class Asprak extends CI_Controller
   {
     $data             = $this->data;
     $data['title']      = 'Dashboard | SIM Laboratorium';
-    $data['komplain'] = $this->laboran->grafikKomplain()->result();
-    $data['pengumuman'] = $this->laboran->daftarPengumuman()->result();
+    // $data['komplain'] = $this->laboran->grafikKomplain()->result();
+    $data['pengumuman'] = $this->m->daftarPengumuman()->result();
     view('asprak/header', $data);
     view('asprak/dashboard', $data);
     view('asprak/footer');
   }
 
-  public function Pengaturan()
+  public function Schedule()
+  {
+    $data             = $this->data;
+    $data['title']      = 'Dashboard | SIM Laboratorium';
+    // $data['komplain'] = $this->laboran->grafikKomplain()->result();
+    // $data['pengumuman'] = $this->laboran->daftarPengumuman()->result();
+    view('asprak/header', $data);
+    view('asprak/schedule', $data);
+    view('asprak/footer');
+  }
+
+  public function ajaxJadwal()
+  {
+    $hasil  = array();
+    $data = $this->asprak->jadwalAsprak(userdata('nim'))->result();
+    foreach ($data as $d) {
+      $tmp['title']           = $d->title;
+      $tmp['start']           = $d->start;
+      $tmp['end']             = $d->end;
+      $tmp['dow']             = $d->hari_ke;
+      // $tmp['backgroundColor'] = $d->color;
+      array_push($hasil, $tmp);
+    }
+    echo json_encode($hasil);
+  }
+
+  public function Setting()
   {
     set_rules('nim_asprak', 'NIM', 'required|trim');
     if (validation_run() == false) {
       $data           = $this->data;
-      $data['title']  = 'Pengaturan | SIM Laboratorium';
+      $data['title']  = 'Setting | SIM Laboratorium';
       $data['akun']   = $this->asprak->akunAsprak(userdata('nim'))->row();
       $data['bank']   = $this->asprak->daftarBank()->result();
       view('asprak/header', $data);
-      view('asprak/pengaturan', $data);
+      view('asprak/setting', $data);
       view('asprak/footer');
     } else {
       $nim_asprak     = input('nim_asprak');
@@ -74,7 +100,39 @@ class Asprak extends CI_Controller
           set_flashdata('msg', '<div class="alert alert-danger">Password lama tidak cocok. Silahkan coba lagi.</div>');
         }
       }
-      redirect('Asprak/Pengaturan');
+      redirect('Asprak/Setting');
     }
+  }
+
+  public function SaveSignature()
+  {
+    $result = array();
+    $image_data = base64_decode($_POST['img_data']);
+    $file_name  = $_POST['nim_asprak'];
+    $cek_data   = $this->db->get_where('asprak', array('nim_asprak' => $_POST['nim_asprak']))->row();
+    if ($cek_data->ttd_asprak) {
+      unlink($cek_data->ttd_asprak);
+    }
+    $save_file  = 'assets/signature/asprak/' . $file_name . '.png';
+    $input      = array('ttd_asprak' => $save_file);
+    $this->db->where('nim_asprak', $_POST['nim_asprak'])->update('asprak', $input);
+    file_put_contents($save_file, $image_data);
+    $result['status'] = 1;
+    $result['file_name'] = $save_file;
+    echo json_encode($result);
+  }
+
+  public function DeleteSignature()
+  {
+    $result = array();
+    $nim_asprak = $_POST['nim_asprak'];
+    $cek_data   = $this->db->get_where('asprak', array('nim_asprak' => $nim_asprak))->row();
+    if ($cek_data->ttd_asprak) {
+      unlink($cek_data->ttd_asprak);
+    }
+    $input      = array('ttd_asprak' => null);
+    $this->db->where('nim_asprak', $_POST['nim_asprak'])->update('asprak', $input);
+    $result['status'] = 1;
+    echo json_encode($result);
   }
 }
