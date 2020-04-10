@@ -13,7 +13,7 @@ class Asprak extends CI_Controller
       redirect();
     }
     $this->data = array(
-      'profil'  => $this->asprak->profilAsprak(userdata('nim'))->row()
+      'profil'  => $this->a->profilAsprak(userdata('nim'))->row()
     );
   }
 
@@ -21,8 +21,7 @@ class Asprak extends CI_Controller
   {
     $data             = $this->data;
     $data['title']      = 'Dashboard | SIM Laboratorium';
-    // $data['komplain'] = $this->laboran->grafikKomplain()->result();
-    $data['pengumuman'] = $this->m->daftarPengumuman()->result();
+    $data['pengumuman'] = $this->a->daftarPengumuman()->result();
     view('asprak/header', $data);
     view('asprak/dashboard', $data);
     view('asprak/footer');
@@ -31,9 +30,7 @@ class Asprak extends CI_Controller
   public function Schedule()
   {
     $data             = $this->data;
-    $data['title']      = 'Dashboard | SIM Laboratorium';
-    // $data['komplain'] = $this->laboran->grafikKomplain()->result();
-    // $data['pengumuman'] = $this->laboran->daftarPengumuman()->result();
+    $data['title']      = 'Schedule | SIM Laboratorium';
     view('asprak/header', $data);
     view('asprak/schedule', $data);
     view('asprak/footer');
@@ -42,7 +39,7 @@ class Asprak extends CI_Controller
   public function ajaxJadwal()
   {
     $hasil  = array();
-    $data = $this->asprak->jadwalAsprak(userdata('nim'))->result();
+    $data = $this->a->jadwalAsprak(userdata('nim'))->result();
     foreach ($data as $d) {
       $tmp['title']           = $d->title;
       $tmp['start']           = $d->start;
