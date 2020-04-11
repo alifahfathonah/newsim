@@ -21,7 +21,7 @@ if (uri('2') == 'Schedule') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <?php
 }
-if (uri('2') == 'PracticumAssistant') {
+if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence') {
 ?>
   <!-- Addon scripts -->
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
@@ -29,7 +29,7 @@ if (uri('2') == 'PracticumAssistant') {
   <script>
     $(document).ready(function() {
       $('.dataTables').DataTable({
-        pageLength: 25,
+        pageLength: 10,
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
