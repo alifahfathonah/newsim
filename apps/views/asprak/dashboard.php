@@ -52,6 +52,7 @@
           <div class="col-lg-12">
             <div class="ibox ">
               <div id="ibox-content">
+                <h2 style="text-align: center">Announcement</h2>
                 <div id="vertical-timeline" class="vertical-container light-timeline">
                   <?php
                   foreach ($pengumuman as $p) {
