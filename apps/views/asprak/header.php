@@ -9,29 +9,40 @@
   <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/img/favicon.png') ?>" />
   <link href="<?= base_url('assets/inspinia/') ?>css/bootstrap.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>font-awesome/css/font-awesome.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/iCheck/custom.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/digital-signature/jquery.signaturepad.css" rel="stylesheet">
+  <?php
+  if (uri('2') == 'Schedule') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
+  <?php
+  }
+  if (uri('2') == 'PracticumAssistant') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+  <?php
+  }
+  ?>
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
-  <style>
-    #signArea {
-      width: 304px;
-    }
+  <?php
+  if (uri('2') == 'Setting') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/digital-signature/jquery.signaturepad.css" rel="stylesheet">
+    <style>
+      #signArea {
+        width: 304px;
+      }
 
-    .tag-ingo {
-      font-family: cursive;
-      font-size: 12px;
-      text-align: left;
-      font-style: oblique;
-    }
-  </style>
+      .tag-ingo {
+        font-family: cursive;
+        font-size: 12px;
+        text-align: left;
+        font-style: oblique;
+      }
+    </style>
+  <?php
+  }
+  ?>
 </head>
 
 <body>
@@ -75,26 +86,32 @@
             <span class="nav-label">Schedule</span>
           </a>
           </li>
-          <li>
-            <a href="<?= base_url('Laboran/Schedule') ?>">
-              <i class="fa fa-users"></i>
-              <span class="nav-label">Asisten Praktikum</span>
-            </a>
+          <?php
+          if (uri('2') == 'PracticumAssistant') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Asprak/PracticumAssistant') ?>">
+            <i class="fa fa-users"></i>
+            <span class="nav-label">Practicum Assistant</span>
+          </a>
           </li>
           <li>
-            <a href="<?= base_url('Laboran/Complaint') ?>">
+            <a href="<?= base_url('Asprak/Complaint') ?>">
               <i class="fa fa-line-chart"></i>
               <span class="nav-label">Presensi</span>
             </a>
           </li>
           <li>
-            <a href="<?= base_url('Laboran/Option') ?>">
+            <a href="<?= base_url('Asprak/Option') ?>">
               <i class="fa fa-print"></i>
               <span class="nav-label">BAP</span>
             </a>
           </li>
           <li>
-            <a href="<?= base_url('Laboran/Option') ?>">
+            <a href="<?= base_url('Asprak/Option') ?>">
               <i class="fa fa-money"></i>
               <span class="nav-label">Gaji & TAK</span>
             </a>
