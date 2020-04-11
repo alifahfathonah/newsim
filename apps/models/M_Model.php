@@ -185,6 +185,11 @@ class M_Model extends CI_Model
     return $this->db->order_by('kode_mk')->get('matakuliah');
   }
 
+  function daftarAsprak()
+  {
+    return $this->db->get('asprak');
+  }
+
   function daftarAslab($tahun)
   {
     return $this->db->order_by('namaLengkap', 'asc')->get_where('aslab', array('tahunAjaran' => $tahun));

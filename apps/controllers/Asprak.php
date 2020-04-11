@@ -29,8 +29,8 @@ class Asprak extends CI_Controller
 
   public function Schedule()
   {
-    $data             = $this->data;
-    $data['title']      = 'Schedule | SIM Laboratorium';
+    $data           = $this->data;
+    $data['title']  = 'Schedule | SIM Laboratorium';
     view('asprak/header', $data);
     view('asprak/schedule', $data);
     view('asprak/footer');
@@ -49,6 +49,20 @@ class Asprak extends CI_Controller
       array_push($hasil, $tmp);
     }
     echo json_encode($hasil);
+  }
+
+  public function PracticumAssistant()
+  {
+    $data           = $this->data;
+    $data['title']  = 'Practicum Assistant | SIM Laboratorium';
+    view('asprak/header', $data);
+    view('asprak/practicum_assistant', $data);
+    view('asprak/footer');
+  }
+
+  public function Presence()
+  {
+    #
   }
 
   public function Setting()
