@@ -1,6 +1,6 @@
       <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-12">
-          <h2 style="text-align: center">List of practicum Assistant</h2>
+          <h2 style="text-align: center">List of Practicum Assistant</h2>
         </div>
       </div>
       <div class="wrapper wrapper-content animated fadeInRight">
