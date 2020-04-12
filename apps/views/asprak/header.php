@@ -16,7 +16,7 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
   <?php
   }
-  if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence') {
+  if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence' || uri('2') == 'BAP') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
@@ -114,11 +114,17 @@
             <span class="nav-label">Presence</span>
           </a>
           </li>
-          <li>
-            <a href="<?= base_url('Asprak/Option') ?>">
-              <i class="fa fa-print"></i>
-              <span class="nav-label">BAP</span>
-            </a>
+          <?php
+          if (uri('2') == 'BAP') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Asprak/BAP') ?>">
+            <i class="fa fa-print"></i>
+            <span class="nav-label">BAP</span>
+          </a>
           </li>
           <li>
             <a href="<?= base_url('Asprak/Option') ?>">

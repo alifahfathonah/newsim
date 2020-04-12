@@ -49,7 +49,7 @@ if (uri('2') == 'Schedule') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <?php
 }
-if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence') {
+if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence' || uri('2') == 'BAP') {
 ?>
   <!-- Addon scripts -->
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
@@ -68,6 +68,13 @@ if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'A
 
       $(".jadwal").select2({
         placeholder: "Select a Schedule"
+      });
+
+      $(".matapraktikum").select2({
+        placeholder: "Select Cource"
+      });
+      $(".periode_bap").select2({
+        placeholder: "Select Month"
       });
 
       $('.clockpicker').clockpicker();
