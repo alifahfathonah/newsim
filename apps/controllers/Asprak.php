@@ -62,7 +62,102 @@ class Asprak extends CI_Controller
 
   public function Presence()
   {
-    #
+    $data           = $this->data;
+    $data['title']  = 'Presence | SIM Laboratorium';
+    $data['data']   = $this->a->daftarPresensiAsprak(userdata('nim'))->result();
+    view('asprak/header', $data);
+    view('asprak/presence', $data);
+    view('asprak/footer');
+  }
+
+  public function AddPresence()
+  {
+    set_rules('jadwal_asprak', 'Schedule', 'required|trim');
+    set_rules('tgl_asprak', 'Date', 'required|trim');
+    set_rules('jam_masuk', 'Start', 'required|trim');
+    set_rules('jam_selesai', 'End', 'required|trim');
+    set_rules('modul_praktikum', 'Practicum Modul', 'required|trim');
+    if (validation_run() == false) {
+      $data           = $this->data;
+      $data['title']  = 'Add Presence | SIM Laboratorium';
+      $data['jadwal'] = $this->a->jadwalPresensiAsprak(userdata('nim'))->result();
+      view('asprak/header', $data);
+      view('asprak/add_presence', $data);
+      view('asprak/footer');
+    } else {
+      $jadwal_asprak    = input('jadwal_asprak');
+      $tgl_asprak       = input('tgl_asprak');
+      $jam_masuk        = input('jam_masuk');
+      $jam_selesai      = input('jam_selesai');
+      $modul_praktikum  = input('modul_praktikum');
+      $link_youtube     = input('link_youtube');
+      $tmp              = explode('/', $tgl_asprak);
+      $urut_tanggal     = array($tmp[2], $tmp[0], $tmp[1]);
+      $tanggal          = implode('-', $urut_tanggal);
+      $tmp              = explode(':', $jam_masuk);
+      $jam_masuk_       = ($tmp[0] * 3600) + ($tmp[1] * 60);
+      $tmp              = explode(':', $jam_selesai);
+      $jam_selesai_     = ($tmp[0] * 3600) + ($tmp[1] * 60);
+      $selisih          = $jam_selesai_ - $jam_masuk_;
+      $hitung_durasi    = $selisih / 3600;
+      $hitung_durasi    = explode('.', $hitung_durasi);
+      $selisih_jam      = $hitung_durasi[0];
+      $selisih_menit    = ($selisih % 3600) / 60;
+      $honor            = 10000 * $selisih_jam;
+      $durasi           = $selisih_jam;
+      if ($selisih_menit >= 20 && $selisih_menit <= 30) {
+        $honor          = $honor + (10000 / 2);
+        $durasi         = $selisih_jam + 0.5;
+      } elseif ($selisih_menit >= 40 && $selisih_menit <= 59) {
+        $honor          = $honor + 10000;
+        $durasi         = $selisih_jam + 1;
+      } elseif ($selisih_menit >= 1 && $selisih_menit < 20) {
+        $honor          = $honor;
+        $durasi         = $selisih_jam;
+      } elseif ($selisih_menit > 30 && $selisih_menit < 40) {
+        $honor          = $honor + (10000 / 2);
+        $durasi         = $selisih_jam + 0.5;
+      }
+      $cek_presensi     = $this->db->where('date_format(asprak_masuk, "%Y-%m-%d") = "' . $tanggal . '"')->where('id_jadwal_asprak', $jadwal_asprak)->where('nim_asprak', userdata('nim'))->get('presensi_asprak')->row();
+      if ($cek_presensi) {
+        set_flashdata('msg', '<div class="alert alert-danger">You already presence on that day</div>');
+        redirect('Asprak/Presence');
+      } else {
+        $nama_hari        = date('l', strtotime($tanggal));
+        $id_jadwal_lab    = $this->db->get_where('jadwal_asprak', array('id_jadwal_asprak' => $jadwal_asprak))->row()->id_jadwal_lab;
+        $cek_jadwal_hari  = $this->db->select('hari_ke')->from('jadwal_lab')->where('id_jadwal_lab', $id_jadwal_lab)->get()->row()->hari_ke;
+        $cek_jam_masuk    = $this->db->select('date_format(jam_masuk, "%H:%i") masuk')->from('jadwal_lab')->where('id_jadwal_lab', $id_jadwal_lab)->get()->row()->masuk;
+        $cek_jam_selesai  = $this->db->select('date_format(jam_selesai, "%H:%i") selesai')->from('jadwal_lab')->where('id_jadwal_lab', $id_jadwal_lab)->get()->row()->selesai;
+        if ($nama_hari != hariInggris($cek_jadwal_hari) || $jam_masuk < $cek_jam_masuk || $jam_selesai > $cek_jam_selesai) {
+          echo 'Your presence is not according to the day of practicum or start time before the schedule or end time exceeded the schedule';
+          set_flashdata('msg', '<div class="alert alert-danger">Your presence is not according to the day of practicum or start time before the schedule or end time exceeded the schedule</div>');
+          redirect('Asprak/AddPresence');
+        }
+        $input                = array(
+          'asprak_masuk'      => $tanggal . ' ' . $jam_masuk,
+          'asprak_selesai'    => $tanggal . ' ' . $jam_selesai,
+          'durasi'            => $durasi,
+          'honor'             => $honor,
+          'modul'             => $modul_praktikum,
+          'video'             => $link_youtube,
+          'id_jadwal_asprak'  => $jadwal_asprak,
+          'nim_asprak'        => userdata('nim'),
+          'id_jadwal_lab'     => $id_jadwal_lab
+        );
+        $screenshot               = rand(10, 99) . '-' . str_replace(' ', '_', $_FILES['screenshot_praktikum']['name']);
+        $config['upload_path']    = 'assets/screenshot/';
+        $config['allowed_types']  = 'jpeg|jpg|png|gif|tiff';
+        $config['max_size']       = 1024 * 100;
+        $config['file_name']      = $screenshot;
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('screenshot_praktikum')) {
+          $input['screenshot']     = $config['upload_path'] . '' . $screenshot;
+        }
+        $this->m->insertData('presensi_asprak', $input);
+        set_flashdata('msg', '<div class="alert alert-success msg">Your presence successfully saved</div>');
+        redirect('Asprak/Presence');
+      }
+    }
   }
 
   public function Setting()
@@ -71,8 +166,8 @@ class Asprak extends CI_Controller
     if (validation_run() == false) {
       $data           = $this->data;
       $data['title']  = 'Setting | SIM Laboratorium';
-      $data['akun']   = $this->asprak->akunAsprak(userdata('nim'))->row();
-      $data['bank']   = $this->asprak->daftarBank()->result();
+      $data['akun']   = $this->a->akunAsprak(userdata('nim'))->row();
+      $data['bank']   = $this->a->daftarBank()->result();
       view('asprak/header', $data);
       view('asprak/setting', $data);
       view('asprak/footer');
