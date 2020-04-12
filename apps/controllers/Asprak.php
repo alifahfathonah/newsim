@@ -160,6 +160,106 @@ class Asprak extends CI_Controller
     }
   }
 
+  public function BAP()
+  {
+    $data           = $this->data;
+    $data['title']  = 'BAP | SIM Laboratorium';
+    $data['mk']     = $this->a->daftarMKAsprak(userdata('nim'))->result();
+    view('asprak/header', $data);
+    view('asprak/bap', $data);
+    view('asprak/footer');
+  }
+
+  public function ajaxBAP()
+  {
+    $data                       = $this->data;
+    $nim_asprak = userdata('nim');
+    $bulan_indo                 = $bulan = array(1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
+    $id_mk                      = input('idMK');
+    $ambil                      = input('bulan');
+    $tmp                        = explode("|", $ambil);
+    $bulan                      = $tmp[0];
+    $namaBulan                  = $bulan_indo[$tmp[1]];
+    $ambil_mk                   = $this->db->select('matakuliah.kode_mk, matakuliah.nama_mk, prodi.strata, prodi.kode_prodi, prodi.nama_prodi')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('matakuliah.id_mk', $id_mk)->get()->row();
+    $durasi                     = $this->db->select('sum(presensi_asprak.durasi) durasi')->from('presensi_asprak')->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak')->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab')->where('jadwal_lab.id_mk', $id_mk)->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $bulan)->where('presensi_asprak.nim_asprak', $nim_asprak)->order_by('presensi_asprak.asprak_masuk')->get()->row();
+    $output                     = '<table width="100%">
+                                    <tr>
+                                      <td style="font-family: Arial; font-size: 14px;" width="40%" valign="top" colspan="2"><b>BERITA ACARA PEKERJAAN DAN KEHADIRAN<br>ASISTEN PRAKTIKUM</b></td>
+                                      <td width="30%" rowspan="8" valign="top">
+                                        <div align="right">
+                                          <img src="' . base_url() . 'assets/img/logo_tass.png" height="70px" width="250px">
+                                          <p style="font-family: Arial; font-size: 12px;"><b>Laboratoria<br>Fakultas Ilmu Terapan</b></p>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr style="font-family: Arial; font-size: 12px;">
+                                      <td width="10%"><b><br>NAMA</b></td>
+                                      <td><br><b>: ' . $data['profil']->nama_asprak . '</b></td>
+                                    </tr>
+                                    <tr style="font-family: Arial; font-size: 12px;">
+                                      <td><b>NIM</b></td>
+                                      <td><b>: ' . userdata('nim') . '</b></td>
+                                    </tr>
+                                    <tr style="font-family: Arial; font-size: 12px;">
+                                      <td><b>BULAN</b></td>
+                                      <td><b>: ' . $namaBulan . '</b></td>
+                                    </tr>
+                                    <tr style="font-family: Arial; font-size: 12px;">
+                                      <td><b>PRODI</b></td>
+                                      <td><b>: ' . $ambil_mk->strata . ' ' . $ambil_mk->nama_prodi . '</b></td>
+                                    </tr>
+                                    <tr style="font-family: Arial; font-size: 12px;">
+                                      <td><b>MK / KODE MK</b></td>
+                                      <td><b>: ' . $ambil_mk->nama_mk . ' / ' . $ambil_mk->kode_mk . '</b></td>
+                                    </tr>
+                                    <tr style="font-family: Arial; font-size: 12px;">
+                                      <td><b>TAHUN</b></td>
+                                      <td><b>: ' . date("Y") . '</b></td>
+                                    </tr>
+                                    <tr style="font-family: Arial; font-size: 12px;">
+                                      <td><b>TOTAL JAM</b></td>
+                                      <td><b>: ' . $durasi->durasi . '</b></td>
+                                    </tr>
+                                  </table>
+                                  <br>
+                                  <table border="1" width="100%" style="border-collapse: collapse; border: 1px solid black;">
+                                    <tr style="text-align: center; background: #333333; font-weight: bold; color: white;">
+                                      <td width="15%">Tanggal</td>
+                                      <td width="10%">Jam Masuk</td>
+                                      <td width="10%">Jam Keluar</td>
+                                      <td width="10%">Jumlah Jam</td>
+                                      <td colspan="2">Modul Praktikum</td>
+                                      <td width="10%">Paraf Asprak</td>
+                                    </tr>';
+    if ($bulan != '') {
+      $ambil_bap  = $this->db->select('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") jam_masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") jam_selesai, presensi_asprak.durasi, presensi_asprak.modul, presensi_asprak.screenshot')->from('presensi_asprak')->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak')->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab')->where('jadwal_lab.id_mk', $id_mk)->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $bulan)->where('presensi_asprak.nim_asprak', $nim_asprak)->order_by('presensi_asprak.asprak_masuk', 'asc')->get()->result();
+    }
+    $ttd          = $this->db->get_where('asprak', array('nim_asprak' => $nim_asprak))->row()->ttd_asprak;
+    foreach ($ambil_bap as $a) {
+      $tanggal_indonesia  = tanggal_indonesia($a->tanggal);
+      $gambar_praktikum   = '<img src="' . base_url($a->screenshot) . '" style="max-height: 100px">';
+      $ttd_asprak         = '<img src="' . base_url($ttd) . '" style="max-height: 50px">';
+      $output             .= '<tr>
+                                <td style="text-align: center">' . $tanggal_indonesia . '</td>
+                                <td style="text-align: center">' . $a->jam_masuk . '</td>
+                                <td style="text-align: center">' . $a->jam_selesai . '</td>
+                                <td style="text-align: center">' . $a->durasi . '</td>
+                                <td>' . $a->modul . '</td>
+                                <td width="16%" style="text-align: center">' . $gambar_praktikum . '</td>
+                                <td style="text-align: center">' . $ttd_asprak . '</td>
+                              </tr>';
+    }
+    $output                     .= '</table><br>
+                                  <p style="text-align: right; font-family: Arial; font-size: 12px">
+                                  Bandung, ';
+    $output                     .= date('d') . " " . bulan_panjang(date('n')) . " " . date('Y') . '<br>Koordinator Mata Kuliah<br><br><br><br><br><u>';
+    for ($i = 0; $i < 68; $i++) {
+      $output                   .= '&nbsp';
+    }
+    $output .= '</u></p>';
+    echo $output;
+  }
+
   public function Setting()
   {
     set_rules('nim_asprak', 'NIM', 'required|trim');
@@ -185,7 +285,7 @@ class Asprak extends CI_Controller
         'norek_asprak'    => $norek_asprak,
         'linkaja_asprak'  => $linkaja_asprak
       );
-      $this->asprak->updateData('asprak', $input, 'nim_asprak', $nim_asprak);
+      $this->a->updateData('asprak', $input, 'nim_asprak', $nim_asprak);
       $username_asprak  = input('username_asprak');
       $password_lama    = input('password_lama');
       $password_baru    = input('password_baru');
@@ -193,11 +293,11 @@ class Asprak extends CI_Controller
       if ($password_lama == null) {
         set_flashdata('msg', '<div class="alert alert-success msg">Data successfully updated.</div>');
       } else {
-        $cek_password = $this->asprak->cekPassword($username_asprak)->row()->password;
+        $cek_password = $this->a->cekPassword($username_asprak)->row()->password;
         if ($cek_password == sha1($password_lama)) {
           if ($password_baru == $konfirm_password) {
             $input  = array('password' => sha1($password_baru));
-            $this->asprak->updateData('users', $input, 'username', $username_asprak);
+            $this->a->updateData('users', $input, 'username', $username_asprak);
             set_flashdata('msg', '<div class="alert alert-success msg">Your password successfully updated.</div>');
           } else {
             set_flashdata('msg', '<div class="alert alert-danger">New password and confirm password not match. Please try again.</div>');
