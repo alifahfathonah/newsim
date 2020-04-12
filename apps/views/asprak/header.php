@@ -126,12 +126,6 @@
             <span class="nav-label">BAP</span>
           </a>
           </li>
-          <li>
-            <a href="<?= base_url('Asprak/Option') ?>">
-              <i class="fa fa-money"></i>
-              <span class="nav-label">Salary & TAK</span>
-            </a>
-          </li>
           <?php
           if (uri('2') == 'Setting') {
             echo '<li class="active">';
