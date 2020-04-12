@@ -16,12 +16,16 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
   <?php
   }
-  if (uri('2') == 'PracticumAssistant') {
+  if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/datapicker/datepicker3.css" rel="stylesheet">
   <?php
   }
   ?>
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/toastr/toastr.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
   <?php
@@ -98,11 +102,17 @@
             <span class="nav-label">Practicum Assistant</span>
           </a>
           </li>
-          <li>
-            <a href="<?= base_url('Asprak/Complaint') ?>">
-              <i class="fa fa-line-chart"></i>
-              <span class="nav-label">Presensi</span>
-            </a>
+          <?php
+          if (uri('2') == 'Presence' || uri('2') == 'AddPresence') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Asprak/Presence') ?>">
+            <i class="fa fa-line-chart"></i>
+            <span class="nav-label">Presence</span>
+          </a>
           </li>
           <li>
             <a href="<?= base_url('Asprak/Option') ?>">
@@ -113,7 +123,7 @@
           <li>
             <a href="<?= base_url('Asprak/Option') ?>">
               <i class="fa fa-money"></i>
-              <span class="nav-label">Gaji & TAK</span>
+              <span class="nav-label">Salary & TAK</span>
             </a>
           </li>
           <?php

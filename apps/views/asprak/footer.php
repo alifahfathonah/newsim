@@ -13,6 +13,34 @@
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/inspinia.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/pace/pace.min.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/toastr/toastr.min.js"></script>
+<?php
+if ($profil->kontak_asprak == null || $profil->ttd_asprak == null || $profil->id_bank == null || $profil->norek_asprak == null || $profil->linkaja_asprak == null) {
+?>
+  <script>
+    $(function() {
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "progressBar": false,
+        "preventDuplicates": false,
+        "positionClass": "toast-bottom-right",
+        "onclick": null,
+        "showDuration": "400",
+        "hideDuration": "1000",
+        "timeOut": "0",
+        "extendedTimeOut": "0",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+      toastr.warning("Please complete your personal information in Setting Menu");
+    });
+  </script>
+<?php
+}
+?>
 <?php
 if (uri('2') == 'Schedule') {
 ?>
@@ -21,11 +49,14 @@ if (uri('2') == 'Schedule') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <?php
 }
-if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence') {
+if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence') {
 ?>
   <!-- Addon scripts -->
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/clockpicker/clockpicker.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
   <script>
     $(document).ready(function() {
       $('.dataTables').DataTable({
@@ -33,6 +64,25 @@ if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence') {
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
+      });
+
+      $(".jadwal").select2({
+        placeholder: "Select a Schedule"
+      });
+
+      $('.clockpicker').clockpicker();
+
+      $('#tanggal .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+      });
+
+      $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
       });
     });
   </script>
