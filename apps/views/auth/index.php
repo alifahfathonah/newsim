@@ -42,18 +42,18 @@
             </div>
             <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
           </form>
-          <a href="<?= base_url('Auth/ForgotPassword') ?>"><small>Forgot Password?</small></a>
+          <a href="#"><small>Forgot Password?</small></a>
           <p class="text-muted text-center">
             <small>Do not have an account? Register Here as:</small>
           </p>
           <div class="row">
             <div class="col-sm-12 col-md-6" style="margin-bottom: 5px">
-              <a href="<?= base_url('Auth/RegisterStaff') ?>" style="color: inherit">
+              <a href="#" style="color: inherit">
                 <button class="btn btn-sm btn-white btn-block">Staff Laboratory</button>
               </a>
             </div>
             <div class="col-sm-12 col-md-6" style="margin-bottom: 5px">
-              <a href="<?= base_url('Auth/RegisterLecture') ?>" style="color: inherit">
+              <a href="#" style="color: inherit">
                 <button class="btn btn-sm btn-white btn-block">Lecture</button>
               </a>
             </div>
