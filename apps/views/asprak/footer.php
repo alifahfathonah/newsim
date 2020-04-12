@@ -97,6 +97,57 @@ if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'A
 }
 ?>
 <?php
+if (uri('2') == 'BAP') {
+?>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#matapraktikum").change(function() {
+        var idMK = $(this).val();
+        var bulan = document.getElementById('month').value;
+        if (bulan == "") {
+          bulan = "'<?= date('Y') ?>-01-01' and '<?= date('Y') ?>-01-20'|1";
+        } else {
+          bulan = bulan;
+        }
+        document.getElementById('course').value = idMK;
+        $.ajax({
+          url: "<?= base_url() ?>Asprak/ajaxBAP",
+          method: "POST",
+          data: {
+            bulan: bulan,
+            idMK: idMK
+          },
+          success: function(data) {
+            $('#tampil').html(data);
+          }
+        });
+      });
+
+      $("#bulan").change(function() {
+        var bulan = $(this).val();
+        var idMK = document.getElementById('matapraktikum').value;
+        document.getElementById('month').value = bulan;
+        if (idMK != '') {
+          document.getElementById('month').value = bulan;
+          $.ajax({
+            url: "<?= base_url() ?>Asprak/ajaxBAP",
+            method: "POST",
+            data: {
+              bulan: bulan,
+              idMK: idMK
+            },
+            success: function(data) {
+              $('#tampil').html(data);
+            }
+          });
+        }
+      });
+    });
+  </script>
+<?php
+}
+?>
+<?php
 if (uri('2') == 'Setting') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/html2canvas.js"></script>
