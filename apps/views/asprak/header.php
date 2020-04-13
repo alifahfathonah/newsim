@@ -31,6 +31,7 @@
   <?php
   if (uri('2') == 'Setting') {
   ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/digital-signature/jquery.signaturepad.css" rel="stylesheet">
     <style>
       #signArea {

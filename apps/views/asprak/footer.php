@@ -150,6 +150,7 @@ if (uri('2') == 'BAP') {
 <?php
 if (uri('2') == 'Setting') {
 ?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/sweetalert/sweetalert.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/html2canvas.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/digital-signature/numeric-1.2.6.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/digital-signature/bezier.js"></script>
