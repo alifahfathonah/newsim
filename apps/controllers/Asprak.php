@@ -245,7 +245,7 @@ class Asprak extends CI_Controller
                                 <td style="text-align: center">' . $a->jam_selesai . '</td>
                                 <td style="text-align: center">' . $a->durasi . '</td>
                                 <td>' . $a->modul . '</td>
-                                <td width="16%" style="text-align: center">' . $gambar_praktikum . '</td>
+                                <td width="23%" style="text-align: center">' . $gambar_praktikum . '</td>
                                 <td style="text-align: center">' . $ttd_asprak . '</td>
                               </tr>';
     }
