@@ -334,7 +334,7 @@ class Auth extends CI_Controller
     $mail             = new PHPMailer();
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
-    // $mail->SMTPAuth   = true;
+    $mail->SMTPAuth   = true;
     $mail->Username   = 'simlabfit@gmail.com';
     $mail->Password   = 'superlab5f1t';
     $mail->SMTPSecure = 'ssl';
