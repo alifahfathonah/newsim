@@ -49,26 +49,7 @@ if (uri('2') == 'Schedule') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <?php
 }
-if (uri('2') == 'PracticumAssistant') {
-?>
-  <!-- Addon scripts -->
-  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
-  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
-  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
-  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/clockpicker/clockpicker.js"></script>
-  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('.dataTables').DataTable({
-        pageLength: 5,
-        responsive: true,
-        dom: '<"html5buttons"B>lTfgitp',
-        buttons: []
-      });
-    });
-  </script>
-<?php
-}
+
 ?>
 <script>
   $(document).ready(function() {
@@ -104,6 +85,22 @@ if (uri('2') == 'PracticumAssistant') {
   });
 </script>
 <?php
+if (uri('2') == 'PracticumAssistant') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.dataTables').DataTable({
+        pageLength: 5,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+    });
+  </script>
+<?php
+}
 if (uri('2') == 'Presence') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
