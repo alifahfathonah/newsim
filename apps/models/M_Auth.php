@@ -21,6 +21,14 @@ class M_Auth extends CI_Model
     return $this->db->get();
   }
 
+  function cekEmail($email)
+  {
+    $this->db->select('count(email) jumlah');
+    $this->db->from('users');
+    $this->db->where('email', $email);
+    return $this->db->get();
+  }
+
   function daftarStaffLaboran()
   {
     $this->db->select('laboran.id_laboran, laboran.nip_laboran');
