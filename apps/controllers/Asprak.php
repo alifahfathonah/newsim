@@ -341,4 +341,15 @@ class Asprak extends CI_Controller
     $result['status'] = 1;
     echo json_encode($result);
   }
+
+  public function HistoryLogin()
+  {
+    $data           = $this->data;
+    $data['title']  = 'History Login | SIM Laboratorium';
+    $username = $this->db->get_where('users', array('idUser' => userdata('id')))->row()->username;
+    $data['data']   = $this->db->order_by('tanggal_login', 'desc')->get_where('history_login', array('username' => $username))->result();
+    view('asprak/header', $data);
+    view('asprak/history_login', $data);
+    view('asprak/footer');
+  }
 }

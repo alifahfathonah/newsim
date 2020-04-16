@@ -16,7 +16,7 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
   <?php
   }
-  if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence' || uri('2') == 'BAP') {
+  if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence' || uri('2') == 'BAP' || uri('2') == 'HistoryLogin') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
@@ -140,12 +140,18 @@
             <span class="nav-label">Setting</span>
           </a>
           </li>
-          <!-- <li>
-            <a href="<?= base_url('Laboran/Option') ?>">
-              <i class="fa fa-print"></i>
-              <span class="nav-label">BAP</span>
-            </a>
-          </li> -->
+          <?php
+          if (uri('2') == 'HistoryLogin') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Asprak/HistoryLogin') ?>">
+            <i class="fa fa-history"></i>
+            <span class="nav-label">History Login</span>
+          </a>
+          </li>
         </ul>
       </div>
     </nav>
