@@ -9,6 +9,7 @@
   <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/img/favicon.png') ?>" />
   <link href="<?= base_url('assets/inspinia/') ?>css/bootstrap.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/toastr/toastr.min.css" rel="stylesheet">
   <?php
   if (uri('2') == 'Schedule') {
   ?>
@@ -25,7 +26,6 @@
   <?php
   }
   ?>
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/toastr/toastr.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
   <?php
