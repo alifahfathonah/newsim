@@ -17,15 +17,15 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
   <?php
   }
+  ?>
+  <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
+  <?php
   if (uri('2') == 'PracticumAssistant') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
   <?php
   }
-  ?>
-  <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
-  <?php
   if (uri('2') == 'Presence') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
