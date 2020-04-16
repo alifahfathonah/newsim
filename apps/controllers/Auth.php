@@ -333,19 +333,12 @@ class Auth extends CI_Controller
     $response = false;
     $mail             = new PHPMailer();
     $mail->isSMTP();
-    $mail->Host = 'tls://smtp.gmail.com:587';
-    $mail->SMTPOptions = array(
-      'ssl' => array(
-        'verify_peer' => false,
-        'verify_peer_name' => false,
-        'allow_self_signed' => true
-      )
-    );
-    $mail->SMTPAuth   = true;
+    $mail->Host       = 'smtp.gmail.com';
+    // $mail->SMTPAuth   = true;
     $mail->Username   = 'simlabfit@gmail.com';
     $mail->Password   = 'superlab5f1t';
     $mail->SMTPSecure = 'ssl';
-    // $mail->Port       = 465;
+    $mail->Port       = 465;
     $mail->setFrom('simlabfit@gmail.com', 'SIM Laboratorium FIT');
     $mail->addReplyTo('simlabfit@gmail.com', 'SIM Laboratorium FIT');
     $mail->addAddress($email);
