@@ -55,6 +55,10 @@
                 <p id="status_username" style="text-align: center"></p>
               </div>
               <div class="form-group">
+                <input type="text" name="email_user" id="email_user" class="form-control" placeholder="E-mail" required onkeyup="cekEmail()">
+                <p id="status_email" style="text-align: center"></p>
+              </div>
+              <div class="form-group">
                 <input type="password" name="password_user" id="password_user" class="form-control" placeholder="Password" required>
               </div>
               <button type="submit" name="submit" id="submit" class="btn btn-primary block full-width m-b">Register</button>
@@ -108,6 +112,33 @@
         });
       } else {
         $('#status_username').html('');
+        return false;
+      }
+    }
+
+    function cekEmail() {
+      var email = document.getElementById('email_user').value;
+      if (email) {
+        $.ajax({
+          url: '<?= base_url('Auth/ajaxCekEmail') ?>',
+          type: 'post',
+          data: {
+            email: email
+          },
+          success: function(response) {
+            if (response == 'null') {
+              document.getElementById('submit').disabled = false;
+              $('#status_email').html('');
+            } else {
+              document.getElementById('submit').disabled = true;
+              $('#status_email').html(response);
+              $('#status_email').css('color', '#ff0004', 'important');
+              return false;
+            }
+          }
+        });
+      } else {
+        $('#status_email').html('');
         return false;
       }
     }
