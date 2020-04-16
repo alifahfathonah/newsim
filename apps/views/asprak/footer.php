@@ -145,6 +145,39 @@ if (uri('2') == 'BAP') {
 <?php
 }
 ?>
+<script>
+  $(document).ready(function() {
+    <?php
+    if (uri('2') == 'Schedule') {
+    ?>
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
+
+      $('#calendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay'
+        },
+        editable: false,
+        droppable: false,
+        contentHeight: 600,
+        eventSources: ['<?= base_url('Asprak/ajaxJadwal') ?>'],
+        axisFormat: 'H:mm',
+        timeFormat: {
+          agenda: 'H:mm'
+        }
+      });
+
+      $('#calendar').fullCalendar('changeView', 'agendaWeek');
+    <?php
+    }
+    ?>
+
+  });
+</script>
 <?php
 if (uri('2') == 'Setting') {
 ?>
@@ -156,7 +189,17 @@ if (uri('2') == 'Setting') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/digital-signature/jquery.signaturepad.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/digital-signature/json2.min.js"></script>
   <script>
+    window.setTimeout(function() {
+      $(".msg").fadeTo(500, 0).slideUp(500, function() {
+        $(this).remove();
+      });
+    }, 3500);
+
     $(document).ready(function() {
+      $(".nama_bank").select2({
+        placeholder: "Select a Bank Name",
+      });
+
       $('#signArea').signaturePad({
         drawOnly: true,
         drawBezierCurves: true,
@@ -235,52 +278,6 @@ if (uri('2') == 'Setting') {
 <?php
 }
 ?>
-<script>
-  window.setTimeout(function() {
-    $(".msg").fadeTo(500, 0).slideUp(500, function() {
-      $(this).remove();
-    });
-  }, 3500);
-
-  $(document).ready(function() {
-    <?php
-    if (uri('2') == 'Setting') {
-    ?>
-      $(".nama_bank").select2({
-        placeholder: "Select a Bank Name",
-      });
-    <?php
-    }
-    if (uri('2') == 'Schedule') {
-    ?>
-      var date = new Date();
-      var d = date.getDate();
-      var m = date.getMonth();
-      var y = date.getFullYear();
-
-      $('#calendar').fullCalendar({
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'month,agendaWeek,agendaDay'
-        },
-        editable: false,
-        droppable: false,
-        contentHeight: 600,
-        eventSources: ['<?= base_url('Asprak/ajaxJadwal') ?>'],
-        axisFormat: 'H:mm',
-        timeFormat: {
-          agenda: 'H:mm'
-        }
-      });
-
-      $('#calendar').fullCalendar('changeView', 'agendaWeek');
-    <?php
-    }
-    ?>
-
-  });
-</script>
 </body>
 
 </html>
