@@ -8,7 +8,6 @@
   <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/img/favicon.png') ?>" />
   <link href="<?= base_url('assets/inspinia/') ?>css/bootstrap.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>font-awesome/css/font-awesome.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
   <style>
@@ -41,9 +40,6 @@
             <h3 style="text-align: center; margin-bottom: 20px">Forgot Password</h3>
             <form class="m-t" role="form" method="post" action="<?= base_url('Auth/ForgotPassword') ?>">
               <div class="form-group">
-                <input type="text" name="username_user" id="username_user" class="form-control" placeholder="Username" required>
-              </div>
-              <div class="form-group">
                 <input type="text" name="email_user" id="email_user" class="form-control" placeholder="Your Email" required>
               </div>
               <button type="submit" name="submit" id="submit" class="btn btn-primary block full-width m-b">Send</button>
@@ -65,42 +61,6 @@
   </div>
   <script src="<?= base_url('assets/inspinia/') ?>js/jquery-3.1.1.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/bootstrap.min.js"></script>
-  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $(".select_nim").select2({
-        placeholder: "Select Your NIM"
-      });
-    });
-
-    function cekUsername() {
-      var username = document.getElementById('username_user').value;
-      if (username) {
-        $.ajax({
-          url: '<?= base_url('Auth/ajaxCekUsername') ?>',
-          type: 'post',
-          data: {
-            username: username
-          },
-          success: function(response) {
-            if (response == 'null') {
-              document.getElementById('submit').disabled = false;
-              $('#status_username').html('');
-              return true;
-            } else {
-              document.getElementById('submit').disabled = true;
-              $('#status_username').html(response);
-              $('#status_username').css('color', '#ff0004', 'important');
-              return false;
-            }
-          }
-        });
-      } else {
-        $('#status_username').html('');
-        return false;
-      }
-    }
-  </script>
 </body>
 
 </html>

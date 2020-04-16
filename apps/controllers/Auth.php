@@ -220,17 +220,16 @@ class Auth extends CI_Controller
 
   public function ForgotPassword()
   {
-    set_rules('username_user', 'Username', 'required|trim');
     set_rules('email_user', 'Password', 'required|trim');
     if (validation_run() == false) {
       $data['title']  = 'Forgot Password | SIM Laboratorium';
       view('auth/forgot_password', $data);
     } else {
-      $username_user  = input('username_user');
       $email_user     = input('email_user');
       $token          = base64_encode(random_bytes(32));
       $waktu          = date('Y-m-d H:i:s');
-      $data           = $this->db->get_where('users', array('username' => $username_user))->row();
+      $data           = $this->db->get_where('users', array('email' => $email_user))->row();
+      $username_user  = $data->username;
       $nama_user      = '';
       if ($data) {
         if ($data->idAslab) {
@@ -248,21 +247,21 @@ class Auth extends CI_Controller
           $id         = $data->id_laboran;
           $nama_user  = $this->db->get_where('laboran', array('id_laboran' => $id))->row()->nama_laboran;
         }
+        $input          = array(
+          'email'             => $email_user,
+          'username'          => $username_user,
+          'nama_user'         => $nama_user,
+          'token'             => $token,
+          'tanggal_pengajuan' => $waktu
+        );
+        // $this->auth->insertData('forgot_password', $input);
+        $this->email_reset_password($nama_user, $email_user, $username_user, $token);
+        // set_flashdata('msg', '<div class="alert alert-success msg">Please check your email to reset your password</div>');
+        // redirect('Auth/ForgotPassword');
       } else {
-        set_flashdata('msg', '<div class="alert alert-danger msg">Username not registered</div>');
+        set_flashdata('msg', '<div class="alert alert-danger msg">E-mail not registered</div>');
         redirect('Auth/ForgotPassword');
       }
-      $input          = array(
-        'email'             => $email_user,
-        'username'          => $username_user,
-        'nama_user'         => $nama_user,
-        'token'             => $token,
-        'tanggal_pengajuan' => $waktu
-      );
-      $this->auth->insertData('forgot_password', $input);
-      $this->email_reset_password($nama_user, $email_user, $username_user, $token);
-      set_flashdata('msg', '<div class="alert alert-success msg">Please check your email to reset your password</div>');
-      redirect('Auth/ForgotPassword');
     }
   }
 
@@ -334,14 +333,14 @@ class Auth extends CI_Controller
     $response = false;
     $mail             = new PHPMailer();
     $mail->isSMTP();
-    $mail->Host       = 'simlabfit.com';
+    $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'admin@simlabfit.com';
+    $mail->Username   = 'simlabfit@gmail.com';
     $mail->Password   = 'superlab5f1t';
     $mail->SMTPSecure = 'ssl';
     $mail->Port       = 465;
-    $mail->setFrom('admin@simlabfit.com', 'SIM Laboratorium FIT');
-    $mail->addReplyTo('admin@simlabfit.com', '');
+    $mail->setFrom('simlabfit@gmail.com', 'SIM Laboratorium FIT');
+    $mail->addReplyTo('simlabfit@gmail.com', 'SIM Laboratorium FIT');
     $mail->addAddress($email);
     $mail->Subject    = 'Reset Your SIM Laboratorium Password';
     $mail->isHTML(true);
@@ -352,7 +351,7 @@ class Auth extends CI_Controller
     $mailContent  = $isi;
     $mail->Body = $mailContent;
     if (!$mail->send()) {
-      echo 'Message could not be sent.';
+      echo 'Message could not be sent.<br>';
       echo 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
       echo 'Message has been sent';
