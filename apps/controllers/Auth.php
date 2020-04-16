@@ -333,12 +333,19 @@ class Auth extends CI_Controller
     $response = false;
     $mail             = new PHPMailer();
     $mail->isSMTP();
-    $mail->Host       = 'ssl://smtp.gmail.com';
+    $mail->Host = 'tls://smtp.gmail.com:587';
+    $mail->SMTPOptions = array(
+      'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+      )
+    );
     $mail->SMTPAuth   = true;
     $mail->Username   = 'simlabfit@gmail.com';
     $mail->Password   = 'superlab5f1t';
     $mail->SMTPSecure = 'ssl';
-    $mail->Port       = 465;
+    // $mail->Port       = 465;
     $mail->setFrom('simlabfit@gmail.com', 'SIM Laboratorium FIT');
     $mail->addReplyTo('simlabfit@gmail.com', 'SIM Laboratorium FIT');
     $mail->addAddress($email);
@@ -350,7 +357,6 @@ class Auth extends CI_Controller
     $isi = view('auth/email_reset_password', $data, true);
     $mailContent  = $isi;
     $mail->Body = $mailContent;
-    echo !extension_loaded('openssl') ? "Not Available" : "Available";
     if (!$mail->send()) {
       echo 'Message could not be sent.<br>';
       echo 'Mailer Error: ' . $mail->ErrorInfo;
