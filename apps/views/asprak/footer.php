@@ -49,7 +49,7 @@ if (uri('2') == 'Schedule') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <?php
 }
-if (uri('2') == 'PracticumAssistant' || uri('2') == 'AddPresence') {
+if (uri('2') == 'PracticumAssistant') {
 ?>
   <!-- Addon scripts -->
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
@@ -64,25 +64,6 @@ if (uri('2') == 'PracticumAssistant' || uri('2') == 'AddPresence') {
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
-      });
-
-      $(".jadwal").select2({
-        placeholder: "Select a Schedule"
-      });
-
-      $('.clockpicker').clockpicker();
-
-      $('#tanggal .input-group.date').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: false,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true
-      });
-
-      $('.custom-file-input').on('change', function() {
-        let fileName = $(this).val().split('\\').pop();
-        $(this).next('.custom-file-label').addClass("selected").html(fileName);
       });
     });
   </script>
@@ -128,6 +109,12 @@ if (uri('2') == 'Presence') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
   <script>
+    window.setTimeout(function() {
+      $(".msg").fadeTo(500, 0).slideUp(500, function() {
+        $(this).remove();
+      });
+    }, 3500);
+
     $(document).ready(function() {
       $('.dataTables').DataTable({
         pageLength: 10,
@@ -141,7 +128,31 @@ if (uri('2') == 'Presence') {
 }
 if (uri('2') == 'AddPresence') {
 ?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/clockpicker/clockpicker.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
+  <script>
+    $(document).ready(function() {
+      $(".jadwal").select2({
+        placeholder: "Select Schedule"
+      });
 
+      $('.clockpicker').clockpicker();
+
+      $('#tanggal .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+      });
+
+      $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+      });
+    });
+  </script>
 <?php
 }
 if (uri('2') == 'BAP') {
