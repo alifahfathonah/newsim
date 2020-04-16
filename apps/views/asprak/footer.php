@@ -104,9 +104,7 @@ if (uri('2') == 'BAP') {
       $("#matapraktikum").change(function() {
         var idMK = $(this).val();
         var bulan = document.getElementById('month').value;
-        if (bulan == "") {
-          bulan = "'<?= date('Y') ?>-01-01' and '<?= date('Y') ?>-01-20'|1";
-        } else {
+        if (bulan != '') {
           bulan = bulan;
         }
         document.getElementById('course').value = idMK;
