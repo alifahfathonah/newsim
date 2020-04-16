@@ -49,7 +49,7 @@ if (uri('2') == 'Schedule') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <?php
 }
-if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence' || uri('2') == 'BAP') {
+if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence') {
 ?>
   <!-- Addon scripts -->
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
@@ -68,13 +68,6 @@ if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'A
 
       $(".jadwal").select2({
         placeholder: "Select a Schedule"
-      });
-
-      $(".matapraktikum").select2({
-        placeholder: "Select Cource"
-      });
-      $(".periode_bap").select2({
-        placeholder: "Select Month"
       });
 
       $('.clockpicker').clockpicker();
@@ -96,11 +89,53 @@ if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'A
 <?php
 }
 ?>
+<script>
+  $(document).ready(function() {
+    <?php
+    if (uri('2') == 'Schedule') {
+    ?>
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
+
+      $('#calendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay'
+        },
+        editable: false,
+        droppable: false,
+        contentHeight: 600,
+        eventSources: ['<?= base_url('Asprak/ajaxJadwal') ?>'],
+        axisFormat: 'H:mm',
+        timeFormat: {
+          agenda: 'H:mm'
+        }
+      });
+
+      $('#calendar').fullCalendar('changeView', 'agendaWeek');
+    <?php
+    }
+    ?>
+
+  });
+</script>
 <?php
 if (uri('2') == 'BAP') {
 ?>
-  <script type="text/javascript">
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
+  <script>
     $(document).ready(function() {
+      $(".matapraktikum").select2({
+        placeholder: "Select Cource"
+      });
+
+      $(".periode_bap").select2({
+        placeholder: "Select Month"
+      });
+
       $("#matapraktikum").change(function() {
         var idMK = $(this).val();
         var bulan = document.getElementById('month').value;
@@ -144,41 +179,6 @@ if (uri('2') == 'BAP') {
   </script>
 <?php
 }
-?>
-<script>
-  $(document).ready(function() {
-    <?php
-    if (uri('2') == 'Schedule') {
-    ?>
-      var date = new Date();
-      var d = date.getDate();
-      var m = date.getMonth();
-      var y = date.getFullYear();
-
-      $('#calendar').fullCalendar({
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'month,agendaWeek,agendaDay'
-        },
-        editable: false,
-        droppable: false,
-        contentHeight: 600,
-        eventSources: ['<?= base_url('Asprak/ajaxJadwal') ?>'],
-        axisFormat: 'H:mm',
-        timeFormat: {
-          agenda: 'H:mm'
-        }
-      });
-
-      $('#calendar').fullCalendar('changeView', 'agendaWeek');
-    <?php
-    }
-    ?>
-
-  });
-</script>
-<?php
 if (uri('2') == 'Setting') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
