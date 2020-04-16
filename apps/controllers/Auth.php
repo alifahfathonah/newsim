@@ -338,9 +338,9 @@ class Auth extends CI_Controller
     $mail->Username   = 'simlabfit@gmail.com';
     $mail->Password   = 'superlab5f1t';
     $mail->SMTPSecure = 'ssl';
-    $mail->Port       = 587;
+    $mail->Port       = 465;
     $mail->setFrom('simlabfit@gmail.com', 'SIM Laboratorium FIT');
-    $mail->addReplyTo('simlabfit@gmail.com', 'SIM Laboratorium FIT');
+    $mail->addReplyTo('simlabfit@gmail.com', '');
     $mail->addAddress($email);
     $mail->Subject    = 'Reset Your SIM Laboratorium Password';
     $mail->isHTML(true);
