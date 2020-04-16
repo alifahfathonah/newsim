@@ -31,9 +31,9 @@
                         <th width="25%">Date</th>
                         <th width="5%">Start</th>
                         <th width="5%">End</th>
+                        <th>Courses</th>
+                        <th width="10%">Class</th>
                         <th>Modul</th>
-                        <th width="5%">Sum</th>
-                        <th width="10%">Honor</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -46,9 +46,9 @@
                           <td><?= tanggal_inggris($d->tanggal) ?></td>
                           <td><?= $d->masuk ?></td>
                           <td><?= $d->selesai ?></td>
+                          <td><?= $d->nama_mk ?></td>
+                          <td><?= $d->kelas ?></td>
                           <td><?= $d->modul ?></td>
-                          <td><?= $d->durasi ?></td>
-                          <td style="text-align: right">Rp <?= number_format($d->honor, 0, ',', '.') ?></td>
                         </tr>
                       <?php
                       }
