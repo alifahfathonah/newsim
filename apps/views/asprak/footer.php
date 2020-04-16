@@ -40,8 +40,6 @@ if ($profil->kontak_asprak == null || $profil->ttd_asprak == null || $profil->id
   </script>
 <?php
 }
-?>
-<?php
 if (uri('2') == 'Schedule') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/moment.min.js"></script>
