@@ -60,7 +60,7 @@ if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'A
   <script>
     $(document).ready(function() {
       $('.dataTables').DataTable({
-        pageLength: 10,
+        pageLength: 5,
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
