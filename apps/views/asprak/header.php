@@ -17,7 +17,7 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
   <?php
   }
-  if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence' || uri('2') == 'BAP' || uri('2') == 'HistoryLogin') {
+  if (uri('2') == 'PracticumAssistant' || uri('2') == 'Presence' || uri('2') == 'AddPresence') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
@@ -29,6 +29,11 @@
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
   <?php
+  if (uri('2') == 'BAP') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
+  <?php
+  }
   if (uri('2') == 'Setting') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
@@ -46,6 +51,11 @@
         font-style: oblique;
       }
     </style>
+  <?php
+  }
+  if (uri('2') == 'HistoryLogin') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
   <?php
   }
   ?>
