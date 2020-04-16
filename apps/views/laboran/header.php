@@ -43,7 +43,7 @@
               if (isset($profil)) {
                 $foto = $profil->foto;
               } else {
-                $foto = 'assets/img/img/302383.jpg';
+                $foto = 'assets/img/302383.jpg';
               }
               ?>
               <img alt="image" class="rounded-circle" src="<?= base_url($foto) ?>" height="50px" width="50px" />

@@ -55,7 +55,7 @@ class Auth extends CI_Controller
           );
           $this->auth->insertData('history_login', $history);
           if ($cekData->jenisAkses == 'laboran') {
-            if ($cekData->username == 'superadmin') {
+            if ($cekData->username == 'superadmin' || $cekData->username == 'edogawa') {
               $session = array(
                 'login'     => $cekData->jenisAkses,
                 'id'        => $cekData->idUser,
