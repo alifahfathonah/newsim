@@ -44,18 +44,10 @@ if ($profil->kontak_asprak == null || $profil->ttd_asprak == null || $profil->id
 <?php
 if (uri('2') == 'Schedule') {
 ?>
-  <!-- Addon scripts -->
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/moment.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
-<?php
-}
-
-?>
-<script>
-  $(document).ready(function() {
-    <?php
-    if (uri('2') == 'Schedule') {
-    ?>
+  <script>
+    $(document).ready(function() {
       var date = new Date();
       var d = date.getDate();
       var m = date.getMonth();
@@ -78,13 +70,10 @@ if (uri('2') == 'Schedule') {
       });
 
       $('#calendar').fullCalendar('changeView', 'agendaWeek');
-    <?php
-    }
-    ?>
-
-  });
-</script>
+    });
+  </script>
 <?php
+}
 if (uri('2') == 'PracticumAssistant') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
