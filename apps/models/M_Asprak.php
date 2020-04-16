@@ -58,8 +58,10 @@ class M_Asprak extends CI_Model
 
   function daftarPresensiAsprak($nim)
   {
-    $this->db->select('date_format(asprak_masuk, "%Y-%m-%d") tanggal, date_format(asprak_masuk, "%H:%i") masuk, date_format(asprak_selesai, "%H:%i") selesai, modul, durasi, honor');
+    $this->db->select('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") selesai, presensi_asprak.modul, jadwal_lab.kelas, matakuliah.nama_mk');
     $this->db->from('presensi_asprak');
+    $this->db->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
+    $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
     $this->db->where('nim_asprak', $nim);
     $this->db->order_by('asprak_masuk', 'desc');
     return $this->db->get();
