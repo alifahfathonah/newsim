@@ -157,9 +157,18 @@ class Auth extends CI_Controller
         'jabatan'     => 'Asisten Praktikum',
         'status'      => '1'
       );
-      $this->auth->insertData('users', $input);
-      set_flashdata('msg', '<div class="alert alert-success msg">Thank you for register. Now you can login using your account.</div>');
-      redirect();
+      $where = array(
+        'nimAsprak' => $nim_user
+      );
+      $cek_akun = $this->db->get_where('users', $where)->row();
+      if ($cek_akun == true) {
+        set_flashdata('msg', '<div class="alert alert-danger msg">NIM already used. Please login with your account.</div>');
+        redirect('Auth/RegisterAsprak');
+      } else {
+        $this->auth->insertData('users', $input);
+        set_flashdata('msg', '<div class="alert alert-success msg">Thank you for register. Now you can login using your account.</div>');
+        redirect();
+      }
     }
   }
 
@@ -301,6 +310,18 @@ class Auth extends CI_Controller
       $this->db->where('username', $username)->delete('forgot_password');
       set_flashdata('msg', '<div class="alert alert-success msg">Your password successfully changed. Now you can login.</div>');
       redirect();
+    }
+  }
+
+  public function ajaxCekNIM()
+  {
+    if (!empty($_POST['nim'])) {
+      $cek_nim  = $this->auth->cekNIM($_POST['nim'])->row()->jumlah;
+      if ($cek_nim > 0) {
+        echo 'terdaftar';
+      } else {
+        echo 'tidak';
+      }
     }
   }
 
