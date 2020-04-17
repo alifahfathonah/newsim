@@ -85,6 +85,7 @@ class Asprak extends CI_Controller
       view('asprak/add_presence', $data);
       view('asprak/footer');
     } else {
+      $honor_asprak     = $this->db->get('tarif')->row()->tarif_honor;
       $jadwal_asprak    = input('jadwal_asprak');
       $tgl_asprak       = input('tgl_asprak');
       $jam_masuk        = input('jam_masuk');
@@ -103,19 +104,19 @@ class Asprak extends CI_Controller
       $hitung_durasi    = explode('.', $hitung_durasi);
       $selisih_jam      = $hitung_durasi[0];
       $selisih_menit    = ($selisih % 3600) / 60;
-      $honor            = 10000 * $selisih_jam;
+      $honor            = $honor_asprak * $selisih_jam;
       $durasi           = $selisih_jam;
       if ($selisih_menit >= 20 && $selisih_menit <= 30) {
-        $honor          = $honor + (10000 / 2);
+        $honor          = $honor + ($honor_asprak / 2);
         $durasi         = $selisih_jam + 0.5;
       } elseif ($selisih_menit >= 40 && $selisih_menit <= 59) {
-        $honor          = $honor + 10000;
+        $honor          = $honor + $honor_asprak;
         $durasi         = $selisih_jam + 1;
       } elseif ($selisih_menit >= 1 && $selisih_menit < 20) {
         $honor          = $honor;
         $durasi         = $selisih_jam;
       } elseif ($selisih_menit > 30 && $selisih_menit < 40) {
-        $honor          = $honor + (10000 / 2);
+        $honor          = $honor + ($honor_asprak / 2);
         $durasi         = $selisih_jam + 0.5;
       }
       $cek_presensi     = $this->db->where('date_format(asprak_masuk, "%Y-%m-%d") = "' . $tanggal . '"')->where('id_jadwal_asprak', $jadwal_asprak)->where('nim_asprak', userdata('nim'))->get('presensi_asprak')->row();
@@ -162,26 +163,66 @@ class Asprak extends CI_Controller
 
   public function BAP()
   {
-    $data           = $this->data;
-    $data['title']  = 'BAP | SIM Laboratorium';
-    $data['mk']     = $this->a->daftarMKAsprak(userdata('nim'))->result();
-    view('asprak/header', $data);
-    view('asprak/bap', $data);
-    view('asprak/footer');
+    set_rules('matapraktikum', 'Courses', 'required|trim');
+    set_rules('bulan', 'Month', 'required|trim');
+    if (validation_run() == false) {
+      $data           = $this->data;
+      $data['title']  = 'BAP | SIM Laboratorium';
+      $data['mk']     = $this->a->daftarMKAsprak(userdata('nim'))->result();
+      view('asprak/header', $data);
+      view('asprak/bap', $data);
+      view('asprak/footer');
+    } else {
+      $bulan_indo     = array(1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
+      $matapraktikum  = input('matapraktikum');
+      $bulan          = input('bulan');
+      $periode        = $this->a->daftarPeriode()->result();
+      $tmp            = explode('|', $bulan);
+      $rentang_periode  = $tmp[0];
+      $id_asprak        = '----';
+      $cek_data_matkul    = $this->db->select('matakuliah.id_mk, matakuliah.kode_mk, matakuliah.nama_mk, prodi.strata, prodi.kode_prodi, prodi.nama_prodi')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_daftar_mk', $matapraktikum)->get()->row();
+      // $data['nama_bulan'] = $bulan_indo[$tmp[1]];
+      // buat ngecek periode aktif
+      // foreach ($periode as $p) {
+      //   if ($p->bulan == $tmp[2]) {
+      //     echo 'cocok';
+      //   }
+      // }
+      $id_mk          = $cek_data_matkul->id_mk;
+      $kode_mk        = $cek_data_matkul->kode_mk;
+      $cek_data_user  = $this->db->select('asprak.nim_asprak, asprak.nama_asprak')->from('users')->join('asprak', 'users.nimAsprak = asprak.nim_asprak')->where('users.idUser', userdata('id'))->get()->row();
+      $nim_asprak     = $cek_data_user->nim_asprak;
+      $durasi         = $this->db->select('sum(presensi_asprak.durasi) durasi')->from('presensi_asprak')->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak')->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab')->where('jadwal_lab.id_mk', $id_mk)->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $rentang_periode)->where('presensi_asprak.nim_asprak', $nim_asprak)->order_by('presensi_asprak.asprak_masuk')->get()->row();
+      $ambil_bap      = $this->db->select('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") jam_masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") jam_selesai, presensi_asprak.durasi, presensi_asprak.modul, presensi_asprak.screenshot')->from('presensi_asprak')->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak')->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab')->where('jadwal_lab.id_mk', $id_mk)->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $rentang_periode)->where('presensi_asprak.nim_asprak', $nim_asprak)->order_by('presensi_asprak.asprak_masuk', 'asc')->get()->result();
+      $ttd                      = $this->db->get_where('asprak', array('nim_asprak' => $nim_asprak))->row()->ttd_asprak;
+      $koordinator_mk           = $this->db->select('dosen.nama_dosen, dosen.ttd_dosen')->from('daftar_mk')->join('dosen', 'daftar_mk.koordinator_mk = dosen.id_dosen')->where('daftar_mk.kode_mk', $kode_mk)->get()->row();
+      $data['user']             = $cek_data_user;
+      $data['bulan']            = $bulan_indo[$tmp[1]];
+      $data['mk_prodi']         = $cek_data_matkul;
+      $data['durasi']           = $durasi;
+      $data['bap']              = $ambil_bap;
+      $data['ttd_asprak']       = $ttd;
+      $data['tanggal_sekarang'] = tanggal_indonesia(date('Y-m-d'));
+      $data['koordinator']      = $koordinator_mk;
+      view('asprak/print_bap', $data);
+    }
   }
 
   public function ajaxBAP()
   {
     $data                       = $this->data;
-    $nim_asprak = userdata('nim');
+    $nim_asprak                 = userdata('nim');
     $bulan_indo                 = $bulan = array(1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
-    $id_mk                      = input('idMK');
+    $id_daftar_mk               = input('idMK');
     $ambil                      = input('bulan');
     $tmp                        = explode("|", $ambil);
     $bulan                      = $tmp[0];
     $namaBulan                  = $bulan_indo[$tmp[1]];
-    $ambil_mk                   = $this->db->select('matakuliah.kode_mk, matakuliah.nama_mk, prodi.strata, prodi.kode_prodi, prodi.nama_prodi')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('matakuliah.id_mk', $id_mk)->get()->row();
+    $ambil_mk                   = $this->db->select('matakuliah.id_mk, matakuliah.kode_mk, matakuliah.nama_mk, prodi.strata, prodi.kode_prodi, prodi.nama_prodi')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_daftar_mk', $id_daftar_mk)->get()->row();
+    $id_mk                      = $ambil_mk->id_mk;
     $durasi                     = $this->db->select('sum(presensi_asprak.durasi) durasi')->from('presensi_asprak')->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak')->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab')->where('jadwal_lab.id_mk', $id_mk)->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $bulan)->where('presensi_asprak.nim_asprak', $nim_asprak)->order_by('presensi_asprak.asprak_masuk')->get()->row();
+    $kode_mk                    = $ambil_mk->kode_mk;
+    $koordinator_mk             = $this->db->select('dosen.nama_dosen, dosen.ttd_dosen')->from('daftar_mk')->join('dosen', 'daftar_mk.koordinator_mk = dosen.id_dosen')->where('daftar_mk.kode_mk', $kode_mk)->get()->row();
     $output                     = '<table width="100%">
                                     <tr>
                                       <td style="font-family: Arial; font-size: 14px;" width="40%" valign="top" colspan="2"><b>BERITA ACARA PEKERJAAN DAN KEHADIRAN<br>ASISTEN PRAKTIKUM</b></td>
@@ -252,11 +293,13 @@ class Asprak extends CI_Controller
     $output                     .= '</table><br>
                                   <p style="text-align: right; font-family: Arial; font-size: 12px">
                                   Bandung, ';
-    $output                     .= date('d') . " " . bulan_panjang(date('n')) . " " . date('Y') . '<br>Koordinator Mata Kuliah<br><br><br><br><br><u>';
-    for ($i = 0; $i < 68; $i++) {
-      $output                   .= '&nbsp';
+    $output                     .= date('d') . " " . bulan_panjang(date('n')) . " " . date('Y') . '<br>Koordinator Mata Kuliah<br><br>';
+    if ($koordinator_mk->ttd_dosen != '') {
+      $output                   .= '<img src="' . base_url($koordinator_mk->ttd_dosen) . '" style="max-height: 50px"><br><br>';
+      $output                   .= $koordinator_mk->nama_dosen;
+    } else {
+      $output                   .= '<br><br><br><br><br>';
     }
-    $output .= '</u></p>';
     echo $output;
   }
 
