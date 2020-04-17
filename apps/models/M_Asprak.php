@@ -74,7 +74,9 @@ class M_Asprak extends CI_Model
     $this->db->join('daftar_mk', 'daftarasprak.id_daftar_mk = daftar_mk.id_daftar_mk');
     $this->db->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi');
     $this->db->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk');
+    $this->db->join('tahun_ajaran', 'daftar_mk.id_ta = tahun_ajaran.id_ta');
     $this->db->where('daftarasprak.nim_asprak', $nim);
+    $this->db->where('tahun_ajaran.status', '1');
     $this->db->order_by('matakuliah.kode_mk', 'asc');
     return $this->db->get();
   }
