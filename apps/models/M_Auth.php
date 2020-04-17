@@ -13,6 +13,14 @@ class M_Auth extends CI_Model
     return $this->db->get_where('users', $where);
   }
 
+  function cekNIM($nim)
+  {
+    $this->db->select('count(nim_asprak) jumlah');
+    $this->db->from('daftarasprak');
+    $this->db->where('nim_asprak', $nim);
+    return $this->db->get();
+  }
+
   function cekUsername($username)
   {
     $this->db->select('count(username) jumlah');
