@@ -8,7 +8,6 @@
   <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/img/favicon.png') ?>" />
   <link href="<?= base_url('assets/inspinia/') ?>css/bootstrap.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>font-awesome/css/font-awesome.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
   <style>
@@ -31,8 +30,8 @@
       <div class="row">
         <div class="col-sm-12 col-md-4 offset-md-4">
           <?php
-          if (flashdata('pesan')) {
-            echo flashdata('pesan');
+          if (flashdata('msg')) {
+            echo flashdata('msg');
           }
           ?>
           <div class="ibox-content" style="background-color: rgba(255,255,255,0.8)">
@@ -41,14 +40,7 @@
             <h3 style="text-align: center; margin-bottom: 20px">Create New Account for Practicum Assistant</h3>
             <form class="m-t" role="form" method="post" action="<?= base_url('Auth/RegisterAsprak') ?>">
               <div class="form-group">
-                <select name="nim_user" id="nim_user" class="select_nim form-control" required>
-                  <option></option>
-                  <?php
-                  foreach ($data as $d) {
-                    echo '<option value="' . $d->nim_asprak . '">' . $d->nim_asprak . '</option>';
-                  }
-                  ?>
-                </select>
+                <input type="text" name="nim_user" id="nim_user" class="form-control" placeholder="Your NIM" required onkeyup="cekNIM()">
               </div>
               <div class="form-group">
                 <input type="text" name="username_user" id="username_user" class="form-control" placeholder="Username" required onkeyup="cekUsername()">
@@ -80,13 +72,28 @@
   </div>
   <script src="<?= base_url('assets/inspinia/') ?>js/jquery-3.1.1.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/bootstrap.min.js"></script>
-  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
   <script>
-    $(document).ready(function() {
-      $(".select_nim").select2({
-        placeholder: "Select Your NIM"
-      });
-    });
+    function cekNIM() {
+      var nim = document.getElementById('nim_user').value;
+      if (nim) {
+        $.ajax({
+          url: '<?= base_url('Auth/ajaxCekNIM') ?>',
+          type: 'post',
+          data: {
+            nim: nim
+          },
+          success: function(response) {
+            if (response != 'tidak') {
+              document.getElementById('submit').disabled = false;
+              return true;
+            } else {
+              document.getElementById('submit').disabled = true;
+              return false;
+            }
+          }
+        });
+      }
+    }
 
     function cekUsername() {
       var username = document.getElementById('username_user').value;
