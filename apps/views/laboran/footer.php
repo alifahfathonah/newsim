@@ -259,6 +259,24 @@
     ?>
   });
 </script>
+<?php
+if (uri('1') == 'Option') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $(".periode").select2({
+        placeholder: "Select Periode",
+      });
+
+      $(".tarif").select2({
+        placeholder: "Select Honor",
+      });
+    });
+  </script>
+<?php
+}
+?>
 </body>
 
 </html>
