@@ -81,6 +81,11 @@ class M_Asprak extends CI_Model
     return $this->db->get();
   }
 
+  function daftarPeriode()
+  {
+    return $this->db->get('periode');
+  }
+
   function daftarBank()
   {
     return $this->db->get('bank');
