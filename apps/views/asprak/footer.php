@@ -143,6 +143,12 @@ if (uri('2') == 'BAP') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
   <script>
+    window.setTimeout(function() {
+      $(".msg").fadeTo(500, 0).slideUp(500, function() {
+        $(this).remove();
+      });
+    }, 3500);
+
     $(document).ready(function() {
       $(".matapraktikum").select2({
         placeholder: "Select Cource"

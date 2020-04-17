@@ -141,4 +141,9 @@ class Practicum extends CI_Controller
     }
     echo $hasil;
   }
+
+  public function AsprakSchedule()
+  {
+    #
+  }
 }

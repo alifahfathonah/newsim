@@ -7,6 +7,11 @@
         <div class="row">
           <div class="col-md-12 col-sm-12">
             <?php
+            if (flashdata('msg')) {
+              echo flashdata('msg');
+            }
+            ?>
+            <?php
             if ($profil->kontak_asprak == null || $profil->ttd_asprak == null || $profil->id_bank == null || $profil->norek_asprak == null) {
               echo '<div class="alert alert-danger">Please complete your personal information in <b>Setting Menu before submit BAP</b></div>';
             } else {
