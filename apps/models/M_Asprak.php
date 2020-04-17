@@ -69,7 +69,7 @@ class M_Asprak extends CI_Model
 
   function daftarMKAsprak($nim)
   {
-    $this->db->select('prodi.strata, prodi.kode_prodi, matakuliah.id_mk, matakuliah.kode_mk, matakuliah.nama_mk');
+    $this->db->select('daftarasprak.id_daftar_mk, prodi.strata, prodi.kode_prodi, matakuliah.id_mk, matakuliah.kode_mk, matakuliah.nama_mk');
     $this->db->from('daftarasprak');
     $this->db->join('daftar_mk', 'daftarasprak.id_daftar_mk = daftar_mk.id_daftar_mk');
     $this->db->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi');
