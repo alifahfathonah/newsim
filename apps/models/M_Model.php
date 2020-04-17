@@ -314,4 +314,14 @@ class M_Model extends CI_Model
     $this->db->where('substring(sha1(idKomplain), 7, 4) = "' . $id . '"');
     return $this->db->get('komplain');
   }
+
+  function daftarPeriode()
+  {
+    return $this->db->get('tahun_ajaran');
+  }
+
+  function daftarTarif()
+  {
+    return $this->db->get('tarif');
+  }
 }
