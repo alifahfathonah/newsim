@@ -43,6 +43,11 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
   <?php
   }
+  if (uri('2') == 'Salary') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+  <?php
+  }
   if (uri('2') == 'Setting') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
@@ -145,6 +150,18 @@
           <a href="<?= base_url('Asprak/BAP') ?>">
             <i class="fa fa-print"></i>
             <span class="nav-label">BAP</span>
+          </a>
+          </li>
+          <?php
+          if (uri('2') == 'Salary') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Asprak/Salary') ?>">
+            <i class="fa fa-money"></i>
+            <span class="nav-label">Salary</span>
           </a>
           </li>
           <?php
