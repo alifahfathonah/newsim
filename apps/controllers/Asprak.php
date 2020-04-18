@@ -320,6 +320,16 @@ class Asprak extends CI_Controller
     echo $output;
   }
 
+  public function Salary()
+  {
+    $data           = $this->data;
+    $data['title']  = 'Salary | SIM Laboratorium';
+    $data['data']   = $this->a->daftarHonorAsprak(userdata('nim'))->result();
+    view('asprak/header', $data);
+    view('asprak/salary', $data);
+    view('asprak/footer');
+  }
+
   public function Setting()
   {
     set_rules('nim_asprak', 'NIM', 'required|trim');
