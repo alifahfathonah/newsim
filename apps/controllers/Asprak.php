@@ -345,13 +345,11 @@ class Asprak extends CI_Controller
       $nim_asprak     = input('nim_asprak');
       $nama_asprak    = input('nama_asprak');
       $kontak_asprak  = input('kontak_asprak');
-      $bank_asprak    = input('bank_asprak');
       $norek_asprak   = input('norek_asprak');
       $linkaja_asprak = input('linkaja_asprak');
       $input          = array(
         'nama_asprak'     => $nama_asprak,
         'kontak_asprak'   => $kontak_asprak,
-        'id_bank'         => $bank_asprak,
         'norek_asprak'    => $norek_asprak,
         'linkaja_asprak'  => $linkaja_asprak
       );
