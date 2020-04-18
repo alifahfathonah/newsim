@@ -154,20 +154,26 @@ class Auth extends CI_Controller
         'password'    => $password_user,
         'nimAsprak'   => $nim_user,
         'jenisAkses'  => 'asprak',
-        'jabatan'     => 'Asisten Praktikum',
+        'jabatan'     => 'Practicum Assistant',
         'status'      => '1'
       );
       $where = array(
         'nimAsprak' => $nim_user
       );
       $cek_akun = $this->db->get_where('users', $where)->row();
-      if ($cek_akun == true) {
-        set_flashdata('msg', '<div class="alert alert-danger msg">NIM already used. Please login with your account.</div>');
-        redirect('Auth/RegisterAsprak');
+      $cek_nim  = $this->db->get_where('daftarasprak', array('nim_asprak' => $nim_user))->row();
+      if ($cek_nim == true) {
+        if ($cek_akun == true) {
+          set_flashdata('msg', '<div class="alert alert-danger msg">NIM already used. Please login with your account.</div>');
+          redirect('Auth/RegisterAsprak');
+        } else {
+          $this->auth->insertData('users', $input);
+          set_flashdata('msg', '<div class="alert alert-success msg">Thank you for register. Now you can login using your account.</div>');
+          redirect();
+        }
       } else {
-        $this->auth->insertData('users', $input);
-        set_flashdata('msg', '<div class="alert alert-success msg">Thank you for register. Now you can login using your account.</div>');
-        redirect();
+        set_flashdata('msg', '<div class="alert alert-danger msg">NIM ' . $nim_user . ' not registered. Please check again.</div>');
+        redirect('Auth/RegisterAsprak');
       }
     }
   }
@@ -263,10 +269,10 @@ class Auth extends CI_Controller
           'token'             => $token,
           'tanggal_pengajuan' => $waktu
         );
-        // $this->auth->insertData('forgot_password', $input);
+        $this->auth->insertData('forgot_password', $input);
         $this->email_reset_password($nama_user, $email_user, $username_user, $token);
-        // set_flashdata('msg', '<div class="alert alert-success msg">Please check your email to reset your password</div>');
-        // redirect('Auth/ForgotPassword');
+        set_flashdata('msg', '<div class="alert alert-success msg">Please check your email to reset your password</div>');
+        redirect('Auth/ForgotPassword');
       } else {
         set_flashdata('msg', '<div class="alert alert-danger msg">E-mail not registered</div>');
         redirect('Auth/ForgotPassword');
