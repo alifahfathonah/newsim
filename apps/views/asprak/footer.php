@@ -201,6 +201,22 @@ if (uri('2') == 'BAP') {
   </script>
 <?php
 }
+if (uri('2') == 'Salary') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.dataTables').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+    });
+  </script>
+<?php
+}
 if (uri('2') == 'Setting') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
