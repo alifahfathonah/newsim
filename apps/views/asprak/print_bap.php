@@ -1,95 +1,147 @@
-<style>
-  .pembungkus {
-    position: relative;
+<style type="text/css">
+  .header-bap {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
   }
 
-  .img {
-    border: 5px dotted aqua;
+  .table-isi {
+    border-collapse: collapse;
+    border: 1px solid black;
+
+  }
+
+  .thead-isi {
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #333333;
+    color: white;
+    text-align: center;
+  }
+
+  .isi-bap {
+    font-family: Arial;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .modul-bap {
+    font-family: Arial;
+    font-size: 12px;
+    padding: 5px 5px 5px 5px;
+  }
+
+  .img-dosen {
+    position: relative;
+    z-index: 1;
+    top: 0px;
+  }
+
+  .p-dosen {
+    position: absolute;
+    font-family: Arial;
+    font-size: 9px;
+    text-align: left;
+    color: black;
+    padding-left: 605px;
+    padding-top: 35px;
+    z-index: 2;
+    width: 10%;
   }
 </style>
-<table width="100%">
+<table width="100%" class="header-bap">
   <tr>
-    <td style="font-family: Arial; font-size: 9px;" width="70%" valign="top" colspan="2"><b>BERITA ACARA PEKERJAAN DAN KEHADIRAN<br>ASISTEN PRAKTIKUM</b></td>
-    <td width="30%" rowspan="8" valign="top">
+    <td width="70%" valign="top" colspan="2">BERITA ACARA PEKERJAAN DAN KEHADIRAN<br>ASISTEN PRAKTIKUM</td>
+    <td style="text-align: right" width="30%" rowspan="9" valign="top">
       <div align="right">
-        <img src="<?= base_url('assets/img/logo_tass.png') ?>" height="70px" width="250px">
-        <p style="font-family: Arial; font-size: 9px;"><b>Laboratoria<br>Fakultas Ilmu Terapan</b></p>
+        <img src="<?= base_url('assets/img/logo_tass.png') ?>" height="53px">
+        Laboratoria<br>Fakultas Ilmu Terapan
       </div>
     </td>
   </tr>
-  <tr style="font-family: Arial; font-size: 9px;">
-    <td width="15%"><b><br>NAMA</b></td>
-    <td><b><br>: <?= $user->nama_asprak ?></b></td>
+  <tr>
+    <td>&nbsp;</td>
   </tr>
-  <tr style="font-family: Arial; font-size: 9px;">
-    <td><b>NIM</b></td>
-    <td><b>: <?= $user->nim_asprak ?></b></td>
+  <tr>
+    <td width="15%">NAMA</td>
+    <td>: <?= $user->nama_asprak ?></td>
   </tr>
-  <tr style="font-family: Arial; font-size: 9px;">
+  <tr>
+    <td>NIM</td>
+    <td>: <?= $user->nim_asprak ?></td>
+  </tr>
+  <tr>
     <td><b>BULAN</b></td>
-    <td><b>: <?= $bulan ?></b></td>
+    <td>: <?= $bulan ?></td>
   </tr>
-  <tr style="font-family: Arial; font-size: 9px;">
-    <td><b>PRODI</b></td>
-    <td><b>: <?= $mk_prodi->strata . ' ' . $mk_prodi->nama_prodi ?></b></td>
+  <tr>
+    <td>PRODI</td>
+    <td>: <?= $mk_prodi->strata . ' ' . $mk_prodi->nama_prodi ?></td>
   </tr>
-  <tr style="font-family: Arial; font-size: 9px;">
-    <td><b>MK / KODE MK</b></td>
-    <td><b>: <?= $mk_prodi->nama_mk . ' / ' . $mk_prodi->kode_mk ?></b></td>
+  <tr>
+    <td>MK / KODE MK</td>
+    <td>: <?= $mk_prodi->nama_mk . ' / ' . $mk_prodi->kode_mk ?></td>
   </tr>
-  <tr style="font-family: Arial; font-size: 9px;">
-    <td><b>TAHUN</b></td>
-    <td><b>: <?= date('Y') ?></b></td>
+  <tr>
+    <td>TAHUN</td>
+    <td>: <?= date('Y') ?></td>
   </tr>
-  <tr style="font-family: Arial; font-size: 9px;">
-    <td><b>TOTAL JAM</b></td>
-    <td><b>: <?= $durasi->durasi ?></b></td>
+  <tr>
+    <td>TOTAL JAM</td>
+    <td>: <?= $durasi->durasi ?></td>
   </tr>
 </table>
 <br>
-<!-- <table border="1" width="100%" style="font-family: Arial; font-size: 9px; border-collapse: collapse; border: 1px solid black">
-      <tr style="text-align: center; background-color: #333333; color: white; font-weight: bold">
-        <td width="15%">Tanggal</td>
-        <td width="8%">Jam Masuk</td>
-        <td width="8%">Jam Keluar</td>
-        <td width="9%">Jumlah Jam</td>
-        <td width="48%" colspan="2">Modul Praktikum</td>
-        <td width="12%">Paraf Asprak</td>
-      </tr>
-      <?php
-      $ttd_asprak         = '<center><img src="' . base_url($ttd_asprak) . '" style="height: 20px"></center>';
-      $ttd_dosen          = '<img src="' . base_url($koordinator->ttd_dosen) . '" style="height: 40px" class="img">';
-      foreach ($bap as $b) {
-        $tanggal_indonesia  = tanggal_indonesia($b->tanggal);
-        $gambar_praktikum   = '<img src="' . base_url($b->screenshot) . '" style="height: 60px">';
-      ?>
-        <tr>
-          <td style="text-align: center"><?= $tanggal_indonesia ?></td>
-          <td style="text-align: center"><?= $b->jam_masuk ?></td>
-          <td style="text-align: center"><?= $b->jam_selesai ?></td>
-          <td style="text-align: center"><?= $b->durasi ?></td>
-          <td style="padding: 5px 5px 5px 5px"><?= $b->modul ?></td>
-          <td class="img-table" style="text-align: center"><?= $gambar_praktikum ?></td>
-          <td><?= $ttd_asprak ?></td>
-        </tr>
-      <?php
-      }
-      ?>
-    </table> -->
-<br><br>
-<p style="text-align: right; font-family: Arial; font-size: 9px">
-  Bandung, <?= $tanggal_sekarang ?><br>
-  Koordinator Mata Kuliah
-</p>
-<div class="pembungkus">
-  <?= $ttd_dosen ?>
-</div>
-<!-- <p style="text-align: right; font-family: Arial; font-size: 9px">
-      Bandung, <?= $tanggal_sekarang ?>
-      <br>Koordinator Mata Kuliah<br><br>
-      <?= $ttd_dosen ?><br><br>
-      <?= $koordinator->nama_dosen ?>
-    </p> -->
+<table border="1" width="100%" class="table-isi">
+  <tr>
+    <td class="thead-isi" width="15%">Tanggal</td>
+    <td class="thead-isi" width="9%">Jam Masuk</td>
+    <td class="thead-isi" width="9%">Jam Keluar</td>
+    <td class="thead-isi" width="9%">Jumlah Jam</td>
+    <td class="thead-isi" width="45%" colspan="2">Modul Praktikum</td>
+    <td class="thead-isi" width="13%">Paraf Asprak</td>
+  </tr>
+  <?php
+  $ttd_asprak         = '<center><img src="' . base_url($ttd_asprak) . '" style="height: 30px"></center>';
+  $ttd_dosen          = '<img src="' . base_url($koordinator->ttd_dosen) . '" style="height: 55px" class="img-dosen">';
+  foreach ($bap as $b) {
+    $tanggal_indonesia  = tanggal_indonesia($b->tanggal);
+    $gambar_praktikum   = '<img src="' . base_url($b->screenshot) . '" style="height: 80px; padding: 5px 5px 5px 5px">';
+  ?>
+    <tr>
+      <td class="isi-bap" width="15%"><?= $tanggal_indonesia ?></td>
+      <td class="isi-bap" width="9%"><?= $b->jam_masuk ?></td>
+      <td class="isi-bap" width="9%"><?= $b->jam_selesai ?></td>
+      <td class="isi-bap" width="9%"><?= $b->durasi ?></td>
+      <td class="modul-bap" width="22%"><?= $b->modul ?></td>
+      <td style="text-align: center" width="23%"><?= $gambar_praktikum ?></td>
+      <td width="13%"><?= $ttd_asprak ?></td>
+    </tr>
+  <?php
+  }
+  ?>
+</table>
+<br>
+<table width="100%" style="text-align: right; font-family: Arial; font-size: 12px">
+  <tr>
+    <td>Bandung, <?= $tanggal_sekarang ?></td>
+  </tr>
+  <tr>
+    <td>Koordinator Mata Kuliah</td>
+  </tr>
+  <tr>
+    <td>
+      <div>
+        <?= $ttd_dosen ?>
+        <p class="p-dosen">Bayu Setya Ajie Perdana Putra<br><?= tanggal_indonesia(date('Y-m-d')) ?></p>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>Bayu Setya Ajie Perdana Putra, Amd.Kom., S.Kom.</td>
+  </tr>
+</table>
 </body>
 
 </html>
