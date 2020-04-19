@@ -61,25 +61,7 @@
                               </td>
                             </tr>
                             <tr>
-                              <td>Bank Name</td>
-                              <td>:</td>
-                              <td style="padding-bottom: 5px">
-                                <select name="bank_asprak" id="bank_asprak" class="nama_bank form-control">
-                                  <option></option>
-                                  <?php
-                                  foreach ($bank as $b) {
-                                    if ($b->id_bank == $profil->id_bank) {
-                                      echo '<option value="' . $b->id_bank . '" selected>' . $b->nama_bank . '</option>';
-                                    } else {
-                                      echo '<option value="' . $b->id_bank . '">' . $b->nama_bank . '</option>';
-                                    }
-                                  }
-                                  ?>
-                                </select>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Account Number</td>
+                              <td>Bank Mandiri Account</td>
                               <td>:</td>
                               <td style="padding-bottom: 5px">
                                 <input type="text" name="norek_asprak" id="norek_asprak" class="form-control" value="<?= $profil->norek_asprak ?>">
