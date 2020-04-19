@@ -9,7 +9,7 @@ class Dashboard extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    if (userdata('login') != 'laboran' && userdata('login') != 'aslab') {
+    if (userdata('login') != 'laboran' && userdata('login') != 'aslab' && userdata('login') != 'dosen') {
       redirect();
     }
     $id_laboran = $this->db->get_where('users', array('idUser' => userdata('id')))->row()->id_laboran;
@@ -41,6 +41,8 @@ class Dashboard extends CI_Controller
       view('aslab/header', $data);
       view('aslab/dashboard', $data);
       view('aslab/footer');
+    } elseif (userdata('login') == 'dosen') {
+      echo 'dosen';
     }
   }
 
