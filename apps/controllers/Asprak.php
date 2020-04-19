@@ -330,6 +330,24 @@ class Asprak extends CI_Controller
     view('asprak/footer');
   }
 
+  public function TakeSalary()
+  {
+    set_rules('pilihan', 'Option', 'required|trim');
+    if (validation_run() == false) {
+      redirect('Asprak/Salary');
+    } else {
+      $id_honor = input('id_honor');
+      $pilihan  = input('pilihan');
+      $tmp      = explode('|', $id_honor);
+      print_r($tmp);
+      for ($i = 1; $i < count($tmp); $i++) {
+        $input  = array('opsi_pengambilan' => $pilihan);
+        print_r($input);
+        echo '<br>';
+      }
+    }
+  }
+
   public function Setting()
   {
     set_rules('nim_asprak', 'NIM', 'required|trim');
