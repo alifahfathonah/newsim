@@ -69,7 +69,7 @@ class Setting extends CI_Controller
         if ($cek_password == sha1($password_lama)) {
           if ($password_baru == $konfirm_password) {
             $input  = array('password' => sha1($password_baru));
-            $this->db->where('username' => $username_dosen)->update('users', $input);
+            $this->db->where('username', $username_dosen)->update('users', $input);
             set_flashdata('msg', '<div class="alert alert-success msg">Your password successfully updated.</div>');
           } else {
             set_flashdata('msg', '<div class="alert alert-danger">New password and confirm password not match. Please try again.</div>');
