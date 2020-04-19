@@ -233,4 +233,36 @@ class Laboran extends CI_Controller
     }
     redirect('Schedule');
   }
+
+  public function uploadNIPDosen()
+  {
+    view('Laboran/nip_dosen_csv');
+  }
+
+  public function simpanNIPDosen()
+  {
+    $file = $_FILES['file_csv']['tmp_name'];
+    $ekstensi_file  = explode('.', $_FILES['file_csv']['name']);
+    if (strtolower(end($ekstensi_file)) === 'csv' && $_FILES['file_csv']['size'] > 0) {
+      $handle = fopen($file, 'r');
+      $i = 0;
+      while (($row = fgetcsv($handle, 2048))) {
+        $i++;
+        if ($i == 1) {
+          continue;
+        }
+        $cek_data = $this->db->get_where('dosen', array('nip_dosen' => $row[1], 'kode_dosen' => $row[0]))->row();
+        if (!$cek_data) {
+          $input  = array(
+            'kode_dosen'  => $row[0],
+            'nip_dosen'   => $row[1],
+            'nama_dosen'  => ucwords(strtolower($row[2]))
+          );
+          $this->db->insert('dosen', $input);
+        }
+      }
+      fclose($handle);
+    }
+    redirect('Schedule');
+  }
 }
