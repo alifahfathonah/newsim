@@ -20,6 +20,11 @@ class HistoryLogin extends CI_Controller
         'jumlah_pinjam_lab'   => $this->m->hitungPeminjamanLab()->row()->pinjamlab,
         'jumlah_pinjam_alat'  => $this->m->hitungPeminjamanAlat()->row()->pinjamalat
       );
+    } elseif (userdata('login') == 'dosen') {
+      $id_dosen = $this->db->get_where('users', array('idUser' => userdata('id')))->row()->id_dosen;
+      $this->data = array(
+        'profil'              => $this->m->profilDosen($id_dosen)->row()
+      );
     }
   }
 
@@ -37,6 +42,10 @@ class HistoryLogin extends CI_Controller
       view('aslab/header', $data);
       view('aslab/history_login', $data);
       view('aslab/footer');
+    } elseif (userdata('login') == 'dosen') {
+      view('dosen/header', $data);
+      view('dosen/history_login', $data);
+      view('dosen/footer');
     }
   }
 }

@@ -32,6 +32,11 @@
     </style>
   <?php
   }
+  if (uri('1') == 'HistoryLogin') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+  <?php
+  }
   ?>
 </head>
 
@@ -137,13 +142,13 @@
           </a>
           </li>
           <?php
-          if (uri('2') == 'HistoryLogin') {
+          if (uri('1') == 'HistoryLogin') {
             echo '<li class="active">';
           } else {
             echo '<li>';
           }
           ?>
-          <a href="<?= base_url('Asprak/HistoryLogin') ?>">
+          <a href="<?= base_url('HistoryLogin') ?>">
             <i class="fa fa-history"></i>
             <span class="nav-label">History Login</span>
           </a>
