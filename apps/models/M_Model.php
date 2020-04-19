@@ -26,6 +26,11 @@ class M_Model extends CI_Model
     return $this->db->get_where('laboran', array('id_laboran' => $id));
   }
 
+  function profilDosen($id)
+  {
+    return $this->db->get_where('dosen', array('id_dosen' => $id));
+  }
+
   function hitungKomplain()
   {
     $this->db->select('count(idKomplain) komplain');
@@ -323,5 +328,10 @@ class M_Model extends CI_Model
   function daftarTarif()
   {
     return $this->db->get('tarif');
+  }
+
+  function akunDosen($id)
+  {
+    return $this->db->get_where('users', array('idUser' => $id));
   }
 }
