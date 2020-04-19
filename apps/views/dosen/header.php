@@ -125,13 +125,13 @@
           </a>
           </li>
           <?php
-          if (uri('2') == 'Setting') {
+          if (uri('1') == 'Setting') {
             echo '<li class="active">';
           } else {
             echo '<li>';
           }
           ?>
-          <a href="<?= base_url('Asprak/Setting') ?>">
+          <a href="<?= base_url('Setting') ?>">
             <i class="fa fa-gear"></i>
             <span class="nav-label">Setting</span>
           </a>
