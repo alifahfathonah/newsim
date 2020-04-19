@@ -9,16 +9,18 @@ class HistoryLogin extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    if (userdata('login') != 'laboran' && userdata('login') != 'aslab') {
+    if (userdata('login') != 'laboran' && userdata('login') != 'aslab' && userdata('login') != 'dosen') {
       redirect();
     }
-    $id_laboran = $this->db->get_where('users', array('idUser' => userdata('id')))->row()->id_laboran;
-    $this->data = array(
-      'profil'              => $this->m->profilLaboran($id_laboran)->row(),
-      'jumlah_komplain'     => $this->m->hitungKomplain()->row()->komplain,
-      'jumlah_pinjam_lab'   => $this->m->hitungPeminjamanLab()->row()->pinjamlab,
-      'jumlah_pinjam_alat'  => $this->m->hitungPeminjamanAlat()->row()->pinjamalat
-    );
+    if (userdata('login') == 'laboran') {
+      $id_laboran = $this->db->get_where('users', array('idUser' => userdata('id')))->row()->id_laboran;
+      $this->data = array(
+        'profil'              => $this->m->profilLaboran($id_laboran)->row(),
+        'jumlah_komplain'     => $this->m->hitungKomplain()->row()->komplain,
+        'jumlah_pinjam_lab'   => $this->m->hitungPeminjamanLab()->row()->pinjamlab,
+        'jumlah_pinjam_alat'  => $this->m->hitungPeminjamanAlat()->row()->pinjamalat
+      );
+    }
   }
 
   public function index()
