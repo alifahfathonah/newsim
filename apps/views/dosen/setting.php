@@ -120,7 +120,7 @@
                               <td>Username</td>
                               <td>:</td>
                               <td style="padding-bottom: 5px">
-                                <input type="text" name="username_asprak" id="username_asprak" class="form-control" value="<?= $akun->username ?>" readonly>
+                                <input type="text" name="username_dosen" id="username_dosen" class="form-control" value="<?= $akun->username ?>" readonly>
                               </td>
                             </tr>
                             <tr>
