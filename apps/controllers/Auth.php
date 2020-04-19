@@ -99,7 +99,23 @@ class Auth extends CI_Controller
           } elseif ($cekData->jenisAkses == 'grant') {
             echo 5;
           } elseif ($cekData->jenisAkses == 'dosen') {
-            echo 'dosen';
+            if ($cekData->status == '1') {
+              $session = array(
+                'login'     => $cekData->jenisAkses,
+                'id'        => $cekData->idUser,
+                'username'  => $cekData->username,
+                'id_dosen'  => $cekData->id_dosen,
+                'jabatan'   => $cekData->jabatan
+              );
+              set_userdata($session);
+              redirect('Dashboard');
+            } elseif ($cekData->status == '2') {
+              set_flashdata('msg', '<div class="alert alert-danger">Please check your email for activate.</div>');
+              redirect('Auth');
+            } else {
+              set_flashdata('msg', '<div class="alert alert-danger">Your account deactived.</div>');
+              redirect('Auth');
+            }
           }
         } else {
           set_flashdata('msg', '<div class="alert alert-danger">Incorrect Username or Password</div>');
@@ -377,14 +393,14 @@ class Auth extends CI_Controller
     $response = false;
     $mail             = new PHPMailer();
     $mail->isSMTP();
-    $mail->Host       = 'mail.bayusapp.com';
+    $mail->Host       = 'simlabfit.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'simlabfit@bayusapp.com';
-    $mail->Password   = 'Bayu.1996';
+    $mail->Username   = 'admin@simlabfit.com';
+    $mail->Password   = 'superlab5f1t';
     $mail->SMTPSecure = 'ssl';
     $mail->Port       = 465;
-    $mail->setFrom('simlabfit@bayusapp.com', 'SIM Laboratorium FIT');
-    $mail->addReplyTo('simlabfit@bayusapp.com', '');
+    $mail->setFrom('admin@simlabfit.com', 'SIM Laboratorium FIT');
+    // $mail->addReplyTo('simlabfit@bayusapp.com', '');
     $mail->addAddress($email);
     $mail->Subject    = 'Reset Your SIM Laboratorium Password';
     $mail->isHTML(true);
