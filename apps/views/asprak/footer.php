@@ -213,7 +213,36 @@ if (uri('2') == 'Salary') {
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
       });
+
+      $('.honor').click(function(event) {
+        var total = 0;
+        var id_honor = '';
+        var tmp = '';
+        $('.honor:checked').each(function() {
+          tmp = $(this).val().split('|');
+          id_honor = id_honor + '|' + tmp[1];
+          total += parseInt($(this).val());
+        });
+        document.getElementById('id_honor').value = id_honor;
+
+        if (total === 0) {
+          $('#total_honor').text('Rp 0');
+          document.getElementById('cek_alert').disabled = true;
+        } else {
+          $('#total_honor').text('Rp ' + total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+          $('#modal_total_honor').text('Rp ' + total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+          document.getElementById('cek_alert').disabled = false;
+        }
+      });
     });
+
+    function ya_tidak_honor() {
+      if (document.getElementById('tidak_cek').checked) {
+        document.getElementById('tampil_surat_kuasa').style.display = 'block';
+      } else {
+        document.getElementById('tampil_surat_kuasa').style.display = 'none';
+      }
+    }
   </script>
 <?php
 }
