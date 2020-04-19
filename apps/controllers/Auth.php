@@ -98,6 +98,8 @@ class Auth extends CI_Controller
             echo 4;
           } elseif ($cekData->jenisAkses == 'grant') {
             echo 5;
+          } elseif ($cekData->jenisAkses == 'dosen') {
+            echo 'dosen';
           }
         } else {
           set_flashdata('msg', '<div class="alert alert-danger">Incorrect Username or Password</div>');
@@ -181,7 +183,7 @@ class Auth extends CI_Controller
   public function RegisterLecture()
   {
     set_rules('nip_user', 'NIP', 'required|trim');
-    set_rules('nama_user', 'Nama', 'required|trim');
+    set_rules('email_user', 'Email', 'required|trim');
     set_rules('username_user', 'Username', 'required|trim');
     set_rules('password_user', 'Password', 'required|trim');
     if (validation_run() == false) {
@@ -189,20 +191,35 @@ class Auth extends CI_Controller
       view('auth/register_dosen', $data);
     } else {
       $nip_user       = input('nip_user');
-      $nama_user      = input('nama_user');
       $username_user  = input('username_user');
+      $email_user     = input('email_user');
       $password_user  = sha1(input('password_user'));
-      $input          = array(
-        'username'    => $username_user,
-        'password'    => $password_user,
-        'nipDosen'    => $nip_user,
-        'jenisAkses'  => 'dosen',
-        'jabatan'     => 'Lecture',
-        'status'      => '1'
-      );
-      $this->auth->insertData('users', $input);
-      set_flashdata('msg', '<div class="alert alert-success msg">Thank you for register. Now you can login using your account.</div>');
-      redirect();
+      $cek_nip        = $this->db->get_where('dosen', array('nip_dosen' => $nip_user))->row();
+      $cek_akun       = $this->db->get_where('users', array('id_dosen' => $cek_nip->id_dosen))->row();
+      if ($cek_nip) {
+        if ($cek_akun) {
+          set_flashdata('msg', '<div class="alert alert-danger msg">NIP already used to create account. You can login with your username and password.</div>');
+          redirect();
+        } else {
+          $input  = array(
+            'id_dosen'    => $cek_nip->id_dosen,
+            'username'    => $username_user,
+            'email'       => $email_user,
+            'password'    => $password_user,
+            'jenisAkses'  => 'dosen',
+            'jabatan'     => 'Lecture',
+            'status'      => '0'
+          );
+          $this->auth->insertData('users', $input);
+          $input  = array('email_dosen' => $email_user);
+          $this->db->where('nip_dosen', $nip_user)->update('dosen', $input);
+          set_flashdata('msg', '<div class="alert alert-success msg">Thank you for register. Now you can login using your account.</div>');
+          redirect();
+        }
+      } else {
+        set_flashdata('msg', '<div class="alert alert-danger msg">Sorry your NIP not registered.</div>');
+        redirect('Auth/RegisterLecture');
+      }
     }
   }
 
