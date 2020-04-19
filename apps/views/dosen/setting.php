@@ -30,7 +30,7 @@
               <div class="ibox-content">
                 <div class="row">
                   <div class="col-md-12 col-sm-12">
-                    <form method="post" action="<?= base_url('Setting') ?>">
+                    <form method="post" action="<?= base_url('Setting') ?>" enctype="multipart/form-data">
                       <div class="table-responsive">
                         <table width="98%">
                           <tbody>
@@ -43,21 +43,21 @@
                               <td width="15%">NIP</td>
                               <td width="2%">:</td>
                               <td style="padding-bottom: 5px">
-                                <input type="text" name="nim_asprak" id="nim_asprak" class="form-control" value="<?= $profil->nip_dosen ?>">
+                                <input type="text" name="nip_dosen" id="nip_dosen" class="form-control" value="<?= $profil->nip_dosen ?>">
                               </td>
                             </tr>
                             <tr>
                               <td>Name</td>
                               <td>:</td>
                               <td style="padding-bottom: 5px">
-                                <input type="text" name="nama_asprak" id="nama_asprak" class="form-control" value="<?= $profil->nama_dosen ?>">
+                                <input type="text" name="nama_dosen" id="nama_dosen" class="form-control" value="<?= $profil->nama_dosen ?>">
                               </td>
                             </tr>
                             <tr>
                               <td>Phone Number</td>
                               <td>:</td>
                               <td style="padding-bottom: 5px">
-                                <input type="text" name="kontak_asprak" id="kontak_asprak" class="form-control" value="<?= $profil->no_telp ?>">
+                                <input type="text" name="no_telp" id="no_telp" class="form-control" value="<?= $profil->no_telp ?>">
                               </td>
                             </tr>
                             <tr>
@@ -78,7 +78,7 @@
                                   <div class="col-md-6 col-sm-6">
                                     <h2 class="tag-ingo">Upload your signature below,</h2>
                                     <div class="custom-file">
-                                      <input id="logo" type="file" class="custom-file-input">
+                                      <input id="logo" type="file" name="file_ttd" class="custom-file-input" accept="image/*">
                                       <label for="logo" class="custom-file-label">Choose file...</label>
                                     </div>
                                   </div>
@@ -106,7 +106,7 @@
                               <td style="padding-bottom: 5px">
                                 <?php
                                 if ($profil->ttd_dosen) {
-                                  echo '<img src="' . base_url($profil->ttd_dosen) . '">';
+                                  echo '<img src="' . base_url($profil->ttd_dosen) . '" height="100px" width="300px">';
                                 }
                                 ?>
                               </td>
@@ -145,20 +145,12 @@
                               </td>
                             </tr>
                             <tr>
-                              <td colspan="3">
-                                <div class="form-group" style="margin-top: 20px">
-                                  <div class="row">
-                                    <div class="col-md-1 col-sm-2">
-                                      <button type="submit" class="btn btn-primary btn-sm btn-block">Save</button>
-                                    </div>
-                                    <div class="col-md-1 col-sm-4">
-                                      <button type="reset" class="btn btn-warning btn-sm btn-block">Reset</button>
-                                    </div>
-                                    <div class="col-md-1 col-sm-4">
-                                      <button type="button" class="btn btn-danger btn-sm btn-block">Cancel</button>
-                                    </div>
-                                  </div>
-                                </div>
+                              <td colspan="3" style="padding-top: 10px">
+                                <p>
+                                  <button type="submit" class="btn btn-primary btn-sm col-md-1">Save</button>
+                                  <button type="reset" class="btn btn-warning btn-sm col-md-1">Reset</button>
+                                  <button type="button" class="btn btn-danger btn-sm col-md-1">Cancel</button>
+                                </p>
                               </td>
                             </tr>
                           </tbody>
