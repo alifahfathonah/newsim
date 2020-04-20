@@ -13,6 +13,11 @@
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
   <?php
+  if (uri('1') == 'PracticumAssistant') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+  <?php
+  }
   if (uri('1') == 'Setting') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
@@ -82,13 +87,13 @@
           </a>
           </li>
           <?php
-          if (uri('2') == 'PracticumAssistant') {
+          if (uri('1') == 'PracticumAssistant') {
             echo '<li class="active">';
           } else {
             echo '<li>';
           }
           ?>
-          <a href="<?= base_url('Asprak/PracticumAssistant') ?>">
+          <a href="<?= base_url('PracticumAssistant') ?>">
             <i class="fa fa-users"></i>
             <span class="nav-label">Practicum Assistant</span>
           </a>
