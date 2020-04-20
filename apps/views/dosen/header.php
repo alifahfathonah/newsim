@@ -113,20 +113,8 @@
           }
           ?>
           <a href="<?= base_url('Asprak/BAP') ?>">
-            <i class="fa fa-print"></i>
+            <i class="fa fa-book"></i>
             <span class="nav-label">BAP</span>
-          </a>
-          </li>
-          <?php
-          if (uri('2') == 'Salary') {
-            echo '<li class="active">';
-          } else {
-            echo '<li>';
-          }
-          ?>
-          <a href="<?= base_url('Asprak/Salary') ?>">
-            <i class="fa fa-money"></i>
-            <span class="nav-label">Salary</span>
           </a>
           </li>
           <?php
