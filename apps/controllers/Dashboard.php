@@ -12,13 +12,20 @@ class Dashboard extends CI_Controller
     if (userdata('login') != 'laboran' && userdata('login') != 'aslab' && userdata('login') != 'dosen') {
       redirect();
     }
-    $id_laboran = $this->db->get_where('users', array('idUser' => userdata('id')))->row()->id_laboran;
-    $this->data = array(
-      'profil'              => $this->m->profilLaboran($id_laboran)->row(),
-      'jumlah_komplain'     => $this->m->hitungKomplain()->row()->komplain,
-      'jumlah_pinjam_lab'   => $this->m->hitungPeminjamanLab()->row()->pinjamlab,
-      'jumlah_pinjam_alat'  => $this->m->hitungPeminjamanAlat()->row()->pinjamalat
-    );
+    if (userdata('login') == 'laboran' || userdata('login') == 'aslab') {
+      $id_laboran = $this->db->get_where('users', array('idUser' => userdata('id')))->row()->id_laboran;
+      $this->data = array(
+        'profil'              => $this->m->profilLaboran($id_laboran)->row(),
+        'jumlah_komplain'     => $this->m->hitungKomplain()->row()->komplain,
+        'jumlah_pinjam_lab'   => $this->m->hitungPeminjamanLab()->row()->pinjamlab,
+        'jumlah_pinjam_alat'  => $this->m->hitungPeminjamanAlat()->row()->pinjamalat
+      );
+    } elseif (userdata('login') == 'dosen') {
+      $id_dosen = $this->db->get_where('users', array('idUser' => userdata('id')))->row()->id_dosen;
+      $this->data = array(
+        'profil'              => $this->m->profilDosen($id_dosen)->row()
+      );
+    }
   }
 
   public function index()
@@ -42,7 +49,10 @@ class Dashboard extends CI_Controller
       view('aslab/dashboard', $data);
       view('aslab/footer');
     } elseif (userdata('login') == 'dosen') {
-      echo 'dosen';
+      $data['pengumuman'] = $this->a->daftarPengumuman()->result();
+      view('dosen/header', $data);
+      view('dosen/dashboard', $data);
+      view('dosen/footer');
     }
   }
 
