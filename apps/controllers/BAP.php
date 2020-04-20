@@ -21,7 +21,7 @@ class BAP extends CI_Controller
   public function index()
   {
     $data           = $this->data;
-    $data['title']  = 'Practicum Assistant | SIM Laboratorium';
+    $data['title']  = 'BAP | SIM Laboratorium';
     view('dosen/header', $data);
     view('dosen/salary', $data);
     view('dosen/footer');
