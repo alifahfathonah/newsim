@@ -23,7 +23,7 @@ class BAP extends CI_Controller
     $data           = $this->data;
     $data['title']  = 'BAP | SIM Laboratorium';
     view('dosen/header', $data);
-    view('dosen/salary', $data);
+    view('dosen/bap', $data);
     view('dosen/footer');
   }
 
