@@ -69,7 +69,7 @@
             echo '<li>';
           }
           ?>
-          <a href="<?= base_url('Asprak/Dashboard') ?>">
+          <a href="<?= base_url('Dashboard') ?>">
             <i class="fa fa-dashboard"></i>
             <span class="nav-label">Dashboard</span>
           </a>
@@ -87,13 +87,13 @@
           </a>
           </li>
           <?php
-          if (uri('2') == 'BAP') {
+          if (uri('1') == 'BAP') {
             echo '<li class="active">';
           } else {
             echo '<li>';
           }
           ?>
-          <a href="<?= base_url('Asprak/BAP') ?>">
+          <a href="<?= base_url('BAP') ?>">
             <i class="fa fa-book"></i>
             <span class="nav-label">BAP</span>
           </a>
