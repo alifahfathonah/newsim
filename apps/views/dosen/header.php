@@ -63,7 +63,7 @@
             </div>
           </li>
           <?php
-          if (uri('2') == 'Dashboard') {
+          if (uri('1') == 'Dashboard') {
             echo '<li class="active">';
           } else {
             echo '<li>';
