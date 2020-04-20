@@ -1,6 +1,8 @@
 <html>
 
 <head>
+  <title><?= $title ?></title>
+  <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/img/favicon.png') ?>" />
   <style type="text/css">
     body {
       font-family: Tahoma, Verdana, Segoe, sans-serif;
@@ -75,23 +77,23 @@
     </tr>
     <tr>
       <td width="15%">NAMA</td>
-      <td>: <?= $user->nama_asprak ?></td>
+      <td>: <?= $asprak->nama_asprak ?></td>
     </tr>
     <tr>
       <td>NIM</td>
-      <td>: <?= $user->nim_asprak ?></td>
+      <td>: <?= $asprak->nim_asprak ?></td>
     </tr>
     <tr>
       <td><b>BULAN</b></td>
-      <td>: <?= $bulan ?></td>
+      <td>: <?= $periode->bulan ?></td>
     </tr>
     <tr>
       <td>PRODI</td>
-      <td>: <?= $mk_prodi->strata . ' ' . $mk_prodi->nama_prodi ?></td>
+      <td>: <?= $prodi->strata . ' ' . $prodi->nama_prodi ?></td>
     </tr>
     <tr>
       <td>MK / KODE MK</td>
-      <td>: <?= $mk_prodi->nama_mk . ' / ' . $mk_prodi->kode_mk ?></td>
+      <td>: <?= $prodi->nama_mk . ' / ' . $prodi->kode_mk ?></td>
     </tr>
     <tr>
       <td>TAHUN</td>
@@ -99,7 +101,7 @@
     </tr>
     <tr>
       <td>TOTAL JAM</td>
-      <td>: <?= $durasi->durasi ?></td>
+      <td>: <?= $total->jam ?></td>
     </tr>
   </table>
   <br>
@@ -116,16 +118,17 @@
     </thead>
     <tbody>
       <?php
-      $ttd_asprak         = '<center><img src="' . base_url($ttd_asprak) . '" style="height: 30px"></center>';
-      $ttd_dosen          = '<img src="' . base_url($koordinator->ttd_dosen) . '" style="height: 60px" class="img-dosen">';
+      // $ttd_asprak         = '<center><img src="' . base_url($bap->ttd_asprak) . '" style="height: 30px"></center>';
+      // $ttd_dosen          = '<img src="' . base_url($koordinator->ttd_dosen) . '" style="height: 60px" class="img-dosen">';
       foreach ($bap as $b) {
         $tanggal_indonesia  = tanggal_indonesia($b->tanggal);
         $gambar_praktikum   = '<img src="' . base_url($b->screenshot) . '" style="height: 60px; padding: 5px 5px 5px 5px">';
+        $ttd_asprak         = '<center><img src="' . base_url($b->ttd_asprak) . '" style="height: 30px"></center>';
       ?>
         <tr>
           <td class="isi-bap"><?= $tanggal_indonesia ?></td>
-          <td class="isi-bap"><?= $b->jam_masuk ?></td>
-          <td class="isi-bap"><?= $b->jam_selesai ?></td>
+          <td class="isi-bap"><?= $b->masuk ?></td>
+          <td class="isi-bap"><?= $b->selesai ?></td>
           <td class="isi-bap"><?= $b->durasi ?></td>
           <td class="modul-bap" width="22%"><?= $b->modul ?></td>
           <td style="text-align: center" width="23%"><?= $gambar_praktikum ?></td>
@@ -136,10 +139,10 @@
       ?>
     </tbody>
   </table>
-  <br>
+  <!-- <br>
   <table width="100%" style="text-align: right">
     <tr>
-      <td>Bandung, <?= $tanggal_sekarang ?></td>
+      <td>Bandung, <?= tanggal_indonesia(date('Y-m-d')) ?></td>
     </tr>
     <tr>
       <td>Koordinator Mata Kuliah</td>
@@ -158,7 +161,7 @@
     <tr>
       <td>Bayu Setya Ajie Perdana Putra, Amd.Kom., S.Kom.</td>
     </tr>
-  </table>
+  </table> -->
 </body>
 
 </html>

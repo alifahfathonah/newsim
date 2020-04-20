@@ -334,4 +334,44 @@ class M_Model extends CI_Model
   {
     return $this->db->get_where('users', array('idUser' => $id));
   }
+
+  function daftarBAP($id_dosen, $id_daftar_mk)
+  {
+    $this->db->select('honor.id_honor, matakuliah.kode_mk, matakuliah.nama_mk, asprak.nim_asprak, asprak.nama_asprak, LEFT(periode.rentang_akhir, 2) bulan');
+    $this->db->from('honor');
+    $this->db->join('daftar_mk', 'honor.id_daftar_mk = daftar_mk.id_daftar_mk');
+    $this->db->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk');
+    $this->db->join('asprak', 'honor.nim_asprak = asprak.nim_asprak');
+    $this->db->join('periode', 'honor.id_periode = periode.id_periode');
+    $this->db->where('honor.id_dosen', $id_dosen);
+    $this->db->where('honor.approve_dosen', '0');
+    $this->db->where('daftar_mk.id_daftar_mk', $id_daftar_mk);
+    return $this->db->get();
+  }
+
+  function previewBAPAsprak($nim, $id_daftar_mk, $between)
+  {
+    $this->db->select('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") selesai, presensi_asprak.durasi, presensi_asprak.modul, presensi_asprak.screenshot, asprak.ttd_asprak');
+    $this->db->from('presensi_asprak');
+    $this->db->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak');
+    $this->db->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
+    $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
+    $this->db->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk');
+    $this->db->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak');
+    $this->db->where('presensi_asprak.nim_asprak', $nim);
+    $this->db->where('daftar_mk.id_daftar_mk', $id_daftar_mk);
+    $this->db->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $between);
+    return $this->db->get();
+  }
+
+  function tampilProdiBAP($id)
+  {
+    $this->db->select('prodi.strata, prodi.nama_prodi, matakuliah.kode_mk, matakuliah.nama_mk');
+    $this->db->from('honor');
+    $this->db->join('daftar_mk', 'honor.id_daftar_mk = daftar_mk.id_daftar_mk');
+    $this->db->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk');
+    $this->db->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi');
+    $this->db->where('honor.id_daftar_mk', $id);
+    return $this->db->get();
+  }
 }
