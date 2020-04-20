@@ -75,18 +75,6 @@
           </a>
           </li>
           <?php
-          if (uri('2') == 'Schedule') {
-            echo '<li class="active">';
-          } else {
-            echo '<li>';
-          }
-          ?>
-          <a href="<?= base_url('Asprak/Schedule') ?>">
-            <i class="fa fa-calendar"></i>
-            <span class="nav-label">Schedule</span>
-          </a>
-          </li>
-          <?php
           if (uri('1') == 'PracticumAssistant') {
             echo '<li class="active">';
           } else {
@@ -96,18 +84,6 @@
           <a href="<?= base_url('PracticumAssistant') ?>">
             <i class="fa fa-users"></i>
             <span class="nav-label">Practicum Assistant</span>
-          </a>
-          </li>
-          <?php
-          if (uri('2') == 'Presence' || uri('2') == 'AddPresence') {
-            echo '<li class="active">';
-          } else {
-            echo '<li>';
-          }
-          ?>
-          <a href="<?= base_url('Asprak/Presence') ?>">
-            <i class="fa fa-line-chart"></i>
-            <span class="nav-label">Presence</span>
           </a>
           </li>
           <?php
