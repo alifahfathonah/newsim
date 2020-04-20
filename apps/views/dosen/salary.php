@@ -1,98 +1,75 @@
       <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-12">
-          <h2 style="text-align: center">Salary</h2>
+          <h2 style="text-align: center">BAP</h2>
         </div>
       </div>
       <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
           <div class="col-md-12 col-sm-12">
-            <div class="ibox">
-              <div class="ibox-content">
-                <div class="row" style="text-align: right">
-                  <div class="col-md-2 offset-md-10" style="margin-bottom: 5px">
-                    <button type="button" class="btn btn-primary btn-sm" id="cek_alert" data-toggle="modal" data-target="#alert_honor" disabled>
-                      <i class="fa fa-hand-lizard-o"></i> Take Salary
-                    </button>
-                    <div class="modal inmodal fade" id="alert_honor" tabindex="-1" role="dialog" aria-hidden="true">
-                      <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title">Take Salary</h4>
-                          </div>
-                          <form method="post" action="<?= base_url('Asprak/TakeSalary') ?>">
-                            <div class="modal-body" style="font-size: 15px">
-                              <p style="text-align: center">You will receive a salary of <span id="modal_total_honor"></span></p>
-                              <input type="text" name="id_honor" id="id_honor" style="display: none">
-                              <div class="row" style="text-align: left; font-size: 13px">
-                                <div class="col-md-4 offset-md-5">
-                                  <div class="radio">
-                                    <input type="radio" name="pilihan" id="cash" value="Cash">
-                                    <label for="cash">Cash</label>
-                                  </div>
-                                  <div class="radio">
-                                    <input type="radio" name="pilihan" id="transfer" value="Transfer">
-                                    <label for="transfer">Bank Transfer</label>
-                                  </div>
-                                  <div class="radio">
-                                    <input type="radio" name="pilihan" id="linkaja" value="Linkaja">
-                                    <label for="linkaja">Linkaja</label>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="submit" class="btn btn-success">Submit</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
+            <?php
+            if (flashdata('msg')) {
+              echo flashdata('msg');
+            }
+            ?>
+            <?php
+            $id_ta        = $this->db->get_where('tahun_ajaran', array('status' => '1'))->row()->id_ta;
+            $id_dosen     = $this->db->get_where('users', array('idUser' => userdata('id')))->row()->id_dosen;
+            $daftar_mk    = $this->db->get_where('daftar_mk', array('koordinator_mk' => $id_dosen))->result();
+            foreach ($daftar_mk as $d) {
+              $matakuliah = $this->db->get_where('matakuliah', array('kode_mk' => $d->kode_mk))->row();
+            ?>
+              <div class="ibox">
+                <div class="ibox-title">
+                  <h5><?= $matakuliah->kode_mk . ' - ' . $matakuliah->nama_mk ?></h5>
+                  <div class="ibox-tools">
+                    <a class="collapse-link">
+                      <i class="fa fa-chevron-up"></i>
+                    </a>
                   </div>
                 </div>
-                <div class="table-responsive">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th width="7%">No</th>
-                        <th>Subject</th>
-                        <th>Year</th>
-                        <th>Periode</th>
-                        <th width="12%">Amount</th>
-                        <th width="12%">Status</th>
-                        <th width="7%">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $no = 1;
-                      foreach ($data as $d) {
-                      ?>
+                <div class="ibox-content">
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead>
                         <tr>
-                          <td><?= $no++ ?></td>
-                          <td><?= $d->kode_mk . ' - ' . $d->nama_mk ?></td>
-                          <td><?= $d->ta ?></td>
-                          <td><?= $d->bulan . ' ' . $d->tahun ?></td>
-                          <td style="text-align: right">Rp <?= number_format($d->nominal, 0, '', '.') ?></td>
-                          <td>Untaken</td>
-                          <td>
-                            <div class="checkbox checkbox-primary">
-                              <input type="checkbox" name="honor" id="honor<?= $no ?>" value="<?= $d->nominal . '|' . $d->id_honor ?>" class="honor">
-                              <label for="honor<?= $no ?>">&nbsp;</label>
-                            </div>
-                          </td>
+                          <th width="5%">No</th>
+                          <th width="10%">NIM</th>
+                          <th>Name</th>
+                          <th width="10%">Periode</th>
+                          <th width="20%">Action</th>
                         </tr>
-                      <?php
-                      }
-                      ?>
-                    </tbody>
-                  </table>
-                  <h2 style="text-align: right" id="total_honor">Rp 0</h2>
-                  <hr style="color: solid #ccc">
+                      </thead>
+                      <tbody>
+                        <?php
+                        $no = 1;
+                        $bap  = $this->m->daftarBAP($id_dosen, $d->id_daftar_mk)->result();
+                        foreach ($bap as $b) {
+                        ?>
+                          <tr>
+                            <td><?= $no++ ?></td>
+                            <td><?= $b->nim_asprak ?></td>
+                            <td><?= $b->nama_asprak ?></td>
+                            <td><?= bulanPanjang($b->bulan) ?></td>
+                            <td style="text-align: center">
+                              <a href="<?= base_url('BAP/PreviewBAP/' . substr(sha1($b->id_honor), 7, 7)) ?>" target="_blank">
+                                <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> See BAP</button>
+                              </a>
+                              <a href="<?= base_url('BAP/ApproveBAP/' . substr(sha1($b->id_honor), 7, 7)) ?>">
+                                <button class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve</button>
+                              </a>
+                            </td>
+                          </tr>
+                        <?php
+                        }
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
+            <?php
+            }
+            ?>
           </div>
         </div>
       </div>
