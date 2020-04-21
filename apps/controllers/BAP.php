@@ -44,7 +44,7 @@ class BAP extends CI_Controller
     $data['total']    = $honor;
     view('dosen/header', $data);
     view('dosen/view_presence', $data);
-    view('dosen/footer');
+    view('dosen/footer', $data);
   }
 
   public function ApprovePresence()
@@ -91,7 +91,7 @@ class BAP extends CI_Controller
 
   public function ApproveBAP($id)
   {
-    $honor  = $this->db->where('substring(sha1(id_honor), 8, 7) = "' . $id . '"')->get('honor')->row();
+    $honor  = $this->db->where('substring(sha1(id_honor), 20, 9) = "' . $id . '"')->get('honor')->row();
     if ($honor == true) {
       $input  = array(
         'tanggal_approve' => date('Y-m-d'),
