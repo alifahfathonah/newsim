@@ -31,7 +31,7 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
   <?php
   }
-  if (uri('2') == 'AddPresence') {
+  if (uri('2') == 'AddPresence' || uri('2') == 'EditPresence') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
@@ -130,7 +130,7 @@
           </a>
           </li>
           <?php
-          if (uri('2') == 'Presence' || uri('2') == 'AddPresence') {
+          if (uri('2') == 'Presence' || uri('2') == 'AddPresence' || uri('2') == 'EditPresence') {
             echo '<li class="active">';
           } else {
             echo '<li>';

@@ -110,7 +110,7 @@ if (uri('2') == 'Presence') {
   </script>
 <?php
 }
-if (uri('2') == 'AddPresence') {
+if (uri('2') == 'AddPresence' || uri('2') == 'EditPresence') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/clockpicker/clockpicker.js"></script>
