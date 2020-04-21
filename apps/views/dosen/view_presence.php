@@ -11,6 +11,33 @@
           <div class="col-md-12 col-sm-12">
             <div class="ibox">
               <div class="ibox-content">
+                <div class="row" style="margin-bottom: 10px">
+                  <div class="col-md-4 offset-md-8" id="refresh" style="text-align: right">
+                    <?php
+                    $approve  = 0;
+                    $pending  = 0;
+                    $no_action  = 0;
+                    $jumlah = 0;
+                    foreach ($bap as $b) {
+                      if ($b->approve_absen == '0') {
+                        $no_action = $no_action + 1;
+                      } elseif ($b->approve_absen == '1') {
+                        $approve = $approve + 1;
+                      } elseif ($b->approve_absen == '2') {
+                        $pending = $pending + 1;
+                      }
+                      $jumlah = $jumlah + 1;
+                    }
+                    if ($jumlah == $approve) {
+                      echo '<button class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve BAP</button>';
+                    } elseif ($pending > 0) {
+                      echo '<button class="btn btn-danger btn-sm" disabled><i class="fa fa-check"></i> Waiting to fix their presence</button>';
+                    } elseif ($no_action > 0) {
+                      echo '<button class="btn btn-danger btn-sm" disabled><i class="fa fa-check"></i> You must approve/not their presence</button>';
+                    }
+                    ?>
+                  </div>
+                </div>
                 <div class="table-responsive">
                   <table class="table table-bordered" width="100%">
                     <thead>
@@ -65,5 +92,3 @@
           </div>
         </div>
       </div>
-      <script>
-      </script>
