@@ -248,9 +248,9 @@ class Asprak extends CI_Controller
           $input['screenshot']     = $config['upload_path'] . '' . $screenshot;
         }
         print_r($input);
-        // $this->m->insertData('presensi_asprak', $input);
-        // set_flashdata('msg', '<div class="alert alert-success msg">Your presence successfully updated</div>');
-        // redirect('Asprak/Presence');
+        $this->db->where('substring(sha1(id_presensi_asprak), 8, 7) = "' . $id . '"')->update('presensi_asprak', $input);
+        set_flashdata('msg', '<div class="alert alert-success msg">Your presence successfully updated</div>');
+        redirect('Asprak/Presence');
       }
     } else {
       redirect('Asprak/Presence');
