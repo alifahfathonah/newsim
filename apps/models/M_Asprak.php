@@ -67,6 +67,15 @@ class M_Asprak extends CI_Model
     return $this->db->get();
   }
 
+  function dataPresensiAsprak($nim, $id)
+  {
+    $this->db->select('id_jadwal_asprak, date_format(asprak_masuk, "%m/%d/%Y") tanggal, date_format(asprak_masuk, "%H:%i") masuk, date_format(asprak_selesai, "%H:%i") selesai, modul, video');
+    $this->db->from('presensi_asprak');
+    $this->db->where('substring(sha1(id_presensi_asprak), 8, 7) = "' . $id . '"');
+    $this->db->where('nim_asprak', $nim);
+    return $this->db->get();
+  }
+
   function daftarMKAsprak($nim)
   {
     $this->db->select('daftarasprak.id_daftar_mk, prodi.strata, prodi.kode_prodi, matakuliah.id_mk, matakuliah.kode_mk, matakuliah.nama_mk');
