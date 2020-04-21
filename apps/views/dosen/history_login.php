@@ -46,36 +46,3 @@
           </div>
         </div>
       </div>
-      <script>
-        function hapus_inventaris(id) {
-          $.ajax({
-            url: '<?= base_url('StockLists/ajaxNamaStockList') ?>',
-            method: 'post',
-            data: {
-              id: id
-            },
-            success: function(response) {
-              swal({
-                title: 'Are you sure?',
-                text: 'Do you want to delete "' + response + '"',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-                closeOnConfirm: false
-              }, function() {
-                swal({
-                  title: 'Deleted!',
-                  text: 'Your stock list has been deleted',
-                  timer: 1500,
-                  type: 'success',
-                  showConfirmButton: false
-                }, function() {
-                  window.location.href = '<?= base_url('StockLists/DeleteStockList/') ?>' + id;
-                });
-              });
-            }
-          });
-        }
-      </script>
