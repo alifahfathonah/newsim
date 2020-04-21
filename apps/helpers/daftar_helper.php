@@ -73,6 +73,17 @@ if (!function_exists('tanggal_inggris')) {
   }
 }
 
+if (!function_exists('tanggal_inggris2')) {
+  function tanggal_inggris2($tanggal)
+  {
+    $pecah_tanggal  = explode('-', $tanggal);
+    $tanggal        = $pecah_tanggal[2];
+    $bulan          = bulanPanjang($pecah_tanggal[1]);
+    $tahun          = $pecah_tanggal[0];
+    return $tanggal . ' ' . $bulan . ' ' . $tahun;
+  }
+}
+
 if (!function_exists('tanggalInggris')) {
   function tanggalInggris($tanggal)
   {
