@@ -28,13 +28,6 @@
                   </div>
                 </div>
                 <div class="ibox-content">
-                  <div class="row" style="text-align: right">
-                    <div class="col-md-2 offset-md-10" style="margin-bottom: 5px">
-                      <button type="button" class="btn btn-success btn-sm">
-                        <i class="fa fa-check"></i> Approve All
-                      </button>
-                    </div>
-                  </div>
                   <div class="table-responsive">
                     <table class="table table-bordered">
                       <thead>
@@ -44,8 +37,7 @@
                           <th>Name</th>
                           <th width="10%">Periode</th>
                           <th width="10%">Status</th>
-                          <th width="20%">Action</th>
-                          <!-- <th width="7%">Mark</th> -->
+                          <th width="15%">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -61,19 +53,10 @@
                             <td><?= bulanPanjang($b->bulan) ?></td>
                             <td>Not Approved</td>
                             <td style="text-align: center">
-                              <a href="<?= base_url('BAP/PreviewBAP/' . substr(sha1($b->id_honor), 7, 7)) ?>" target="_blank">
-                                <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> See BAP</button>
-                              </a>
-                              <a href="<?= base_url('BAP/ApproveBAP/' . substr(sha1($b->id_honor), 7, 7)) ?>">
-                                <button class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve</button>
+                              <a href="<?= base_url('BAP/ViewPresence/' . substr(sha1($b->id_honor), 7, 7)) ?>" target="_blank">
+                                <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> See Presence</button>
                               </a>
                             </td>
-                            <!-- <td>
-                              <div class="radio" style="text-align: center">
-                                <input type="radio" name="tandai" id="tanda<?= $b->id_honor ?>" value="Cash" class="form-control">
-                                <label for="tanda<?= $b->id_honor ?>">&nbsp;</label>
-                              </div>
-                            </td> -->
                           </tr>
                         <?php
                         }
