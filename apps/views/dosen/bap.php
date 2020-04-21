@@ -53,7 +53,7 @@
                             <td><?= bulanPanjang($b->bulan) ?></td>
                             <td>Not Approved</td>
                             <td style="text-align: center">
-                              <a href="<?= base_url('BAP/ViewPresence/' . substr(sha1($b->id_honor), 7, 7)) ?>" target="_blank">
+                              <a href="<?= base_url('BAP/ViewPresence/' . substr(sha1($b->id_honor), 7, 7)) ?>">
                                 <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> See Presence</button>
                               </a>
                             </td>
