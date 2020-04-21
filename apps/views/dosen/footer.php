@@ -81,6 +81,13 @@ if (uri('1') == 'PracticumAssistant') {
   </script>
 <?php
 }
+if (uri('1') == 'BAP') {
+?>
+  <script>
+
+  </script>
+<?php
+}
 if (uri('1') == 'Setting') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
