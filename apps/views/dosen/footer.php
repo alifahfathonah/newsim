@@ -81,10 +81,46 @@ if (uri('1') == 'PracticumAssistant') {
   </script>
 <?php
 }
-if (uri('1') == 'BAP') {
+if (uri('2') == 'ViewPresence') {
 ?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/lightbox/ekko-lightbox.js"></script>
   <script>
+    $(document).on("click", '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox();
+    });
 
+    function approve(id) {
+      $.ajax({
+        url: '<?= base_url('BAP/ApprovePresence/') ?>' + id,
+        method: 'post',
+        data: {
+          id: id
+        },
+        success: function(response) {
+          if (response == 'true') {
+            document.getElementById('button' + id).innerHTML = '';
+            document.getElementById('button' + id).innerHTML = '<button class="btn btn-success btn-sm" disabled><i class="fa fa-check"></i> Approved</button>';
+          }
+        }
+      });
+    }
+
+    function pending(id) {
+      $.ajax({
+        url: '<?= base_url('BAP/PendingPresence/') ?>' + id,
+        method: 'post',
+        data: {
+          id: id
+        },
+        success: function(response) {
+          if (response == 'true') {
+            document.getElementById('button' + id).innerHTML = '';
+            document.getElementById('button' + id).innerHTML = '<button class="btn btn-danger btn-sm" disabled><i class="fa fa-ban"></i> Pending</button>';
+          }
+        }
+      });
+    }
   </script>
 <?php
 }
