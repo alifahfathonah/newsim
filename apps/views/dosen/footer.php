@@ -85,6 +85,27 @@ if (uri('2') == 'ViewPresence') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/lightbox/ekko-lightbox.js"></script>
   <script>
+    <?php
+    $approve  = 0;
+    $pending  = 0;
+    $no_action  = 0;
+    $jumlah = 0;
+    foreach ($bap as $b) {
+      if ($b->approve_absen == '0') {
+        $no_action = $no_action + 1;
+      } elseif ($b->approve_absen == '1') {
+        $approve = $approve + 1;
+      } elseif ($b->approve_absen == '2') {
+        $pending = $pending + 1;
+      }
+      $jumlah = $jumlah + 1;
+    }
+    ?>
+    var jumlah = <?= $jumlah ?>;
+    var belum = <?= $no_action ?>;
+    var iya = <?= $approve ?>;
+    var tahan = <?= $pending ?>;
+
     $(document).on("click", '[data-toggle="lightbox"]', function(event) {
       event.preventDefault();
       $(this).ekkoLightbox();
@@ -101,6 +122,11 @@ if (uri('2') == 'ViewPresence') {
           if (response == 'true') {
             document.getElementById('button' + id).innerHTML = '';
             document.getElementById('button' + id).innerHTML = '<button class="btn btn-success btn-sm" disabled><i class="fa fa-check"></i> Approved</button>';
+            iya = iya + 1;
+            belum = belum - 1;
+            if (iya == jumlah) {
+              document.getElementById('refresh').innerHTML = '<a href="<?= base_url('BAP/ApproveBAP/' . substr(sha1($total->id_honor), 19, 9)) ?>"><button class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve BAP</button></a>';
+            }
           }
         }
       });
@@ -117,6 +143,11 @@ if (uri('2') == 'ViewPresence') {
           if (response == 'true') {
             document.getElementById('button' + id).innerHTML = '';
             document.getElementById('button' + id).innerHTML = '<button class="btn btn-danger btn-sm" disabled><i class="fa fa-ban"></i> Pending</button>';
+            tahan = tahan + 1;
+            belum = belum - 1;
+            if (tahan > 0 && belum == 0) {
+              document.getElementById('refresh').innerHTML = '<button class="btn btn-danger btn-sm" disabled><i class="fa fa-check"></i> Waiting to fix their presence</button>';
+            }
           }
         }
       });
