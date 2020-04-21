@@ -27,6 +27,48 @@ class BAP extends CI_Controller
     view('dosen/footer');
   }
 
+  public function ViewPresence($id)
+  {
+    $data     = $this->data;
+    $honor    = $this->db->where('substring(sha1(id_honor), 8, 7) = "' . $id . '"')->get('honor')->row();
+    $periode  = $this->db->get_where('periode', array('id_periode' => $honor->id_periode))->row();
+    $between  = '"' . date('Y') . '-' . $periode->rentang_awal . '" and "' . date('Y') . '-' . $periode->rentang_akhir . '"';
+    $bap      = $this->m->previewBAPAsprak($honor->nim_asprak, $honor->id_daftar_mk, $between)->result();
+    $asprak   = $this->db->get_where('asprak', array('nim_asprak' => $honor->nim_asprak))->row();
+    $prodi    = $this->m->tampilProdiBAP($honor->id_daftar_mk)->row();
+    $data['title']    = 'View Presence | SIM Laboratorium';
+    $data['bap']      = $bap;
+    $data['asprak']   = $asprak;
+    $data['periode']  = $periode;
+    $data['prodi']    = $prodi;
+    $data['total']    = $honor;
+    view('dosen/header', $data);
+    view('dosen/view_presence', $data);
+    view('dosen/footer');
+  }
+
+  public function ApprovePresence()
+  {
+    $id = $_POST['id'];
+    $cek_data = $this->db->where('substring(sha1(id_presensi_asprak), 8, 7) = "' . $id . '"')->get('presensi_asprak')->row();
+    if ($cek_data) {
+      $input  = array('approve_absen' => '1');
+      $this->db->where('substring(sha1(id_presensi_asprak), 8, 7) = "' . $id . '"')->update('presensi_asprak', $input);
+      echo 'true';
+    }
+  }
+
+  public function PendingPresence()
+  {
+    $id = $_POST['id'];
+    $cek_data = $this->db->where('substring(sha1(id_presensi_asprak), 8, 7) = "' . $id . '"')->get('presensi_asprak')->row();
+    if ($cek_data) {
+      $input  = array('approve_absen' => '2');
+      $this->db->where('substring(sha1(id_presensi_asprak), 8, 7) = "' . $id . '"')->update('presensi_asprak', $input);
+      echo 'true';
+    }
+  }
+
   public function PreviewBAP($id)
   {
     $honor  = $this->db->where('substring(sha1(id_honor), 8, 7) = "' . $id . '"')->get('honor')->row();
