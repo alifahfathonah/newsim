@@ -76,7 +76,15 @@ class Auth extends CI_Controller
               set_userdata($session);
               redirect('Dashboard');
             } elseif ($cekData->jenisAkses == 'aslab') {
-              #
+              $session = array(
+                'login'     => $cekData->jenisAkses,
+                'id'        => $cekData->idUser,
+                'username'  => $cekData->username,
+                'id_aslab'  => $cekData->idAslab,
+                'jabatan'   => $cekData->jabatan
+              );
+              set_userdata($session);
+              redirect('Dashboard');
             } elseif ($cekData->jenisAkses == 'asprak') {
               #
             } elseif ($cekData->jenisAkses == 'dosen') {
@@ -95,15 +103,7 @@ class Auth extends CI_Controller
           // if ($cekData->jenisAkses == 'laboran') {
           //   
           // } elseif ($cekData->jenisAkses == 'aslab') {
-          //   $session = array(
-          //     'login'     => $cekData->jenisAkses,
-          //     'id'        => $cekData->idUser,
-          //     'username'  => $cekData->username,
-          //     'id_aslab'  => $cekData->idAslab,
-          //     'jabatan'   => $cekData->jabatan
-          //   );
-          //   set_userdata($session);
-          //   redirect('Dashboard');
+          //   
           // } elseif ($cekData->jenisAkses == 'asprak') {
           //   $session = array(
           //     'login'     => $cekData->jenisAkses,
