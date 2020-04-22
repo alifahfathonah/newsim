@@ -116,27 +116,6 @@ class Auth extends CI_Controller
           } elseif ($cekData->status == '0') {
             echo 'non aktif';
           }
-          // if ($cekData->jenisAkses == 'laboran') {
-          //   
-          // } elseif ($cekData->jenisAkses == 'aslab') {
-          //   
-          // } elseif ($cekData->jenisAkses == 'asprak') {
-          //   
-          // } elseif ($cekData->jenisAkses == 'magang') {
-          //   echo 4;
-          // } elseif ($cekData->jenisAkses == 'grant') {
-          //   echo 5;
-          // } elseif ($cekData->jenisAkses == 'dosen') {
-          //   if ($cekData->status == '1') {
-          //     
-          //   } elseif ($cekData->status == '2') {
-          //     set_flashdata('msg', '<div class="alert alert-danger">Please check your email for activate.</div>');
-          //     redirect('Auth');
-          //   } else {
-          //     set_flashdata('msg', '<div class="alert alert-danger">Your account deactived.</div>');
-          //     redirect('Auth');
-          //   }
-          // }
         } else {
           set_flashdata('msg', '<div class="alert alert-danger">Incorrect Username or Password</div>');
           redirect('Auth');
