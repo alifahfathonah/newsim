@@ -55,6 +55,37 @@ class Auth extends CI_Controller
               'provinsi'      => $geolocation['region']
             );
             $this->auth->insertData('history_login', $history);
+            if ($cekData->jenisAkses == 'laboran') {
+              if ($cekData->username == 'superadmin' || $cekData->username == 'edogawa') {
+                $session = array(
+                  'login'     => $cekData->jenisAkses,
+                  'id'        => $cekData->idUser,
+                  'username'  => $cekData->username,
+                  'nama'      => 'Staff Laboratory',
+                  'jabatan'   => $cekData->jabatan
+                );
+              } else {
+                $data_laboran = $this->db->get_where('laboran', array('id_laboran' => $cekData->id_laboran))->row();
+                $session = array(
+                  'login'     => $cekData->jenisAkses,
+                  'id'        => $cekData->idUser,
+                  'username'  => $cekData->username,
+                  'jabatan'   => $cekData->jabatan
+                );
+              }
+              set_userdata($session);
+              redirect('Dashboard');
+            } elseif ($cekData->jenisAkses == 'aslab') {
+              #
+            } elseif ($cekData->jenisAkses == 'asprak') {
+              #
+            } elseif ($cekData->jenisAkses == 'dosen') {
+              #
+            } elseif ($cekData->jenisAkses == 'magang') {
+              #
+            } elseif ($cekData->jenisAkses == 'grant') {
+              #
+            }
           } elseif ($cekData->status == '2') {
             set_flashdata('msg', '<div class="alert alert-danger">Please check your email to actived your account</div>');
             redirect();
@@ -62,25 +93,7 @@ class Auth extends CI_Controller
             echo 'non aktif';
           }
           // if ($cekData->jenisAkses == 'laboran') {
-          //   if ($cekData->username == 'superadmin' || $cekData->username == 'edogawa') {
-          //     $session = array(
-          //       'login'     => $cekData->jenisAkses,
-          //       'id'        => $cekData->idUser,
-          //       'username'  => $cekData->username,
-          //       'nama'      => 'Staff Laboratory',
-          //       'jabatan'   => $cekData->jabatan
-          //     );
-          //   } else {
-          //     $data_laboran = $this->db->get_where('laboran', array('id_laboran' => $cekData->id_laboran))->row();
-          //     $session = array(
-          //       'login'     => $cekData->jenisAkses,
-          //       'id'        => $cekData->idUser,
-          //       'username'  => $cekData->username,
-          //       'jabatan'   => $cekData->jabatan
-          //     );
-          //   }
-          //   set_userdata($session);
-          //   redirect('Dashboard');
+          //   
           // } elseif ($cekData->jenisAkses == 'aslab') {
           //   $session = array(
           //     'login'     => $cekData->jenisAkses,
