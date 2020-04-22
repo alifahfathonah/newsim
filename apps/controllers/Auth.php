@@ -44,79 +44,86 @@ class Auth extends CI_Controller
         $geolocation  = $this->geolocation('114.142.169.36');
         // $geolocation  = $this->geolocation($this->cekIP());
         if ($cekData) {
-          $history = array(
-            'ip'            => $this->cekIP(),
-            'browser'       => $this->cekUserAgent(),
-            'platform'      => $this->agent->platform(),
-            'username'      => $username,
-            'tanggal_login' => date('Y-m-d H:i:s'),
-            'kota'          => $geolocation['city'],
-            'provinsi'      => $geolocation['region']
-          );
-          $this->auth->insertData('history_login', $history);
-          if ($cekData->jenisAkses == 'laboran') {
-            if ($cekData->username == 'superadmin' || $cekData->username == 'edogawa') {
-              $session = array(
-                'login'     => $cekData->jenisAkses,
-                'id'        => $cekData->idUser,
-                'username'  => $cekData->username,
-                'nama'      => 'Staff Laboratory',
-                'jabatan'   => $cekData->jabatan
-              );
-            } else {
-              $data_laboran = $this->db->get_where('laboran', array('id_laboran' => $cekData->id_laboran))->row();
-              $session = array(
-                'login'     => $cekData->jenisAkses,
-                'id'        => $cekData->idUser,
-                'username'  => $cekData->username,
-                'jabatan'   => $cekData->jabatan
-              );
-            }
-            set_userdata($session);
-            redirect('Dashboard');
-          } elseif ($cekData->jenisAkses == 'aslab') {
-            $session = array(
-              'login'     => $cekData->jenisAkses,
-              'id'        => $cekData->idUser,
-              'username'  => $cekData->username,
-              'id_aslab'  => $cekData->idAslab,
-              'jabatan'   => $cekData->jabatan
+          if ($cekData->status == '1') {
+            $history = array(
+              'ip'            => $this->cekIP(),
+              'browser'       => $this->cekUserAgent(),
+              'platform'      => $this->agent->platform(),
+              'username'      => $username,
+              'tanggal_login' => date('Y-m-d H:i:s'),
+              'kota'          => $geolocation['city'],
+              'provinsi'      => $geolocation['region']
             );
-            set_userdata($session);
-            redirect('Dashboard');
-          } elseif ($cekData->jenisAkses == 'asprak') {
-            $session = array(
-              'login'     => $cekData->jenisAkses,
-              'id'        => $cekData->idUser,
-              'username'  => $cekData->username,
-              'nim'       => $cekData->nimAsprak,
-              'jabatan'   => $cekData->jabatan
-            );
-            set_userdata($session);
-            redirect('Asprak/Dashboard');
-          } elseif ($cekData->jenisAkses == 'magang') {
-            echo 4;
-          } elseif ($cekData->jenisAkses == 'grant') {
-            echo 5;
-          } elseif ($cekData->jenisAkses == 'dosen') {
-            if ($cekData->status == '1') {
-              $session = array(
-                'login'     => $cekData->jenisAkses,
-                'id'        => $cekData->idUser,
-                'username'  => $cekData->username,
-                'id_dosen'  => $cekData->id_dosen,
-                'jabatan'   => $cekData->jabatan
-              );
-              set_userdata($session);
-              redirect('Dashboard');
-            } elseif ($cekData->status == '2') {
-              set_flashdata('msg', '<div class="alert alert-danger">Please check your email for activate.</div>');
-              redirect('Auth');
-            } else {
-              set_flashdata('msg', '<div class="alert alert-danger">Your account deactived.</div>');
-              redirect('Auth');
-            }
+            $this->auth->insertData('history_login', $history);
+          } elseif ($cekData->status == '2') {
+            set_flashdata('msg', '<div class="alert alert-danger">Please check your email to actived your account</div>');
+            redirect();
+          } elseif ($cekData->status == '0') {
+            echo 'non aktif';
           }
+          // if ($cekData->jenisAkses == 'laboran') {
+          //   if ($cekData->username == 'superadmin' || $cekData->username == 'edogawa') {
+          //     $session = array(
+          //       'login'     => $cekData->jenisAkses,
+          //       'id'        => $cekData->idUser,
+          //       'username'  => $cekData->username,
+          //       'nama'      => 'Staff Laboratory',
+          //       'jabatan'   => $cekData->jabatan
+          //     );
+          //   } else {
+          //     $data_laboran = $this->db->get_where('laboran', array('id_laboran' => $cekData->id_laboran))->row();
+          //     $session = array(
+          //       'login'     => $cekData->jenisAkses,
+          //       'id'        => $cekData->idUser,
+          //       'username'  => $cekData->username,
+          //       'jabatan'   => $cekData->jabatan
+          //     );
+          //   }
+          //   set_userdata($session);
+          //   redirect('Dashboard');
+          // } elseif ($cekData->jenisAkses == 'aslab') {
+          //   $session = array(
+          //     'login'     => $cekData->jenisAkses,
+          //     'id'        => $cekData->idUser,
+          //     'username'  => $cekData->username,
+          //     'id_aslab'  => $cekData->idAslab,
+          //     'jabatan'   => $cekData->jabatan
+          //   );
+          //   set_userdata($session);
+          //   redirect('Dashboard');
+          // } elseif ($cekData->jenisAkses == 'asprak') {
+          //   $session = array(
+          //     'login'     => $cekData->jenisAkses,
+          //     'id'        => $cekData->idUser,
+          //     'username'  => $cekData->username,
+          //     'nim'       => $cekData->nimAsprak,
+          //     'jabatan'   => $cekData->jabatan
+          //   );
+          //   set_userdata($session);
+          //   redirect('Asprak/Dashboard');
+          // } elseif ($cekData->jenisAkses == 'magang') {
+          //   echo 4;
+          // } elseif ($cekData->jenisAkses == 'grant') {
+          //   echo 5;
+          // } elseif ($cekData->jenisAkses == 'dosen') {
+          //   if ($cekData->status == '1') {
+          //     $session = array(
+          //       'login'     => $cekData->jenisAkses,
+          //       'id'        => $cekData->idUser,
+          //       'username'  => $cekData->username,
+          //       'id_dosen'  => $cekData->id_dosen,
+          //       'jabatan'   => $cekData->jabatan
+          //     );
+          //     set_userdata($session);
+          //     redirect('Dashboard');
+          //   } elseif ($cekData->status == '2') {
+          //     set_flashdata('msg', '<div class="alert alert-danger">Please check your email for activate.</div>');
+          //     redirect('Auth');
+          //   } else {
+          //     set_flashdata('msg', '<div class="alert alert-danger">Your account deactived.</div>');
+          //     redirect('Auth');
+          //   }
+          // }
         } else {
           set_flashdata('msg', '<div class="alert alert-danger">Incorrect Username or Password</div>');
           redirect('Auth');
@@ -217,20 +224,36 @@ class Auth extends CI_Controller
           set_flashdata('msg', '<div class="alert alert-danger msg">NIP already used to create account. You can login with your username and password.</div>');
           redirect();
         } else {
-          $input  = array(
-            'id_dosen'    => $cek_nip->id_dosen,
-            'username'    => $username_user,
-            'email'       => $email_user,
-            'password'    => $password_user,
-            'jenisAkses'  => 'dosen',
-            'jabatan'     => 'Lecture',
-            'status'      => '0'
-          );
-          $this->auth->insertData('users', $input);
-          $input  = array('email_dosen' => $email_user);
-          $this->db->where('nip_dosen', $nip_user)->update('dosen', $input);
-          set_flashdata('msg', '<div class="alert alert-success msg">Thank you for register. Now you can login using your account.</div>');
-          redirect();
+          if (preg_match('/telkomuniversity.ac.id/', $email_user)) {
+            $input  = array(
+              'id_dosen'    => $cek_nip->id_dosen,
+              'username'    => $username_user,
+              'email'       => $email_user,
+              'password'    => $password_user,
+              'jenisAkses'  => 'dosen',
+              'jabatan'     => 'Lecture',
+              'status'      => '2'
+            );
+            $this->auth->insertData('users', $input);
+            $input  = array('email_dosen' => $email_user);
+            $this->db->where('nip_dosen', $nip_user)->update('dosen', $input);
+            $token  = base64_encode(random_bytes(32));
+            $this->email_konfirm_akun($cek_nip->nama_dosen, $email_user, $username_user, $token);
+            $waktu  = date('Y-m-d H:i:s');
+            $input  = array(
+              'email'             => $email_user,
+              'username'          => $username_user,
+              'nama_user'         => $cek_nip->nama_dosen,
+              'token'             => $token,
+              'tanggal_pengajuan' => $waktu
+            );
+            $this->auth->insertData('forgot_password', $input);
+            set_flashdata('msg', '<div class="alert alert-success">Thank you for register. Please check your inbox/spam to active your account</div>');
+            redirect();
+          } else {
+            set_flashdata('msg', '<div class="alert alert-danger">Sorry you must use email from Telkom University</div>');
+            redirect('Auth/RegisterLecture');
+          }
         }
       } else {
         set_flashdata('msg', '<div class="alert alert-danger msg">Sorry your NIP not registered.</div>');
@@ -313,6 +336,29 @@ class Auth extends CI_Controller
     }
   }
 
+  public function ConfirmAccount()
+  {
+    $username = get('username');
+    $token    = get('token');
+    $cek_data = $this->db->get_where('users', array('username' => $username))->row();
+    if ($cek_data) {
+      $cek_token  = $this->db->get_where('forgot_password', array('token' => $token))->row();
+      if ($cek_token) {
+        $input  = array('status' => '1');
+        $this->db->where('username', $username)->update('users', $input);
+        $this->db->where('username', $username)->where('token', $token)->delete('forgot_password');
+        set_flashdata('msg', '<div class="alert alert-success">Your account successfully active. Now you can login</div>');
+        redirect();
+      } else {
+        set_flashdata('msg', '<div class="alert alert-danger">Token not matched or invalid</div>');
+        redirect();
+      }
+    } else {
+      set_flashdata('msg', '<div class="alert alert-danger">Username not registered</div>');
+      redirect();
+    }
+  }
+
   public function ResetPassword()
   {
     $username = get('username');
@@ -385,6 +431,36 @@ class Auth extends CI_Controller
       } else {
         echo 'null';
       }
+    }
+  }
+
+  private function email_konfirm_akun($nama, $email, $username, $token)
+  {
+    $response = false;
+    $mail             = new PHPMailer();
+    $mail->isSMTP();
+    $mail->Host       = 'simlabfit.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'admin@simlabfit.com';
+    $mail->Password   = 'superlab5f1t';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port       = 465;
+    $mail->setFrom('admin@simlabfit.com', 'SIM Laboratorium FIT');
+    $mail->addReplyTo('admin@simlabfit.com', 'SIM Laboratorium FIT');
+    $mail->addAddress($email);
+    $mail->Subject    = 'Confirm Account SIM Laboratorium FIT';
+    $mail->isHTML(true);
+    $data['nama']     = $nama;
+    $data['username'] = $username;
+    $data['token']    = $token;
+    $isi = view('auth/email_konfirm_akun', $data, true);
+    $mailContent  = $isi;
+    $mail->Body = $mailContent;
+    if (!$mail->send()) {
+      echo 'Message could not be sent.<br>';
+      echo 'Mailer Error: ' . $mail->ErrorInfo;
+    } else {
+      echo 'Message has been sent';
     }
   }
 
