@@ -53,7 +53,7 @@
               </a>
             </div>
             <div class="col-sm-12 col-md-6" style="margin-bottom: 5px">
-              <a href="#" style="color: inherit">
+              <a href="<?= base_url('Auth/RegisterLecture') ?>" style="color: inherit">
                 <button class="btn btn-sm btn-white btn-block">Lecture</button>
               </a>
             </div>
