@@ -6,6 +6,11 @@
       <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
           <div class="col-md-12 col-sm-12">
+            <?php
+            if (flashdata('msg')) {
+              echo flashdata('msg');
+            }
+            ?>
             <div class="ibox">
               <div class="ibox-content">
                 <div class="row" style="text-align: right">
