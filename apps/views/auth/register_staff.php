@@ -8,7 +8,6 @@
   <link rel="shortcut icon" type="image/png" href="<?= base_url('assets/img/favicon.png') ?>" />
   <link href="<?= base_url('assets/inspinia/') ?>css/bootstrap.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>font-awesome/css/font-awesome.css" rel="stylesheet">
-  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
   <style>
@@ -31,8 +30,8 @@
       <div class="row">
         <div class="col-sm-12 col-md-4 offset-md-4">
           <?php
-          if (flashdata('pesan')) {
-            echo flashdata('pesan');
+          if (flashdata('msg')) {
+            echo flashdata('msg');
           }
           ?>
           <div class="ibox-content" style="background-color: rgba(255,255,255,0.8)">
@@ -41,18 +40,14 @@
             <h3 style="text-align: center; margin-bottom: 20px">Create New Account for Staff Laboratory</h3>
             <form class="m-t" role="form" method="post" action="<?= base_url('Auth/RegisterStaff') ?>">
               <div class="form-group">
-                <select name="nip_laboran" id="nip_laboran" class="select_nip form-control" required>
-                  <option></option>
-                  <?php
-                  foreach ($data as $d) {
-                    echo '<option value="' . $d->id_laboran . '">' . $d->nip_laboran . '</option>';
-                  }
-                  ?>
-                </select>
+                <input type="text" name="nip_laboran" id="nip_laboran" class="form-control" placeholder="Input Your NIP" required>
               </div>
               <div class="form-group">
                 <input type="text" name="username_user" id="username_user" class="form-control" placeholder="Username" required onkeyup="cekUsername()">
                 <p id="status_username" style="text-align: center"></p>
+              </div>
+              <div class="form-group">
+                <input type="text" name="email_user" id="email_user" class="form-control" placeholder="Input Your Email" required>
               </div>
               <div class="form-group">
                 <input type="password" name="password_user" id="password_user" class="form-control" placeholder="Password" required>
@@ -76,14 +71,7 @@
   </div>
   <script src="<?= base_url('assets/inspinia/') ?>js/jquery-3.1.1.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/bootstrap.min.js"></script>
-  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
   <script>
-    $(document).ready(function() {
-      $(".select_nip").select2({
-        placeholder: "Select Your NIP"
-      });
-    });
-
     function cekUsername() {
       var username = document.getElementById('username_user').value;
       if (username) {
