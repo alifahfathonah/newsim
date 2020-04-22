@@ -104,6 +104,7 @@ class M_Asprak extends CI_Model
     $this->db->join('periode', 'honor.id_periode = periode.id_periode');
     $this->db->join('tahun_ajaran', 'daftar_mk.id_ta = tahun_ajaran.id_ta');
     $this->db->where('honor.nim_asprak', $nim);
+    $this->db->where('honor.status', '0');
     $this->db->where('honor.approve_dosen', '1');
     $this->db->order_by('honor.id_honor', 'desc');
     return $this->db->get();
