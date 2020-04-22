@@ -166,6 +166,18 @@
           </a>
           </li>
           <?php
+          if (uri('2') == 'PracticumReport') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Asprak/PracticumReport') ?>">
+            <i class="fa fa-file-text-o"></i>
+            <span class="nav-label">Practicum Report</span>
+          </a>
+          </li>
+          <?php
           if (uri('2') == 'Setting') {
             echo '<li class="active">';
           } else {
