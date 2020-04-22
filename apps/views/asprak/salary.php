@@ -35,7 +35,7 @@
                                     <label for="transfer">Bank Transfer</label>
                                   </div>
                                   <div class="radio">
-                                    <input type="radio" name="pilihan" id="linkaja" value="Linkaja">
+                                    <input type="radio" name="pilihan" id="linkaja" value="LinkJja">
                                     <label for="linkaja">Linkaja</label>
                                   </div>
                                 </div>
