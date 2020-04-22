@@ -114,7 +114,8 @@ class Auth extends CI_Controller
             set_flashdata('msg', '<div class="alert alert-danger">Please check your email to actived your account</div>');
             redirect();
           } elseif ($cekData->status == '0') {
-            echo 'non aktif';
+            set_flashdata('msg', '<div class="alert alert-danger">Your account not active. Please contact our admin</div>');
+            redirect('Auth');
           }
         } else {
           set_flashdata('msg', '<div class="alert alert-danger">Incorrect Username or Password</div>');
