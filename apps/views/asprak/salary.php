@@ -61,12 +61,12 @@
                     <thead>
                       <tr>
                         <th width="7%">No</th>
-                        <th>Subject</th>
-                        <th>Year</th>
-                        <th>Periode</th>
+                        <th width="30%">Subject</th>
+                        <th width="10%">Year</th>
+                        <th width="16%">Periode</th>
                         <th width="12%">Amount</th>
                         <th width="12%">Status</th>
-                        <th width="7%">Action</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -81,7 +81,7 @@
                           <td><?= $d->bulan . ' ' . $d->tahun ?></td>
                           <td style="text-align: right">Rp <?= number_format($d->nominal, 0, '', '.') ?></td>
                           <td>Untaken</td>
-                          <td>
+                          <td style="text-align: center">
                             <div class="checkbox checkbox-primary">
                               <input type="checkbox" name="honor" id="honor<?= $no ?>" value="<?= $d->nominal . '|' . $d->id_honor ?>" class="honor">
                               <label for="honor<?= $no ?>">&nbsp;</label>
@@ -95,6 +95,37 @@
                   </table>
                   <h2 style="text-align: right" id="total_honor">Rp 0</h2>
                   <hr style="color: solid #ccc">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th width="7%">No</th>
+                        <th width="30%">Subject</th>
+                        <th width="10%">Year</th>
+                        <th width="16%">Periode</th>
+                        <th width="12%">Amount</th>
+                        <th width="12%">Status</th>
+                        <th>Payment Method</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $no = 1;
+                      foreach ($honor as $d) {
+                      ?>
+                        <tr>
+                          <td><?= $no++ ?></td>
+                          <td><?= $d->kode_mk . ' - ' . $d->nama_mk ?></td>
+                          <td><?= $d->ta ?></td>
+                          <td><?= $d->bulan . ' ' . $d->tahun ?></td>
+                          <td style="text-align: right">Rp <?= number_format($d->nominal, 0, '', '.') ?></td>
+                          <td>Taken</td>
+                          <td><?= $d->opsi_pengambilan ?></td>
+                        </tr>
+                      <?php
+                      }
+                      ?>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
