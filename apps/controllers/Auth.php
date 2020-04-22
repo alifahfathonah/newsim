@@ -96,7 +96,15 @@ class Auth extends CI_Controller
               set_userdata($session);
               redirect('Asprak/Dashboard');
             } elseif ($cekData->jenisAkses == 'dosen') {
-              #
+              $session = array(
+                'login'     => $cekData->jenisAkses,
+                'id'        => $cekData->idUser,
+                'username'  => $cekData->username,
+                'id_dosen'  => $cekData->id_dosen,
+                'jabatan'   => $cekData->jabatan
+              );
+              set_userdata($session);
+              redirect('Dashboard');
             } elseif ($cekData->jenisAkses == 'magang') {
               #
             } elseif ($cekData->jenisAkses == 'grant') {
@@ -120,15 +128,7 @@ class Auth extends CI_Controller
           //   echo 5;
           // } elseif ($cekData->jenisAkses == 'dosen') {
           //   if ($cekData->status == '1') {
-          //     $session = array(
-          //       'login'     => $cekData->jenisAkses,
-          //       'id'        => $cekData->idUser,
-          //       'username'  => $cekData->username,
-          //       'id_dosen'  => $cekData->id_dosen,
-          //       'jabatan'   => $cekData->jabatan
-          //     );
-          //     set_userdata($session);
-          //     redirect('Dashboard');
+          //     
           //   } elseif ($cekData->status == '2') {
           //     set_flashdata('msg', '<div class="alert alert-danger">Please check your email for activate.</div>');
           //     redirect('Auth');
