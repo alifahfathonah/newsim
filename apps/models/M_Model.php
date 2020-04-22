@@ -23,7 +23,7 @@ class M_Model extends CI_Model
 
   function profilLaboran($id)
   {
-    return $this->db->get_where('laboran', array('id_laboran' => $id));
+    return $this->db->get_where('laboran', array('nip_laboran' => $id));
   }
 
   function profilDosen($id)
