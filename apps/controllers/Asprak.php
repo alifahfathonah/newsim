@@ -435,12 +435,12 @@ class Asprak extends CI_Controller
       $id_honor = input('id_honor');
       $pilihan  = input('pilihan');
       $tmp      = explode('|', $id_honor);
-      print_r($tmp);
       for ($i = 1; $i < count($tmp); $i++) {
-        $input  = array('opsi_pengambilan' => $pilihan);
-        print_r($input);
-        echo '<br>';
+        $input  = array('opsi_pengambilan' => $pilihan, 'status' => '1');
+        $this->db->where('id_honor', $tmp[$i])->update('honor', $input);
       }
+      set_flashdata('msg', '<div class="alert alert-success msg">Your BAP successfully submited</div>');
+      redirect('Asprak/Salary');
     }
   }
 
