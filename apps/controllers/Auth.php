@@ -304,8 +304,9 @@ class Auth extends CI_Controller
           $id         = $data->nimAsprak;
           $nama_user  = $this->db->get_where('asprak', array('nim_asprak' => $id))->row()->nama_asprak;
         }
-        if ($data->nipDosen) {
-          echo 'dosen';
+        if ($data->id_dosen) {
+          $id         = $data->id_dosen;
+          $nama_user  = $this->db->get_where('dosen', array('id_dosen' => $id))->row()->nama_dosen;
         }
         if ($data->id_laboran) {
           $id         = $data->id_laboran;
