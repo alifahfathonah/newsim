@@ -206,6 +206,12 @@ if (uri('2') == 'Salary') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
   <script>
+    window.setTimeout(function() {
+      $(".msg").fadeTo(500, 0).slideUp(500, function() {
+        $(this).remove();
+      });
+    }, 3500);
+
     $(document).ready(function() {
       $('.dataTables').DataTable({
         pageLength: 10,
