@@ -125,6 +125,16 @@ class M_Asprak extends CI_Model
     return $this->db->get();
   }
 
+  function daftarLaporan($nim)
+  {
+    $this->db->select('laporan_praktikum.id_laporan_praktikum, date_format(laporan_praktikum.tanggal_upload, "%Y-%m-%d") tanggal, date_format(laporan_praktikum.tanggal_upload, "%H:%i:%s") jam, laporan_praktikum.catatan_revisi, laporan_praktikum.status_laporan, laporan_praktikum.nama_file, matakuliah.kode_mk, matakuliah.nama_mk');
+    $this->db->from('laporan_praktikum');
+    $this->db->join('daftar_mk', 'laporan_praktikum.id_daftar_mk = daftar_mk.id_daftar_mk');
+    $this->db->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk');
+    $this->db->where('laporan_praktikum.nim_asprak', $nim);
+    return $this->db->get();
+  }
+
   function daftarBank()
   {
     return $this->db->get('bank');
