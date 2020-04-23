@@ -49,6 +49,22 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
   <?php
   }
+  if (uri('2') == 'PracticumReport') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <style>
+      .select2-dropdown {
+        z-index: 10060 !important;
+        /*1051;*/
+      }
+
+      .select2 {
+        width: 100% !important;
+      }
+    </style>
+  <?php
+  }
   if (uri('2') == 'Setting') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
