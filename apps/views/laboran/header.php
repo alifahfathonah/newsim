@@ -175,6 +175,9 @@
             <li>
               <a href="<?= base_url('Laboran/#') ?>">Presence Asprak</a>
             </li>
+            <li>
+              <a href="<?= base_url('Practicum/Report') ?>">Practicum Report</a>
+            </li>
           </ul>
           </li>
           <?php
