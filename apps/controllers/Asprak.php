@@ -416,6 +416,45 @@ class Asprak extends CI_Controller
     echo $output;
   }
 
+  public function PracticumReport()
+  {
+    set_rules('daftar_mk', 'Courses', 'required|trim');
+    if (validation_run() == false) {
+      $data           = $this->data;
+      $data['title']  = 'Practicum Report | SIM Laboratorium';
+      $data['data']   = $this->a->daftarLaporan(userdata('nim'))->result();
+      view('asprak/header', $data);
+      view('asprak/practicum_report', $data);
+      view('asprak/footer');
+    } else {
+      $id_daftar_mk = input('daftar_mk');
+      $data = $this->db->select('tahun_ajaran.ta, daftar_mk.kode_mk, matakuliah.nama_mk')->from('daftar_mk')->join('tahun_ajaran', 'daftar_mk.id_ta = tahun_ajaran.id_ta')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_daftar_mk', $id_daftar_mk)->get()->row();
+      print_r($data);
+      echo '<br>';
+      $nama_file  = $data->ta . '_' . $data->kode_mk . '_' . preg_replace('/[^a-zA-Z0-9]/', '_', $data->nama_mk) . '.pdf';
+      $input  = array(
+        'tanggal_upload'  => date('Y-m-d H:i:s'),
+        'status_laporan'  => 'On Progress',
+        'id_daftar_mk'    => $id_daftar_mk,
+        'nim_asprak'      => userdata('nim')
+      );
+      $config['upload_path']    = 'assets/laporan/asprak/';
+      $config['allowed_types']  = 'pdf';
+      $config['max_size']       = 1024 * 100;
+      $config['overwrite']      = true;
+      $config['file_name']      = $nama_file;
+      $this->load->library('upload', $config);
+      if ($this->upload->do_upload('file_laporan')) {
+        $input['nama_file'] = $config['upload_path'] . '' . $nama_file;
+      } else {
+        print_r($this->upload->display_errors());
+      }
+      $this->db->insert('laporan_praktikum', $input);
+      set_flashdata('msg', '<div class="alert alert-success msg">Your practicum report successfully submited</div>');
+      redirect('Asprak/PracticumReport');
+    }
+  }
+
   public function Salary()
   {
     $data           = $this->data;
