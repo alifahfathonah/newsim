@@ -205,6 +205,29 @@ class M_Model extends CI_Model
     return $this->db->get();
   }
 
+  function daftarLaporanAsprak_Tahun_MK($id_ta, $kode_mk)
+  {
+    $this->db->select('laporan_praktikum.id_laporan_praktikum, date_format(laporan_praktikum.tanggal_upload, "%Y-%m-%d") tanggal, date_format(laporan_praktikum.tanggal_upload, "%H:%i:%s") jam, laporan_praktikum.nama_file, laporan_praktikum.catatan_revisi, laporan_praktikum.status_laporan, matakuliah.kode_mk, matakuliah.nama_mk');
+    $this->db->from('laporan_praktikum');
+    $this->db->join('daftar_mk', 'laporan_praktikum.id_daftar_mk = daftar_mk.id_daftar_mk');
+    $this->db->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk');
+    $this->db->where('daftar_mk.id_ta', $id_ta);
+    $this->db->where('daftar_mk.kode_mk', $kode_mk);
+    $this->db->order_by('laporan_praktikum.status_laporan', 'asc');
+    return $this->db->get();
+  }
+
+  function daftarLaporanAsprak_Tahun($id_ta)
+  {
+    $this->db->select('laporan_praktikum.id_laporan_praktikum, date_format(laporan_praktikum.tanggal_upload, "%Y-%m-%d") tanggal, date_format(laporan_praktikum.tanggal_upload, "%H:%i:%s") jam, laporan_praktikum.nama_file, laporan_praktikum.catatan_revisi, laporan_praktikum.status_laporan, matakuliah.kode_mk, matakuliah.nama_mk');
+    $this->db->from('laporan_praktikum');
+    $this->db->join('daftar_mk', 'laporan_praktikum.id_daftar_mk = daftar_mk.id_daftar_mk');
+    $this->db->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk');
+    $this->db->where('daftar_mk.id_ta', $id_ta);
+    $this->db->order_by('laporan_praktikum.status_laporan', 'asc');
+    return $this->db->get();
+  }
+
   function daftarAslab($tahun)
   {
     return $this->db->order_by('namaLengkap', 'asc')->get_where('aslab', array('tahunAjaran' => $tahun));
