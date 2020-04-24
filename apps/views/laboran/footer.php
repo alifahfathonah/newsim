@@ -23,6 +23,43 @@
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/toastr/toastr.min.js"></script>
+<script>
+  <?php
+  if ($laporan_asprak > 0) {
+  ?>
+    $(function() {
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "progressBar": false,
+        "preventDuplicates": false,
+        "positionClass": "toast-bottom-right",
+        "onclick": null,
+        "showDuration": "400",
+        "hideDuration": "1000",
+        "timeOut": "0",
+        "extendedTimeOut": "0",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+      toastr.warning("You have <?= $laporan_asprak ?> practicum report to check. Please go to Practicum &rarr; Practicum Report");
+    });
+  <?php
+  }
+  ?>
+  $(document).ready(function() {
+    $(".tahun_ajaran").select2({
+      placeholder: "Select Year",
+    });
+
+    $(".daftar_mk").select2({
+      placeholder: "Select Courses",
+    });
+  });
+</script>
 <script>
   window.setTimeout(function() {
     $(".msg").fadeTo(500, 0).slideUp(500, function() {
