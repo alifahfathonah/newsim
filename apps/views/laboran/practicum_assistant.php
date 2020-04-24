@@ -47,7 +47,7 @@
             <div class="ibox">
               <div class="ibox-content">
                 <div class="table-responsive">
-                  <table class="table table-striped table-bordered table-hover daftar_lab" width="100%">
+                  <table class="table table-striped table-bordered table-hover asprak" width="100%">
                     <thead>
                       <tr>
                         <th width="7%">No</th>
