@@ -91,7 +91,7 @@ class Practicum extends CI_Controller
   public function PracticumAssistant()
   {
     $data           = $this->data;
-    $data['title']  = 'Courses | SIM Laboratorium';
+    $data['title']  = 'Practicum Assistant | SIM Laboratorium';
     $data['data']   = $this->m->daftarAsprak()->result();
     view('laboran/header', $data);
     view('laboran/practicum_assistant', $data);
