@@ -58,7 +58,7 @@
             <div class="ibox">
               <div class="ibox-content">
                 <div class="table-responsive">
-                  <table class="table table-striped table-bordered table-hover daftar_lab" width="100%">
+                  <table class="table table-striped table-bordered table-hover courses" width="100%">
                     <thead>
                       <tr>
                         <th width="7%">No</th>
@@ -134,43 +134,3 @@
           </div>
         </div>
       </div>
-      <script>
-        function hanya_angka(event) {
-          var angka = (event.which) ? event.which : event.keyCode
-          if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
-            return false;
-          return true;
-        }
-
-        function hapus_matakuliah(id) {
-          $.ajax({
-            url: '<?= base_url('Practicum/ajaxMataKuliah') ?>',
-            method: 'post',
-            data: {
-              id: id
-            },
-            success: function(response) {
-              swal({
-                title: 'Are you sure?',
-                text: 'Do you want to delete "' + response + '"',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-                closeOnConfirm: false
-              }, function() {
-                swal({
-                  title: 'Deleted!',
-                  text: 'Courses been deleted',
-                  timer: 1500,
-                  type: 'success',
-                  showConfirmButton: false
-                }, function() {
-                  window.location.href = '<?= base_url('Practicum/DeleteCourses/') ?>' + id;
-                });
-              });
-            }
-          });
-        }
-      </script>
