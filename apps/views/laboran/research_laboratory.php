@@ -59,31 +59,27 @@
                                 <label class="font-bold">Location</label>
                                 <div class="row">
                                   <div class="col-md-2 col-sm-6">
-                                    <div class="i-checks">
-                                      <label>
-                                        <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 1" required> <i></i> Lantai 1
-                                      </label>
+                                    <div class="radio">
+                                      <input type="radio" name="lokasi_lab" id="lantai1" value="Lantai 1" required>
+                                      <label for="lantai1">Lantai 1</label>
                                     </div>
                                   </div>
                                   <div class="col-md-2 col-sm-6">
-                                    <div class="i-checks">
-                                      <label>
-                                        <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 2" required> <i></i> Lantai 2
-                                      </label>
+                                    <div class="radio">
+                                      <input type="radio" name="lokasi_lab" id="lantai2" value="Lantai 2" required>
+                                      <label for="lantai2">Lantai 2</label>
                                     </div>
                                   </div>
                                   <div class="col-md-2 col-sm-6">
-                                    <div class="i-checks">
-                                      <label>
-                                        <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 3" required> <i></i> Lantai 3
-                                      </label>
+                                    <div class="radio">
+                                      <input type="radio" name="lokasi_lab" id="lantai3" value="Lantai 3" required>
+                                      <label for="lantai3">Lantai 3</label>
                                     </div>
                                   </div>
                                   <div class="col-md-2 col-sm-6">
-                                    <div class="i-checks">
-                                      <label>
-                                        <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 4" required> <i></i> Lantai 4
-                                      </label>
+                                    <div class="radio">
+                                      <input type="radio" name="lokasi_lab" id="lantai4" value="Lantai 4" required>
+                                      <label for="lantai4">Lantai 4</label>
                                     </div>
                                   </div>
                                 </div>
@@ -179,31 +175,27 @@
                                         <label class="font-bold">Location</label>
                                         <div class="row">
                                           <div class="col-md-2 col-sm-6">
-                                            <div class="i-checks">
-                                              <label>
-                                                <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 1" <?php if ($d->lokasiLab == 'Lantai 1') echo 'checked'; ?> required> <i></i> Lantai 1
-                                              </label>
+                                            <div class="radio">
+                                              <input type="radio" name="lokasi_lab" id="lantai1" value="Lantai 1" <?php if ($d->lokasiLab == 'Lantai 1') echo 'checked'; ?> required>
+                                              <label for="lantai1">Lantai 1</label>
                                             </div>
                                           </div>
                                           <div class="col-md-2 col-sm-6">
-                                            <div class="i-checks">
-                                              <label>
-                                                <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 2" <?php if ($d->lokasiLab == 'Lantai 2') echo 'checked'; ?> required> <i></i> Lantai 2
-                                              </label>
+                                            <div class="radio">
+                                              <input type="radio" name="lokasi_lab" id="lantai2" value="Lantai 2" <?php if ($d->lokasiLab == 'Lantai 2') echo 'checked'; ?> required>
+                                              <label for="lantai2">Lantai 2</label>
                                             </div>
                                           </div>
                                           <div class="col-md-2 col-sm-6">
-                                            <div class="i-checks">
-                                              <label>
-                                                <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 3" <?php if ($d->lokasiLab == 'Lantai 3') echo 'checked'; ?> required> <i></i> Lantai 3
-                                              </label>
+                                            <div class="radio">
+                                              <input type="radio" name="lokasi_lab" id="lantai3" value="Lantai 3" <?php if ($d->lokasiLab == 'Lantai 3') echo 'checked'; ?> required>
+                                              <label for="lantai3">Lantai 3</label>
                                             </div>
                                           </div>
                                           <div class="col-md-2 col-sm-6">
-                                            <div class="i-checks">
-                                              <label>
-                                                <input type="radio" name="lokasi_lab" id="lokasi_lab" value="Lantai 4" <?php if ($d->lokasiLab == 'Lantai 4') echo 'checked'; ?> required> <i></i> Lantai 4
-                                              </label>
+                                            <div class="radio">
+                                              <input type="radio" name="lokasi_lab" id="lantai4" value="Lantai 4" <?php if ($d->lokasiLab == 'Lantai 4') echo 'checked'; ?> required>
+                                              <label for="lantai4">Lantai 4</label>
                                             </div>
                                           </div>
                                         </div>
@@ -230,36 +222,3 @@
           </div>
         </div>
       </div>
-      <script>
-        function hapus_lab(id) {
-          $.ajax({
-            url: '<?= base_url('Laboratory/ajaxNamaLab') ?>',
-            method: 'post',
-            data: {
-              id: id
-            },
-            success: function(response) {
-              swal({
-                title: 'Are you sure?',
-                text: 'Do you want to delete "' + response + '"',
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#DD6B55',
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-                closeOnConfirm: false
-              }, function() {
-                swal({
-                  title: 'Deleted!',
-                  text: response + ' Laboratory been deleted',
-                  timer: 1500,
-                  type: 'success',
-                  showConfirmButton: false
-                }, function() {
-                  window.location.href = '<?= base_url('Laboratory/DeleteLaboratory/') ?>' + id;
-                });
-              });
-            }
-          });
-        }
-      </script>
