@@ -17,7 +17,8 @@ class Practicum extends CI_Controller
       'profil'              => $this->m->profilLaboran($id_laboran)->row(),
       'jumlah_komplain'     => $this->m->hitungKomplain()->row()->komplain,
       'jumlah_pinjam_lab'   => $this->m->hitungPeminjamanLab()->row()->pinjamlab,
-      'jumlah_pinjam_alat'  => $this->m->hitungPeminjamanAlat()->row()->pinjamalat
+      'jumlah_pinjam_alat'  => $this->m->hitungPeminjamanAlat()->row()->pinjamalat,
+      'laporan_asprak'      => $this->db->select('count(id_laporan_praktikum) jumlah')->from('laporan_praktikum')->where('status_laporan', '0')->get()->row()->jumlah
     );
   }
 
@@ -145,5 +146,36 @@ class Practicum extends CI_Controller
   public function AsprakSchedule()
   {
     #
+  }
+
+  public function Report()
+  {
+    $data           = $this->data;
+    $data['title']  = 'Practicum Report | SIM Laboratorium';
+    $data['ta']     = $this->db->get_where('tahun_ajaran')->result();
+    $data['mk']     = $this->db->get_where('matakuliah')->result();
+    $data['data']   = $this->m->daftarLaporanAsprak()->result();
+    view('laboran/header', $data);
+    view('laboran/practicum_report', $data);
+    view('laboran/footer');
+  }
+
+  public function EditReport()
+  {
+    set_rules('id_laporan_praktikum', 'ID Practicum Report', 'required|trim');
+    if (validation_run() == false) {
+      redirect('Practicum/Report');
+    } else {
+      $id_laporan_praktikum = input('id_laporan_praktikum');
+      $catatan_revisi       = input('catatan_revisi');
+      $status               = input('status');
+      $input  = array(
+        'catatan_revisi'  => $catatan_revisi,
+        'status_laporan'  => $status
+      );
+      $this->m->updateData('laporan_praktikum', $input, 'id_laporan_praktikum', $id_laporan_praktikum);
+      set_flashdata('msg', '<div class="alert alert-success msg">Data Successfully Saved</div>');
+      redirect('Practicum/Report');
+    }
   }
 }
