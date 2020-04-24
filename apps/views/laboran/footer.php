@@ -14,20 +14,25 @@
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/inspinia.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/pace/pace.min.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/toastr/toastr.min.js"></script>
 <!-- Addon scripts -->
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/chartJs/Chart.min.js"></script>
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<script>
+  window.setTimeout(function() {
+    $(".msg").fadeTo(500, 0).slideUp(500, function() {
+      $(this).remove();
+    });
+  }, 3500);
+</script>
+<!--
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/sweetalert/sweetalert.min.js"></script>
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/toastr/toastr.min.js"></script>
-<script>
-  <?php
-  if ($laporan_asprak > 0) {
-  ?>
+ -->
+<?php
+if ($laporan_asprak > 0) {
+?>
+  <script>
     $(function() {
       toastr.options = {
         "closeButton": false,
@@ -47,9 +52,112 @@
       }
       toastr.warning("You have <?= $laporan_asprak ?> practicum report to check. Please go to Practicum &rarr; Practicum Report");
     });
-  <?php
-  }
-  ?>
+  </script>
+<?php
+}
+if (uri('1') == 'Dashboard') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/chartJs/Chart.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/sweetalert/sweetalert.min.js"></script>
+  <script>
+    function hapus_pengumuman(id) {
+      $.ajax({
+        url: '<?= base_url('Dashboard/ajaxPengumuman') ?>',
+        method: 'post',
+        data: {
+          id: id
+        },
+        success: function(response) {
+          swal({
+            title: 'Are you sure?',
+            text: 'Do you want to delete "' + response + '"',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            closeOnConfirm: false
+          }, function() {
+            swal({
+              title: 'Deleted!',
+              text: 'Your announcement has been deleted',
+              timer: 1500,
+              type: 'success',
+              showConfirmButton: false
+            }, function() {
+              window.location.href = '<?= base_url('Dashboard/DeleteAnnouncement/') ?>' + id;
+            });
+          });
+        }
+      });
+    }
+
+    var tanggal_sekarang = new Date();
+    tanggal_sekarang.setDate(tanggal_sekarang.getDate());
+    $(document).ready(function() {
+      $('#date_picker .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true,
+        startDate: tanggal_sekarang
+      });
+
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+    });
+
+    <?php
+    if (isset($komplain)) {
+    ?>
+      $(function() {
+        var line_data = {
+          labels: ['', <?php
+                        foreach ($komplain as $k) {
+                          echo "'" . $k->bulan . "', ";
+                        }
+                        ?>],
+          datasets: [{
+            label: 'Complaint(s)',
+            backgroundColor: 'rgba(26,179,148,0.5)',
+            borderColor: "rgba(26,179,148,0.7)",
+            pointBackgroundColor: "rgba(26,179,148,1)",
+            pointBorderColor: "#fff",
+            data: [0, <?php
+                      foreach ($komplain as $k) {
+                        echo $k->jumlah . ',';
+                      }
+                      ?>]
+          }]
+        };
+
+        var line_option = {
+          responsive: true,
+          legend: {
+            display: false
+          }
+        };
+
+        var ctx = document.getElementById("grafik_komplain").getContext("2d");
+        new Chart(ctx, {
+          type: 'line',
+          data: line_data,
+          options: line_option
+        });
+      });
+    <?php
+    }
+    ?>
+  </script>
+<?php
+}
+?>
+<!-- <script>
   $(document).ready(function() {
     $(".tahun_ajaran").select2({
       placeholder: "Select Year",
@@ -61,12 +169,6 @@
   });
 </script>
 <script>
-  window.setTimeout(function() {
-    $(".msg").fadeTo(500, 0).slideUp(500, function() {
-      $(this).remove();
-    });
-  }, 3500);
-
   function hanya_angka(event) {
     var angka = (event.which) ? event.which : event.keyCode
     if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
@@ -74,59 +176,8 @@
     return true;
   }
 
-  <?php
-  if (isset($komplain)) {
-  ?>
-    $(function() {
-      var line_data = {
-        labels: ['', <?php
-                      foreach ($komplain as $k) {
-                        echo "'" . $k->bulan . "', ";
-                      }
-                      ?>],
-        datasets: [{
-          label: 'Complaint(s)',
-          backgroundColor: 'rgba(26,179,148,0.5)',
-          borderColor: "rgba(26,179,148,0.7)",
-          pointBackgroundColor: "rgba(26,179,148,1)",
-          pointBorderColor: "#fff",
-          data: [0, <?php
-                    foreach ($komplain as $k) {
-                      echo $k->jumlah . ',';
-                    }
-                    ?>]
-        }]
-      };
-
-      var line_option = {
-        responsive: true,
-        legend: {
-          display: false
-        }
-      };
-
-      var ctx = document.getElementById("grafik_komplain").getContext("2d");
-      new Chart(ctx, {
-        type: 'line',
-        data: line_data,
-        options: line_option
-      });
-    });
-  <?php
-  }
-  ?>
-
-  var tanggal_sekarang = new Date();
-  tanggal_sekarang.setDate(tanggal_sekarang.getDate());
   $(document).ready(function() {
-    $('#date_picker .input-group.date').datepicker({
-      todayBtn: "linked",
-      keyboardNavigation: false,
-      forceParse: false,
-      calendarWeeks: true,
-      autoclose: true,
-      startDate: tanggal_sekarang
-    });
+
 
     $('#tanggal_pinjam .input-group.date').datepicker({
       todayBtn: "linked",
@@ -144,10 +195,7 @@
       autoclose: true
     });
 
-    $('.i-checks').iCheck({
-      checkboxClass: 'icheckbox_square-green',
-      radioClass: 'iradio_square-green',
-    });
+
 
     <?php
     if (uri('1') == 'StockLists') {
@@ -313,7 +361,7 @@ if (uri('1') == 'Option') {
   </script>
 <?php
 }
-?>
+?> -->
 </body>
 
 </html>
