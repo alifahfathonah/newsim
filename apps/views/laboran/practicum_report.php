@@ -26,6 +26,7 @@
                 <div class="col-md-5 col-sm-5">
                   <select name="daftar_mk" id="daftar_mk" class="daftar_mk form-control">
                     <option></option>
+                    <option value="All">All</option>
                     <?php
                     foreach ($mk as $m) {
                       echo '<option value="' . $m->kode_mk . '">' . $m->kode_mk . ' - ' . $m->nama_mk . '</option>';
