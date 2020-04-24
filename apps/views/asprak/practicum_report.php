@@ -76,24 +76,32 @@
                         <th>Courses</th>
                         <th width="20%">Revision Notes</th>
                         <th width="10%">Status</th>
-                        <th width="7%">Action</th>
+                        <th width="10%">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
                       $no = 1;
                       foreach ($data as $d) {
+                        if ($d->status_laporan == '0') {
+                          $status = 'On Progress';
+                        } elseif ($d->status_laporan == '1') {
+                          $status = 'Done';
+                        } elseif ($d->status_laporan == '2') {
+                          $status = 'Revision';
+                        }
                       ?>
                         <tr>
                           <td><?= $no ?></td>
                           <td><?= tanggal_inggris2($d->tanggal) . ' ' . $d->jam ?></td>
                           <td><?= $d->kode_mk . ' - ' . $d->nama_mk ?></td>
                           <td><?= $d->catatan_revisi ?></td>
-                          <td><?= $d->status_laporan ?></td>
+                          <td><?= $status ?></td>
                           <td style="text-align: center">
+                            <a href="<?= base_url($d->nama_file) ?>" target="_blank"><button class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button></a>
                             <?php
-                            if ($d->status_laporan == 'On Progress') {
-                              echo '<a href="' . base_url($d->nama_file) . '" target="_blank"><button class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button></a>';
+                            if ($d->status_laporan == '2') {
+                              echo '<a href="' . base_url($d->nama_file) . '" target="_blank"><button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button></a>';
                             }
                             ?>
                           </td>
