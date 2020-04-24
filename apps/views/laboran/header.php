@@ -176,8 +176,14 @@
             <li>
               <a href="<?= base_url('Laboran/#') ?>">Presence Asprak</a>
             </li>
-            <li>
-              <a href="<?= base_url('Practicum/Report') ?>">Practicum Report</a>
+            <?php
+            if (uri('2') == 'Report') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Practicum/Report') ?>">Practicum Report</a>
             </li>
           </ul>
           </li>
