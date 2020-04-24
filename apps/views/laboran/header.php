@@ -143,7 +143,7 @@
           </ul>
           </li>
           <?php
-          if (uri('2') == 'Courses' || uri('2') == 'PracticumAssistant') {
+          if (uri('1') == 'Practicum') {
             echo '<li class="active">';
           } else {
             echo '<li>';
