@@ -11,31 +11,33 @@
               echo flashdata('msg');
             }
             ?>
-            <div class="row" style="margin-bottom: 5px">
-              <div class="col-md-2 col-sm-2 offset-md-2">
-                <select name="tahun_ajaran" id="tahun_ajaran" class="tahun_ajaran form-control">
-                  <option></option>
-                  <?php
-                  foreach ($ta as $t) {
-                    echo '<option value="' . $t->id_ta . '">' . $t->ta . '</option>';
-                  }
-                  ?>
-                </select>
+            <form method="post" action="<?= base_url('Practicum/Report') ?>">
+              <div class="row" style="margin-bottom: 5px">
+                <div class="col-md-2 col-sm-2 offset-md-2">
+                  <select name="tahun_ajaran" id="tahun_ajaran" class="tahun_ajaran form-control">
+                    <option></option>
+                    <?php
+                    foreach ($ta as $t) {
+                      echo '<option value="' . $t->id_ta . '">' . $t->ta . '</option>';
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-md-5 col-sm-5">
+                  <select name="daftar_mk" id="daftar_mk" class="daftar_mk form-control">
+                    <option></option>
+                    <?php
+                    foreach ($mk as $m) {
+                      echo '<option value="' . $m->kode_mk . '">' . $m->kode_mk . ' - ' . $m->nama_mk . '</option>';
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-md-1 col-sm-2">
+                  <button style="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Search</button>
+                </div>
               </div>
-              <div class="col-md-5 col-sm-5">
-                <select name="daftar_mk" id="daftar_mk" class="daftar_mk form-control">
-                  <option></option>
-                  <?php
-                  foreach ($mk as $m) {
-                    echo '<option value="' . $m->kode_mk . '">' . $m->kode_mk . ' - ' . $m->nama_mk . '</option>';
-                  }
-                  ?>
-                </select>
-              </div>
-              <div class="col-md-1 col-sm-2">
-                <button class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Search</button>
-              </div>
-            </div>
+            </form>
             <div class="ibox">
               <div class="ibox-content">
                 <div class="table-responsive">
