@@ -56,6 +56,10 @@
                       foreach ($data as $d) {
                         if ($d->status_laporan == '0') {
                           $status = 'On Progress';
+                        } elseif ($d->status_laporan == '1') {
+                          $status = 'Done';
+                        } elseif ($d->status_laporan == '2') {
+                          $status = 'Revision';
                         }
                       ?>
                         <tr>
