@@ -342,6 +342,13 @@ if (uri('1') == 'Practicum') {
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
       });
+
+      $('.asprak').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
     });
   </script>
 <?php
