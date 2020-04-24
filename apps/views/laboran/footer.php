@@ -6,7 +6,6 @@
 </div>
 </div>
 <!-- Mainly scripts -->
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/moment.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/jquery-3.1.1.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/popper.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/bootstrap.js"></script>
@@ -15,6 +14,7 @@
 <script src="<?= base_url('assets/inspinia/') ?>js/inspinia.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/pace/pace.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/toastr/toastr.min.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/sweetalert/sweetalert.min.js"></script>
 <!-- Addon scripts -->
 <script>
   window.setTimeout(function() {
@@ -24,10 +24,8 @@
   }, 3500);
 </script>
 <!--
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/moment.min.js"></script>
  -->
 <?php
 if ($laporan_asprak > 0) {
@@ -60,7 +58,6 @@ if (uri('1') == 'Dashboard') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/chartJs/Chart.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
-  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/sweetalert/sweetalert.min.js"></script>
   <script>
     function hapus_pengumuman(id) {
       $.ajax({
@@ -156,6 +153,90 @@ if (uri('1') == 'Dashboard') {
   </script>
 <?php
 }
+if (uri('1') == 'StockLists') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
+  <script>
+    function hanya_angka(event) {
+      var angka = (event.which) ? event.which : event.keyCode
+      if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+        return false;
+      return true;
+    }
+
+    function hapus_inventaris(id) {
+      $.ajax({
+        url: '<?= base_url('StockLists/ajaxNamaStockList') ?>',
+        method: 'post',
+        data: {
+          id: id
+        },
+        success: function(response) {
+          swal({
+            title: 'Are you sure?',
+            text: 'Do you want to delete "' + response + '"',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            closeOnConfirm: false
+          }, function() {
+            swal({
+              title: 'Deleted!',
+              text: 'Your stock list has been deleted',
+              timer: 1500,
+              type: 'success',
+              showConfirmButton: false
+            }, function() {
+              window.location.href = '<?= base_url('StockLists/DeleteStockList/') ?>' + id;
+            });
+          });
+        }
+      });
+    }
+
+    $(document).ready(function() {
+      $('.stock_lists').DataTable({
+        pageLength: 10,
+        responsive: true,
+        <?php
+        if (isset($id_lab)) {
+          echo "'ajax': '" . base_url('StockLists/ajaxStockLists/' . $id_lab) . "'";
+        } else {
+          echo "'ajax': '" . base_url('StockLists/ajaxStockLists') . "'";
+        }
+        ?>,
+        'columns': [{
+          'data': 'no'
+        }, {
+          'data': 'barcode'
+        }, {
+          'data': 'tools'
+        }, {
+          'data': 'lab'
+        }, {
+          'data': 'qty'
+        }, {
+          'data': 'condition'
+        }, {
+          'data': 'spesification'
+        }, {
+          'data': 'action'
+        }],
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+
+      $(".laboratorium").select2({
+        placeholder: "Select Laboratory",
+      });
+    });
+  </script>
+<?php
+}
 ?>
 <!-- <script>
   $(document).ready(function() {
@@ -169,12 +250,6 @@ if (uri('1') == 'Dashboard') {
   });
 </script>
 <script>
-  function hanya_angka(event) {
-    var angka = (event.which) ? event.which : event.keyCode
-    if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
-      return false;
-    return true;
-  }
 
   $(document).ready(function() {
 
@@ -194,44 +269,6 @@ if (uri('1') == 'Dashboard') {
       calendarWeeks: true,
       autoclose: true
     });
-
-
-
-    <?php
-    if (uri('1') == 'StockLists') {
-    ?>
-      $('.stock_lists').DataTable({
-        pageLength: 10,
-        responsive: true,
-        <?php
-        if (isset($id_lab)) {
-          echo "'ajax': '" . base_url('StockLists/ajaxStockLists/' . $id_lab) . "',";
-        } else {
-          echo "'ajax': '" . base_url('StockLists/ajaxStockLists') . "',";
-        }
-        ?> 'columns': [{
-          "data": "no"
-        }, {
-          "data": "barcode"
-        }, {
-          "data": "tools"
-        }, {
-          "data": "lab"
-        }, {
-          "data": "qty"
-        }, {
-          "data": "condition"
-        }, {
-          "data": "spesification"
-        }, {
-          "data": "action"
-        }],
-        dom: '<"html5buttons"B>lTfgitp',
-        buttons: []
-      });
-    <?php
-    }
-    ?>
 
     <?php
     if (uri('2') == 'JournalAssistant') {
@@ -259,10 +296,6 @@ if (uri('1') == 'Dashboard') {
     <?php
     }
     ?>
-
-    $(".laboratorium").select2({
-      placeholder: "Select a Laboratory",
-    });
 
     $(".periode").select2({
       placeholder: "Select a Periode of Journal",
