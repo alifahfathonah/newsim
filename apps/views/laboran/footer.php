@@ -237,6 +237,60 @@ if (uri('1') == 'StockLists') {
   </script>
 <?php
 }
+if (uri('1') == 'Laboratory') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
+  <script>
+    function hapus_lab(id) {
+      $.ajax({
+        url: '<?= base_url('Laboratory/ajaxNamaLab') ?>',
+        method: 'post',
+        data: {
+          id: id
+        },
+        success: function(response) {
+          swal({
+            title: 'Are you sure?',
+            text: 'Do you want to delete "' + response + '"',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            closeOnConfirm: false
+          }, function() {
+            swal({
+              title: 'Deleted!',
+              text: response + ' Laboratory been deleted',
+              timer: 1500,
+              type: 'success',
+              showConfirmButton: false
+            }, function() {
+              window.location.href = '<?= base_url('Laboratory/DeleteLaboratory/') ?>' + id;
+            });
+          });
+        }
+      });
+    }
+
+    $(document).ready(function() {
+      $('.daftar_lab').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+    });
+  </script>
+<?php
+}
 ?>
 <!-- <script>
   $(document).ready(function() {
@@ -303,13 +357,6 @@ if (uri('1') == 'StockLists') {
 
     $(".alat").select2({
       placeholder: "Select an Equipment",
-    });
-
-    $('.daftar_lab').DataTable({
-      pageLength: 10,
-      responsive: true,
-      dom: '<"html5buttons"B>lTfgitp',
-      buttons: []
     });
 
     $('.kegiatan_aslab').DataTable({
