@@ -150,11 +150,23 @@ class Practicum extends CI_Controller
 
   public function Report()
   {
+    set_rules('tahun_ajaran', 'Year', 'required|trim');
+    set_rules('daftar_mk', 'Courses', 'required|trim');
     $data           = $this->data;
     $data['title']  = 'Practicum Report | SIM Laboratorium';
     $data['ta']     = $this->db->get_where('tahun_ajaran')->result();
     $data['mk']     = $this->db->get_where('matakuliah')->result();
-    $data['data']   = $this->m->daftarLaporanAsprak()->result();
+    if (validation_run() == false) {
+      $data['data']   = $this->m->daftarLaporanAsprak()->result();
+    } else {
+      $tahun_ajaran = input('tahun_ajaran');
+      $daftar_mk    = input('daftar_mk');
+      if ($daftar_mk != 'All') {
+        $data['data'] = $this->m->daftarLaporanAsprak_Tahun_MK($tahun_ajaran, $daftar_mk)->result();
+      } elseif ($daftar_mk == 'All') {
+        $data['data'] = $this->m->daftarLaporanAsprak_Tahun($tahun_ajaran)->result();
+      }
+    }
     view('laboran/header', $data);
     view('laboran/practicum_report', $data);
     view('laboran/footer');
