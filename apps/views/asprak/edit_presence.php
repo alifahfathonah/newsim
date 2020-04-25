@@ -85,7 +85,10 @@
                     <div class="col-md-3 col-sm-6">
                       <div class="form-group">
                         <label class="font-bold">Video</label>
-                        <input type="text" name="link_youtube" id="link_youtube" class="form-control" placeholder="Input Link Youtube" value="<?= $data->video ?>">
+                        <div class="custom-file">
+                          <input type="file" name="video_praktikum" id="video_praktikum" accept="video/*" class="custom-file-input">
+                          <label for="logo" class="custom-file-label">Choose file...</label>
+                        </div>
                       </div>
                     </div>
                   </div>
