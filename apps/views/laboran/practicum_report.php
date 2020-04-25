@@ -42,7 +42,7 @@
             <div class="ibox">
               <div class="ibox-content">
                 <div class="table-responsive">
-                  <table class="table table-striped table-bordered table-hover daftar_lab" width="100%">
+                  <table class="table table-striped table-bordered table-hover report" width="100%">
                     <thead>
                       <tr>
                         <th width="7%">No</th>
@@ -92,20 +92,20 @@
                                         <div class="form-group">
                                           <label class="font-bold">Revision Notes</label>
                                           <input type="text" name="id_laporan_praktikum" value="<?= $d->id_laporan_praktikum ?>" style="display: none">
-                                          <textarea name="catatan_revisi" id="catatan_revisi" class="form-control"></textarea>
+                                          <textarea name="catatan_revisi" id="catatan_revisi" class="form-control"><?= $d->catatan_revisi ?></textarea>
                                         </div>
                                       </div>
                                       <div class="col-md-4 col-sm-12">
                                         <label class="font-bold">Status</label>
                                         <div class="form-group row">
                                           <div class="radio">
-                                            <input type="radio" name="status" id="radio1" value="1">
+                                            <input type="radio" name="status" id="radio1" value="1" <?php if ($d->status_laporan == '1') echo 'checked'; ?>>
                                             <label for="radio1">
                                               Accept
                                             </label>
                                           </div>
                                           <div class="radio">
-                                            <input type="radio" name="status" id="radio2" value="2">
+                                            <input type="radio" name="status" id="radio2" value="2" <?php if ($d->status_laporan == '2') echo 'checked'; ?>>
                                             <label for="radio2">
                                               Revision
                                             </label>
