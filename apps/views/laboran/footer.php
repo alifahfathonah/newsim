@@ -503,6 +503,42 @@ if (uri('1') == 'Borrowing') {
   </script>
 <?php
 }
+if (uri('1') == 'Complaint') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.peminjaman').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+
+      $('#tanggal_komplain .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+      });
+
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+
+      $(".laboratorium").select2({
+        placeholder: "Select Laboratory",
+      });
+    });
+  </script>
+<?php
+}
 ?>
 <!-- <script>
   $(document).ready(function() {
@@ -518,14 +554,6 @@ if (uri('1') == 'Borrowing') {
 <script>
 
   $(document).ready(function() {
-
-    $('#tanggal_komplain .input-group.date').datepicker({
-      todayBtn: "linked",
-      keyboardNavigation: false,
-      forceParse: false,
-      calendarWeeks: true,
-      autoclose: true
-    });
 
     $(".periode").select2({
       placeholder: "Select a Periode of Journal",
