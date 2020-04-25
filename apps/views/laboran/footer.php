@@ -539,55 +539,6 @@ if (uri('1') == 'Complaint') {
   </script>
 <?php
 }
-?>
-<!-- <script>
-  $(document).ready(function() {
-    $(".tahun_ajaran").select2({
-      placeholder: "Select Year",
-    });
-
-    $(".daftar_mk").select2({
-      placeholder: "Select Courses",
-    });
-  });
-</script>
-<script>
-
-  $(document).ready(function() {
-
-    $(".periode").select2({
-      placeholder: "Select a Periode of Journal",
-    });
-
-
-    <?php
-    if (uri('1') == 'HistoryLogin') {
-    ?>
-      $('.history_login').DataTable({
-        pageLength: 10,
-        responsive: true,
-        dom: '<"html5buttons"B>lTfgitp',
-        buttons: []
-      });
-    <?php
-    }
-    ?>
-
-    $('.custom-file-input').on('change', function() {
-      let fileName = $(this).val().split('\\').pop();
-      $(this).next('.custom-file-label').addClass("selected").html(fileName);
-    });
-
-    <?php
-    if (uri('1') == 'Schedule') {
-    ?>
-      
-    <?php
-    }
-    ?>
-  });
-</script>
-<?php
 if (uri('1') == 'Option') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
@@ -604,7 +555,26 @@ if (uri('1') == 'Option') {
   </script>
 <?php
 }
-?> -->
+?>
+<!--
+<script>
+
+  $(document).ready(function() {
+    <?php
+    if (uri('1') == 'HistoryLogin') {
+    ?>
+      $('.history_login').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+    <?php
+    }
+    ?>
+  });
+</script>
+-->
 </body>
 
 </html>

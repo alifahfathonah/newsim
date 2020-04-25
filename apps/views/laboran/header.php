@@ -80,6 +80,11 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/iCheck/custom.css" rel="stylesheet">
   <?php
   }
+  if (uri('1') == 'Option') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
+  <?php
+  }
   ?>
 </head>
 
