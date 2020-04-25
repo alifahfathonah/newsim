@@ -572,20 +572,6 @@ if (uri('1') == 'HistoryLogin') {
 <?php
 }
 ?>
-<!--
-<script>
-
-  $(document).ready(function() {
-    <?php
-    if (uri('1') == 'HistoryLogin') {
-    ?>
-      
-    <?php
-    }
-    ?>
-  });
-</script>
--->
 </body>
 
 </html>
