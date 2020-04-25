@@ -92,7 +92,7 @@ class Asprak extends CI_Controller
       $jam_masuk        = input('jam_masuk');
       $jam_selesai      = input('jam_selesai');
       $modul_praktikum  = input('modul_praktikum');
-      $link_youtube     = input('link_youtube');
+      // $link_youtube     = input('link_youtube');
       $tmp              = explode('/', $tgl_asprak);
       $urut_tanggal     = array($tmp[2], $tmp[0], $tmp[1]);
       $tanggal          = implode('-', $urut_tanggal);
@@ -141,7 +141,7 @@ class Asprak extends CI_Controller
           'durasi'            => $durasi,
           'honor'             => $honor,
           'modul'             => $modul_praktikum,
-          'video'             => $link_youtube,
+          // 'video'             => $link_youtube,
           'approve_absen'     => '0',
           'id_jadwal_asprak'  => $jadwal_asprak,
           'nim_asprak'        => userdata('nim'),
@@ -149,13 +149,21 @@ class Asprak extends CI_Controller
         );
         $screenshot               = rand(10, 99) . '-' . str_replace(' ', '_', $_FILES['screenshot_praktikum']['name']);
         $config['upload_path']    = 'assets/screenshot/';
-        $config['allowed_types']  = 'jpeg|jpg|png|gif|tiff';
+        $config['allowed_types']  = 'jpeg|jpg|png|gif|tiff|mov|swf|mp4|mkv|flv|wmv|avi|vob|aaf|mod|mpeg';
         $config['max_size']       = 1024 * 100;
         $config['file_name']      = $screenshot;
         $this->load->library('upload', $config);
         if ($this->upload->do_upload('screenshot_praktikum')) {
           $input['screenshot']     = $config['upload_path'] . '' . $screenshot;
         }
+        if (!empty($_FILES['video_praktikum'])) {
+          $target_folder  = 'assets/video/';
+          $nama_file      = rand(10, 99) . '-' . str_replace(' ', '_', $_FILES['video_praktikum']['name']);
+          $upload_file    = $target_folder . $nama_file;
+          $input['video'] = $upload_file;
+          move_uploaded_file($_FILES['video_praktikum']['tmp_name'], $upload_file);
+        }
+        // print_r($input);
         $this->m->insertData('presensi_asprak', $input);
         set_flashdata('msg', '<div class="alert alert-success msg">Your presence successfully saved</div>');
         redirect('Asprak/Presence');
