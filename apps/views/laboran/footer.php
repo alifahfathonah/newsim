@@ -369,6 +369,36 @@ if (uri('1') == 'Practicum') {
   </script>
 <?php
 }
+if (uri('1') == 'LaboratoryAssistant') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $(".laboratorium").select2({
+        placeholder: "Select Laboratory",
+      });
+
+      $(".periode").select2({
+        placeholder: "Select Periode of Journal",
+      });
+
+      $('.kegiatan_aslab').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+
+      $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+      });
+    });
+  </script>
+<?php
+}
 ?>
 <!-- <script>
   $(document).ready(function() {
@@ -435,13 +465,6 @@ if (uri('1') == 'Practicum') {
 
     $(".alat").select2({
       placeholder: "Select an Equipment",
-    });
-
-    $('.kegiatan_aslab').DataTable({
-      pageLength: 10,
-      responsive: true,
-      dom: '<"html5buttons"B>lTfgitp',
-      buttons: []
     });
 
     $('.peminjaman').DataTable({
