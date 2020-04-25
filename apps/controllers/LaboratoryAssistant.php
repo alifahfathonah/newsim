@@ -85,10 +85,10 @@ class LaboratoryAssistant extends CI_Controller
     } else {
       $data['kegiatan'] = $this->m->kegiatanAslab($id_aslab)->result();
     }
-    $data['profil'] = $this->m->detailAslab($id_aslab)->row();
-    $data['pj']     = $this->m->detailPJAslab($id_aslab)->result();
-    $data['lab']    = $this->m->daftarLabPraktikum()->result();
-    $data['title']  = $data['profil']->namaLengkap . "'s Profile | SIM Laboratorium";
+    $data['profil_aslab'] = $this->m->detailAslab($id_aslab)->row();
+    $data['pj']           = $this->m->detailPJAslab($id_aslab)->result();
+    $data['lab']          = $this->m->daftarLabPraktikum()->result();
+    $data['title']        = $data['profil_aslab']->namaLengkap . "'s Profile | SIM Laboratorium";
     if (userdata('login') == 'laboran') {
       view('laboran/header', $data);
       view('laboran/profile_assistant', $data);
