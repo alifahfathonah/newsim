@@ -384,7 +384,7 @@ class M_Model extends CI_Model
 
   function previewBAPAsprak($nim, $id_daftar_mk, $between)
   {
-    $this->db->select('presensi_asprak.id_presensi_asprak, date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") selesai, presensi_asprak.durasi, presensi_asprak.modul, presensi_asprak.screenshot, presensi_asprak.approve_absen, asprak.ttd_asprak');
+    $this->db->select('presensi_asprak.id_presensi_asprak, date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") selesai, presensi_asprak.durasi, presensi_asprak.modul, presensi_asprak.screenshot, presensi_asprak.video, presensi_asprak.approve_absen, asprak.ttd_asprak');
     $this->db->from('presensi_asprak');
     $this->db->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak');
     $this->db->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
