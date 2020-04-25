@@ -6,6 +6,7 @@
 </div>
 </div>
 <!-- Mainly scripts -->
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/moment.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/jquery-3.1.1.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/popper.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/bootstrap.js"></script>
@@ -23,10 +24,6 @@
     });
   }, 3500);
 </script>
-<!--
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
-<script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/moment.min.js"></script>
- -->
 <?php
 if ($laporan_asprak > 0) {
 ?>
@@ -420,6 +417,45 @@ if (uri('1') == 'LaboratoryAssistant') {
   </script>
 <?php
 }
+if (uri('1') == 'Schedule') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $(".laboratorium").select2({
+        placeholder: "Select Laboratory",
+      });
+
+      var date = new Date();
+      var d = date.getDate();
+      var m = date.getMonth();
+      var y = date.getFullYear();
+
+      $('#calendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay'
+        },
+        editable: false,
+        droppable: false,
+        eventSources: [
+          <?php
+          if ($id_lab) {
+            echo "'" . base_url('Schedule/ajaxJadwal/' . $id_lab) . "'";
+          } else {
+            echo "'" . base_url('Schedule/ajaxJadwal') . "'";
+          }
+          ?>
+        ]
+      });
+
+      $('#calendar').fullCalendar('changeView', 'agendaDay');
+    });
+  </script>
+<?php
+}
 ?>
 <!-- <script>
   $(document).ready(function() {
@@ -489,31 +525,7 @@ if (uri('1') == 'LaboratoryAssistant') {
     <?php
     if (uri('1') == 'Schedule') {
     ?>
-      var date = new Date();
-      var d = date.getDate();
-      var m = date.getMonth();
-      var y = date.getFullYear();
-
-      $('#calendar').fullCalendar({
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'month,agendaWeek,agendaDay'
-        },
-        editable: false,
-        droppable: false,
-        eventSources: [
-          <?php
-          if ($id_lab) {
-            echo "'" . base_url('Schedule/ajaxJadwal/' . $id_lab) . "'";
-          } else {
-            echo "'" . base_url('Schedule/ajaxJadwal') . "'";
-          }
-          ?>
-        ]
-      });
-
-      $('#calendar').fullCalendar('changeView', 'agendaDay');
+      
     <?php
     }
     ?>
