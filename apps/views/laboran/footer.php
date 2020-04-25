@@ -391,6 +391,27 @@ if (uri('1') == 'LaboratoryAssistant') {
         buttons: []
       });
 
+      $('.kegiatan_aslab_full').DataTable({
+        pageLength: 10,
+        responsive: true,
+        'ajax': '<?= base_url('LaboratoryAssistant/ajaxKegiatanAslab') ?>',
+        'columns': [{
+            'data': 'no'
+          },
+          {
+            'data': 'tanggal'
+          },
+          {
+            'data': 'nama'
+          },
+          {
+            'data': 'aktivitas'
+          }
+        ],
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+
       $('.custom-file-input').on('change', function() {
         let fileName = $(this).val().split('\\').pop();
         $(this).next('.custom-file-label').addClass("selected").html(fileName);
@@ -431,33 +452,6 @@ if (uri('1') == 'LaboratoryAssistant') {
       calendarWeeks: true,
       autoclose: true
     });
-
-    <?php
-    if (uri('2') == 'JournalAssistant') {
-    ?>
-      $('.kegiatan_aslab_full').DataTable({
-        pageLength: 10,
-        responsive: true,
-        'ajax': '<?= base_url('LaboratoryAssistant/ajaxKegiatanAslab') ?>',
-        'columns': [{
-            'data': 'no'
-          },
-          {
-            'data': 'tanggal'
-          },
-          {
-            'data': 'nama'
-          },
-          {
-            'data': 'aktivitas'
-          }
-        ],
-        dom: '<"html5buttons"B>lTfgitp',
-        buttons: []
-      });
-    <?php
-    }
-    ?>
 
     $(".periode").select2({
       placeholder: "Select a Periode of Journal",
