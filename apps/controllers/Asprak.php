@@ -13,7 +13,8 @@ class Asprak extends CI_Controller
       redirect();
     }
     $this->data = array(
-      'profil'  => $this->a->profilAsprak(userdata('nim'))->row()
+      'profil'  => $this->a->profilAsprak(userdata('nim'))->row(),
+      'absen'   => $this->db->select('count(id_presensi_asprak) jumlah')->from('presensi_asprak')->where('nim_asprak', userdata('nim'))->where('approve_absen', '2')->get()->row()->jumlah
     );
   }
 

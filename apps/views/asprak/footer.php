@@ -40,6 +40,31 @@ if ($profil->kontak_asprak == null || $profil->ttd_asprak == null || $profil->no
   </script>
 <?php
 }
+if ($absen > 0) {
+?>
+  <script>
+    $(function() {
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "progressBar": false,
+        "preventDuplicates": false,
+        "positionClass": "toast-bottom-right",
+        "onclick": null,
+        "showDuration": "400",
+        "hideDuration": "1000",
+        "timeOut": "0",
+        "extendedTimeOut": "0",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+      toastr.warning("You have <?= $absen ?> presence must be corrected. Please go to presence and click te yellow button to edit");
+    });
+  </script>
+<?php
+}
 if (uri('2') == 'Schedule') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/moment.min.js"></script>
