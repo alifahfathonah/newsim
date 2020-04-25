@@ -63,6 +63,7 @@ class M_Asprak extends CI_Model
     $this->db->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
     $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
     $this->db->where('nim_asprak', $nim);
+    $this->db->order_by('approve_absen', 'desc');
     $this->db->order_by('asprak_masuk', 'desc');
     return $this->db->get();
   }
