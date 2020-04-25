@@ -55,11 +55,11 @@
                               <?php
                               if ($d->approve_absen == '0') {
                               ?>
-                                <button class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Waiting approved by lecture" disabled><i class="fa fa-ban"></i></button>
+                                <button class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Waiting approved by lecture"><i class="fa fa-ban"></i></button>
                               <?php
                               } elseif ($d->approve_absen == '1') {
                               ?>
-                                <button class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Your presence approved by lecture" disabled><i class="fa fa-check"></i></button>
+                                <button class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Your presence approved by lecture"><i class="fa fa-check"></i></button>
                               <?php
                               } elseif ($d->approve_absen == '2') {
                               ?>
