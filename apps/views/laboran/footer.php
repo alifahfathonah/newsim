@@ -555,6 +555,22 @@ if (uri('1') == 'Option') {
   </script>
 <?php
 }
+if (uri('1') == 'HistoryLogin') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.history_login').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+    });
+  </script>
+<?php
+}
 ?>
 <!--
 <script>
@@ -563,12 +579,7 @@ if (uri('1') == 'Option') {
     <?php
     if (uri('1') == 'HistoryLogin') {
     ?>
-      $('.history_login').DataTable({
-        pageLength: 10,
-        responsive: true,
-        dom: '<"html5buttons"B>lTfgitp',
-        buttons: []
-      });
+      
     <?php
     }
     ?>
