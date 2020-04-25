@@ -295,6 +295,7 @@ if (uri('1') == 'Practicum') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
   <script>
     function hanya_angka(event) {
       var angka = (event.which) ? event.which : event.keyCode
@@ -348,6 +349,21 @@ if (uri('1') == 'Practicum') {
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
+      });
+
+      $('.report').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+
+      $(".tahun_ajaran").select2({
+        placeholder: "Select Year",
+      });
+
+      $(".daftar_mk").select2({
+        placeholder: "Select Courses",
       });
     });
   </script>
