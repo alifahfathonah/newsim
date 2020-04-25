@@ -456,6 +456,53 @@ if (uri('1') == 'Schedule') {
   </script>
 <?php
 }
+if (uri('1') == 'Borrowing') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
+  <script>
+    function hanya_angka(event) {
+      var angka = (event.which) ? event.which : event.keyCode
+      if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+        return false;
+      return true;
+    }
+
+    $(document).ready(function() {
+      $('.peminjaman').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+
+      $(".laboratorium").select2({
+        placeholder: "Select Laboratory",
+      });
+
+      $(".alat").select2({
+        placeholder: "Select Equipment",
+      });
+
+      $('#tanggal_pinjam .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+      });
+
+      $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+      });
+    });
+  </script>
+<?php
+}
 ?>
 <!-- <script>
   $(document).ready(function() {
@@ -472,15 +519,6 @@ if (uri('1') == 'Schedule') {
 
   $(document).ready(function() {
 
-
-    $('#tanggal_pinjam .input-group.date').datepicker({
-      todayBtn: "linked",
-      keyboardNavigation: false,
-      forceParse: false,
-      calendarWeeks: true,
-      autoclose: true
-    });
-
     $('#tanggal_komplain .input-group.date').datepicker({
       todayBtn: "linked",
       keyboardNavigation: false,
@@ -493,16 +531,6 @@ if (uri('1') == 'Schedule') {
       placeholder: "Select a Periode of Journal",
     });
 
-    $(".alat").select2({
-      placeholder: "Select an Equipment",
-    });
-
-    $('.peminjaman').DataTable({
-      pageLength: 10,
-      responsive: true,
-      dom: '<"html5buttons"B>lTfgitp',
-      buttons: []
-    });
 
     <?php
     if (uri('1') == 'HistoryLogin') {
