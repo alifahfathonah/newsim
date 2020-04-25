@@ -1,6 +1,6 @@
       <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-12">
-          <h2 style="text-align: center"><?= $profil->namaLengkap ?>'s Profile<br>School of Applied Science School's Laboratory</h2>
+          <h2 style="text-align: center"><?= $profil_aslab->namaLengkap ?>'s Profile<br>School of Applied Science School's Laboratory</h2>
         </div>
       </div>
       <div class="wrapper wrapper-content animated fadeInRight">
@@ -8,10 +8,10 @@
           <div class="col-md-9 col-sm-12" style="margin: 20px 0 20px 0">
             <div class="profile-image">
               <?php
-              if ($profil->fotoAslab == null) {
+              if ($profil_aslab->fotoAslab == null) {
                 $foto = base_url('assets/img/person-flat.png');
               } else {
-                $foto = base_url($profil->fotoAslab);
+                $foto = base_url($profil_aslab->fotoAslab);
               }
               $laboratorium = '';
               foreach ($pj as $p) {
@@ -25,8 +25,8 @@
             <div class="profile-info">
               <div>
                 <div>
-                  <h2 class="no-margins"><?= $profil->namaLengkap ?></h2>
-                  <h4><?= $profil->nim ?> | <i class="fa fa-phone-square"></i> <?= $profil->noTelp ?></h4>
+                  <h2 class="no-margins"><?= $profil_aslab->namaLengkap ?></h2>
+                  <h4><?= $profil_aslab->nim ?> | <i class="fa fa-phone-square"></i> <?= $profil_aslab->noTelp ?></h4>
                   <table>
                     <tr>
                       <td style="padding-right: 20px" width="50%"><small>Aslab in Charge:</small></td>
@@ -34,7 +34,7 @@
                     </tr>
                     <tr>
                       <td style="padding-right: 20px" width="50%"><small><?= $laboratorium ?></small></td>
-                      <td valign="top"><small><?= $profil->spesialisAslab ?></small></td>
+                      <td valign="top"><small><?= $profil_aslab->spesialisAslab ?></small></td>
                     </tr>
                   </table>
                 </div>
@@ -58,14 +58,14 @@
                         <div class="col-md-6 col-sm-12">
                           <div class="form-group">
                             <label class="font-bold">Name</label>
-                            <input type="text" name="id_aslab" id="id_aslab" value="<?= $profil->idAslab ?>" style="display: none">
-                            <input type="text" name="nama_aslab" id="nama_aslab" class="form-control" placeholder="Input Name Assistant" value="<?= $profil->namaLengkap ?>" required>
+                            <input type="text" name="id_aslab" id="id_aslab" value="<?= $profil_aslab->idAslab ?>" style="display: none">
+                            <input type="text" name="nama_aslab" id="nama_aslab" class="form-control" placeholder="Input Name Assistant" value="<?= $profil_aslab->namaLengkap ?>" required>
                           </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                           <div class="form-group">
                             <label class="font-bold">NIM</label>
-                            <input type="text" name="nim_aslab" id="nim_aslab" class="form-control" placeholder="Input NIM Assistant" value="<?= $profil->nim ?>" required>
+                            <input type="text" name="nim_aslab" id="nim_aslab" class="form-control" placeholder="Input NIM Assistant" value="<?= $profil_aslab->nim ?>" required>
                           </div>
                         </div>
                       </div>
@@ -73,7 +73,7 @@
                         <div class="col-md-6 col-sm-12">
                           <div class="form-group">
                             <label class="font-bold">Phone</label>
-                            <input type="text" name="telp_aslab" id="telp_aslab" class="form-control" placeholder="Input Phone Number" value="<?= $profil->noTelp ?>" required>
+                            <input type="text" name="telp_aslab" id="telp_aslab" class="form-control" placeholder="Input Phone Number" value="<?= $profil_aslab->noTelp ?>" required>
                           </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
@@ -117,7 +117,7 @@
                         <div class="col-md-6 col-sm-12">
                           <div class="form-group">
                             <label class="font-bold">Specialist</label>
-                            <input type="text" name="spesialis_aslab" id="spesialis_aslab" class="form-control" placeholder="Input Specialist Assistant" value="<?= $profil->spesialisAslab ?>" required>
+                            <input type="text" name="spesialis_aslab" id="spesialis_aslab" class="form-control" placeholder="Input Specialist Assistant" value="<?= $profil_aslab->spesialisAslab ?>" required>
                           </div>
                         </div>
                       </div>
@@ -125,13 +125,13 @@
                         <div class="col-md-6 col-sm-12">
                           <div class="form-group">
                             <label class="font-bold">RFID Tag</label>
-                            <input type="text" name="rfid_aslab" id="rfid_aslab" class="form-control" placeholder="Input RFID Tag" value="<?= $profil->rfid ?>" required>
+                            <input type="text" name="rfid_aslab" id="rfid_aslab" class="form-control" placeholder="Input RFID Tag" value="<?= $profil_aslab->rfid ?>" required>
                           </div>
                         </div>
                         <div class="col-md-6 col-sm-12">
                           <div class="form-group">
                             <label class="font-bold">Aslab of the Month</label>
-                            <input type="text" name="aslab_bulan" id="aslab_bulan" class="form-control" placeholder="Input Number of the Month" value="<?= $profil->aslabOfTheMonth ?>">
+                            <input type="text" name="aslab_bulan" id="aslab_bulan" class="form-control" placeholder="Input Number of the Month" value="<?= $profil_aslab->aslabOfTheMonth ?>">
                           </div>
                         </div>
                       </div>
