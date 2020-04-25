@@ -48,7 +48,8 @@
                         <th width="5%">End</th>
                         <th width="20%">Modul</th>
                         <th width="15%">Image</th>
-                        <th width="15%">Approve/Not</th>
+                        <th width="15%">Video</th>
+                        <th>Approve/Not</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -58,6 +59,13 @@
                         $image = '<a href="' . base_url($b->screenshot) . '" data-toggle="lightbox">
                           <img src="' . base_url($b->screenshot) . '" height="60x">
                         </a>';
+                        if ($b->video != '') {
+                          $video = '<a data-toggle="modal" data-target="#video' . $b->id_presensi_asprak . '">
+                          <img src="' . base_url('assets/img/839.jpg') . '" height="60px">
+                        </a>';
+                        } else {
+                          $video = '-';
+                        }
                       ?>
                         <tr>
                           <td><?= $no++ ?></td>
@@ -66,6 +74,7 @@
                           <td><?= $b->selesai ?></td>
                           <td><?= $b->modul ?></td>
                           <td style="text-align: center"><?= $image ?></td>
+                          <td style="text-align: center"><?= $video ?></td>
                           <td style="text-align: center" class="align-middle" id="button<?= substr(sha1($b->id_presensi_asprak), 7, 7) ?>">
                             <?php
                             if ($b->approve_absen == '0') {
@@ -81,6 +90,17 @@
                             ?>
                           </td>
                         </tr>
+                        <div class="modal inmodal fade" id="video<?= $b->id_presensi_asprak ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <video controls>
+                                  <source src="<?= base_url($b->video) ?>">
+                                </video>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       <?php
                       }
                       ?>
