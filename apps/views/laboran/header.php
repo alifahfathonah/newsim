@@ -90,6 +90,16 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
   <?php
   }
+  if (uri('1') == 'Finance') {
+  ?>
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <style>
+      .modal-body {
+        overflow-x: auto;
+      }
+    </style>
+  <?php
+  }
   ?>
 </head>
 

@@ -50,6 +50,31 @@ if ($laporan_asprak > 0) {
   </script>
 <?php
 }
+if ($honor_asprak > 0) {
+?>
+  <script>
+    $(function() {
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "progressBar": false,
+        "preventDuplicates": false,
+        "positionClass": "toast-bottom-right",
+        "onclick": null,
+        "showDuration": "400",
+        "hideDuration": "1000",
+        "timeOut": "0",
+        "extendedTimeOut": "0",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+      toastr.info("You have <?= $honor_asprak ?> practicum assistant salary withdrawals to check. Please go to Finance &rarr; Honor");
+    });
+  </script>
+<?php
+}
 if (uri('1') == 'Dashboard') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/chartJs/Chart.min.js"></script>
@@ -568,6 +593,38 @@ if (uri('1') == 'HistoryLogin') {
         buttons: []
       });
     });
+  </script>
+<?php
+}
+if (uri('1') == 'Finance') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.asprak').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+    });
+
+    function approve_honor(id) {
+      $.ajax({
+        url: '<?= base_url('Finance/ApproveHonor/') ?>' + id,
+        method: 'post',
+        data: {
+          id: id
+        },
+        success: function(response) {
+          if (response == 'true') {
+            document.getElementById('btn_approve_honor' + id).innerHTML = '';
+            document.getElementById('btn_approve_honor' + id).innerHTML = '<button class="btn btn-success btn-sm" disabled><i class="fa fa-check"></i></button>';
+          }
+        }
+      });
+    }
   </script>
 <?php
 }
