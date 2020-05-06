@@ -128,7 +128,7 @@
           </li>
           <?php
           $id_aslab = substr(sha1(userdata('id_aslab')), 6, 4);
-          if ((uri('1') == 'LaboratoryAssistant' && uri('3') != $id_aslab) || uri('2') == 'ProfileAssistant' && uri('3') != $id_aslab) {
+          if ((uri('1') == 'LaboratoryAssistant' && (uri('3') != $id_aslab && uri('2') != 'Report')) || uri('2') == 'ProfileAssistant' && uri('3') != $id_aslab) {
             echo '<li class="active">';
           } else {
             echo '<li>';
@@ -206,6 +206,30 @@
           <a href="<?= base_url('Complaint') ?>">
             <i class="fa fa-thumbs-down"></i>
             <span class="nav-label">Complaint</span>
+          </a>
+          </li>
+          <?php
+          if (uri('1') == 'Finance') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Finance/Honor') ?>">
+            <i class="fa fa-money"></i>
+            <span class="nav-label">Salary</span>
+          </a>
+          </li>
+          <?php
+          if (uri('2') == 'Report') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('LaboratoryAssistant/Report') ?>">
+            <i class="fa fa-file-o"></i>
+            <span class="nav-label">Report</span>
           </a>
           </li>
           <?php

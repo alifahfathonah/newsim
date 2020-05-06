@@ -239,4 +239,44 @@ class LaboratoryAssistant extends CI_Controller
     $tampil = array('data' => $hasil);
     echo json_encode($tampil);
   }
+
+  public function Report()
+  {
+    set_rules('lab', 'Laboratory', 'required|trim');
+    if (validation_run() == false) {
+      $data           = $this->data;
+      $data['title']  = 'Report | SIM Laboratorium';
+      $data['lab']    = $this->m->daftarLabPraktikum()->result();
+      $data['data']   = $this->m->laporanAslab(userdata('id_aslab'))->result();
+      view('aslab/header', $data);
+      view('aslab/laboratory_report', $data);
+      view('aslab/footer');
+    } else {
+      $lab = input('lab');
+      $nama_lab = preg_replace('/[^A-Za-z0-9\  ]/', '', $this->db->where('idLab', $lab)->get('laboratorium')->row()->namaLab);
+      $tahun_ajaran = $this->db->where('status', '1')->get('tahun_ajaran')->row()->ta;
+      $nim_aslab    = $this->db->where('idAslab', userdata('id_aslab'))->get('aslab')->row()->nim;
+      $nama_file = $tahun_ajaran . '_' . preg_replace('/[^a-zA-Z0-9]/', '_', $nama_lab) . '_' . $nim_aslab . '.pdf';
+      $input  = array(
+        'tanggal_upload'  => date('Y-m-d H:i:s'),
+        'status_laporan'  => '0',
+        'id_lab'          => $lab,
+        'id_aslab'        => userdata('id_aslab')
+      );
+      $config['upload_path']    = 'assets/laporan/aslab/';
+      $config['allowed_types']  = 'pdf';
+      $config['max_size']       = 1024 * 100;
+      $config['overwrite']      = true;
+      $config['file_name']      = $nama_file;
+      $this->load->library('upload', $config);
+      if ($this->upload->do_upload('file_laporan')) {
+        $input['nama_file'] = $config['upload_path'] . '' . $nama_file;
+      } else {
+        print_r($this->upload->display_errors());
+      }
+      $this->db->insert('laporan_aslab', $input);
+      set_flashdata('msg', '<div class="alert alert-success msg">Your laboratory report successfully submited</div>');
+      redirect('LaboratoryAssistant/Report');
+    }
+  }
 }

@@ -175,6 +175,13 @@
       placeholder: "Select a Periode of Journal",
     });
 
+    $('.dataTables').DataTable({
+      pageLength: 10,
+      responsive: true,
+      dom: '<"html5buttons"B>lTfgitp',
+      buttons: []
+    });
+
     $('.daftar_lab').DataTable({
       pageLength: 10,
       responsive: true,

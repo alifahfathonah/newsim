@@ -126,7 +126,39 @@
                       </div>
                       <div role="tabpanel" id="aslab" class="tab-pane">
                         <div class="panel-body">
-                          <h2 style="text-align: center">Under Construction</h2>
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover asprak" width="100%">
+                              <thead>
+                                <tr>
+                                  <th>No</th>
+                                  <th>NIM</th>
+                                  <th>Name</th>
+                                  <th>Periode</th>
+                                  <th>Amount</th>
+                                  <th>Withdraw Option</th>
+                                  <th>Status</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <?php
+                                $no = 1;
+                                foreach ($withdraw_aslab as $w) {
+                                ?>
+                                  <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= $w->nim ?></td>
+                                    <td><?= $w->namaLengkap ?></td>
+                                    <td><?= $w->bulan ?></td>
+                                    <td style="text-align: right">Rp <?= number_format($w->nominal, 0, '', '.') ?></td>
+                                    <td><?= $w->opsi_pengambilan ?></td>
+                                    <td style="text-align: center"><button class="btn btn-sm btn-info" disabled><i class="fa fa-check"></i></button></td>
+                                  </tr>
+                                <?php
+                                }
+                                ?>
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </div>
                     </div>

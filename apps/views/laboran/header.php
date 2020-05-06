@@ -357,6 +357,30 @@
           </a>
           </li>
           <?php
+          if (uri('1') == 'Finance') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="#">
+            <i class="fa fa-money"></i>
+            <span class="nav-label">Finance</span>
+            <span class="fa arrow"></span>
+          </a>
+          <ul class="nav nav-second-level collapse">
+            <?php
+            if (uri('2') == 'Honor') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Finance/Honor') ?>">Honor</a>
+            </li>
+          </ul>
+          </li>
+          <?php
           if (uri('1') == 'Option') {
             echo '<li class="active">';
           } else {

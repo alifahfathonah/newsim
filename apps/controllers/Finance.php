@@ -9,7 +9,7 @@ class Finance extends CI_Controller
   public function __construct()
   {
     parent::__construct();
-    if (userdata('login') != 'laboran') {
+    if (userdata('login') != 'laboran' && userdata('login') != 'aslab') {
       redirect();
     }
     $id_laboran = $this->db->get_where('users', array('idUser' => userdata('id')))->row()->id_laboran;
@@ -27,10 +27,18 @@ class Finance extends CI_Controller
   {
     $data           = $this->data;
     $data['title']  = 'Honor | SIM Laboratorium';
-    $data['withdraw_asprak']  = $this->m->daftarPengambilanHonorAsprak()->result();
-    view('laboran/header', $data);
-    view('laboran/honor', $data);
-    view('laboran/footer');
+    if (userdata('login') == 'laboran') {
+      $data['withdraw_asprak']  = $this->m->daftarPengambilanHonorAsprak()->result();
+      $data['withdraw_aslab']   = $this->m->daftarPengambilanHonorAslab()->result();
+      view('laboran/header', $data);
+      view('laboran/honor', $data);
+      view('laboran/footer');
+    } elseif (userdata('login') == 'aslab') {
+      $data['data'] = $this->m->daftarHonorAslab(userdata('id_aslab'))->result();
+      view('aslab/header', $data);
+      view('aslab/honor', $data);
+      view('aslab/footer');
+    }
   }
 
   public function ApproveHonor()
