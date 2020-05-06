@@ -75,6 +75,31 @@ if ($honor_asprak > 0) {
   </script>
 <?php
 }
+if ($honor_aslab > 0) {
+?>
+  <script>
+    $(function() {
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "progressBar": false,
+        "preventDuplicates": false,
+        "positionClass": "toast-bottom-right",
+        "onclick": null,
+        "showDuration": "400",
+        "hideDuration": "1000",
+        "timeOut": "0",
+        "extendedTimeOut": "0",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+      toastr.info("You have <?= $honor_aslab ?> laboratory assistant salary withdrawals to check. Please go to Finance &rarr; Honor");
+    });
+  </script>
+<?php
+}
 if (uri('1') == 'Dashboard') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/chartJs/Chart.min.js"></script>
