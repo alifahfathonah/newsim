@@ -186,6 +186,8 @@ class Auth extends CI_Controller
           redirect('Auth/RegisterAsprak');
         } else {
           $this->auth->insertData('users', $input);
+          $input  = array('email_asprak' => $email_user);
+          $this->db->where('nim_asprak', $nim_user)->update('asprak', $input);
           set_flashdata('msg', '<div class="alert alert-success msg">Thank you for register. Now you can login using your account.</div>');
           redirect();
         }

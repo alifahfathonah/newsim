@@ -30,11 +30,13 @@
                           <th width="7%">No</th>
                           <th width="25%">NIM</th>
                           <th>Name</th>
+                          <th>Phone Number</th>
+                          <th>Email</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
-                        $daftar_asprak = $this->db->select('asprak.nim_asprak, asprak.nama_asprak')->from('daftarasprak')->join('asprak', 'daftarasprak.nim_asprak = asprak.nim_asprak')->where('daftarasprak.id_daftar_mk', $d->id_daftar_mk)->order_by('asprak.nim_asprak', 'asc')->get()->result();
+                        $daftar_asprak = $this->db->select('asprak.nim_asprak, asprak.nama_asprak, asprak.kontak_asprak, asprak.email_asprak')->from('daftarasprak')->join('asprak', 'daftarasprak.nim_asprak = asprak.nim_asprak')->where('daftarasprak.id_daftar_mk', $d->id_daftar_mk)->order_by('asprak.nim_asprak', 'asc')->get()->result();
                         $no = 1;
                         foreach ($daftar_asprak as $d) {
                         ?>
@@ -42,6 +44,8 @@
                             <td><?= $no++ ?></td>
                             <td><?= $d->nim_asprak ?></td>
                             <td><?= $d->nama_asprak ?></td>
+                            <td><?= $d->kontak_asprak ?></td>
+                            <td><?= $d->email_asprak ?></td>
                           </tr>
                         <?php
                         }
