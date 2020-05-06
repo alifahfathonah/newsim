@@ -48,7 +48,7 @@
                     </select>
                   </div>
                   <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Submit BAP</button>
+                    <button class="btn btn-primary btn-sm" type="submit" name="print" id="print"><i class="fa fa-print"></i> Submit BAP</button>
                   </div>
                 </div>
               </form>

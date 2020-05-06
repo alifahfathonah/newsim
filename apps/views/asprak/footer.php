@@ -222,6 +222,23 @@ if (uri('2') == 'BAP') {
           });
         }
       });
+
+      var date = new Date();
+      var month = date.getMonth();
+      var split = bulan.split("|");
+      var noBulan = split[1] - 1;
+
+      var tanggal = date.getDate();
+      var nextMonth = (date.getMonth() + 1);
+      if ((tanggal >= 1 && tanggal <= 20) && month == noBulan) {
+        document.getElementById('print').disabled = false;
+      } else if ((tanggal > 20 && tanggal <= 31) && nextMonth == noBulan) {
+        document.getElementById('print').disabled = false;
+      } else if ((tanggal >= 1 && tanggal <= 20) && month != noBulan) {
+        document.getElementById('print').disabled = true;
+      } else if ((tanggal > 20 && tanggal <= 31) && nextMonth != noBulan) {
+        document.getElementById('print').disabled = true;
+      }
     });
   </script>
 <?php
