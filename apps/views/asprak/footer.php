@@ -15,7 +15,7 @@
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/pace/pace.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/toastr/toastr.min.js"></script>
 <?php
-if ($profil->kontak_asprak == null || $profil->ttd_asprak == null || $profil->norek_asprak == null) {
+if ($profil->kontak_asprak == null || $profil->ttd_asprak == null || $profil->norek_asprak == null || $profil->nama_rekening == null) {
 ?>
   <script>
     $(function() {

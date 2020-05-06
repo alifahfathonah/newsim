@@ -517,11 +517,13 @@ class Asprak extends CI_Controller
       $nama_asprak    = input('nama_asprak');
       $kontak_asprak  = input('kontak_asprak');
       $norek_asprak   = input('norek_asprak');
+      $nama_rekening  = input('nama_rekening');
       $linkaja_asprak = input('linkaja_asprak');
       $input          = array(
         'nama_asprak'     => $nama_asprak,
         'kontak_asprak'   => $kontak_asprak,
         'norek_asprak'    => $norek_asprak,
+        'nama_rekening'   => $nama_rekening,
         'linkaja_asprak'  => $linkaja_asprak
       );
       $this->a->updateData('asprak', $input, 'nim_asprak', $nim_asprak);

@@ -68,6 +68,13 @@
                               </td>
                             </tr>
                             <tr>
+                              <td>Account Name</td>
+                              <td>:</td>
+                              <td style="padding-bottom: 5px">
+                                <input type="text" name="nama_rekening" id="nama_rekening" class="form-control" value="<?= $profil->nama_rekening ?>">
+                              </td>
+                            </tr>
+                            <tr>
                               <td>LinkAja</td>
                               <td>:</td>
                               <td style="padding-bottom: 5px">
