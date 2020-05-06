@@ -134,25 +134,27 @@
                             if ($d->status == '1') {
                               echo '<button class="btn btn-sm btn-danger" disabled><i class="fa fa-ban"></i></button>';
                             } elseif ($d->status == '2') {
-                              echo '<button class="btn btn-sm btn-info" data-toggle="modal" data-target="#bukti' . $d->id_honor . '"><i class="fa fa-eye"></i></button>';
+                              if ($d->opsi_pengambilan != 'Cash') {
+                                echo '<button class="btn btn-sm btn-info" data-toggle="modal" data-target="#bukti' . $d->id_honor . '"><i class="fa fa-eye"></i></button>';
                             ?>
-                              <div class="modal inmodal fade" id="bukti<?= $d->id_honor ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                      <h4 class="modal-title">Evidence of Transfer</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                      <img src="<?= base_url($d->bukti_transfer) ?>" height="350px">
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                <div class="modal inmodal fade" id="bukti<?= $d->id_honor ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                        <h4 class="modal-title">Evidence of Transfer</h4>
+                                      </div>
+                                      <div class="modal-body">
+                                        <img src="<?= base_url($d->bukti_transfer) ?>" height="350px">
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
                             <?php
+                              }
                             }
                             ?>
                           </td>
