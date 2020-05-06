@@ -13,8 +13,8 @@
             ?>
             <div class="row">
               <div class="col-md-2 col-sm-2" style="margin-bottom: 5px">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal5"><i class="fa fa-plus"></i> Add Practicum Report</button>
-                <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addPracticumReport"><i class="fa fa-plus"></i> Add Practicum Report</button>
+                <div class="modal inmodal fade" id="addPracticumReport" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -86,9 +86,9 @@
                         if ($d->status_laporan == '0') {
                           $status = 'On Progress';
                         } elseif ($d->status_laporan == '1') {
-                          $status = 'Done';
-                        } elseif ($d->status_laporan == '2') {
                           $status = 'Revision';
+                        } elseif ($d->status_laporan == '2') {
+                          $status = 'Done';
                         }
                       ?>
                         <tr>
@@ -100,8 +100,41 @@
                           <td style="text-align: center">
                             <a href="<?= base_url($d->nama_file) ?>" target="_blank"><button class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button></a>
                             <?php
-                            if ($d->status_laporan == '2') {
-                              echo '<a href="' . base_url($d->nama_file) . '" target="_blank"><button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button></a>';
+                            if ($d->status_laporan == '1') {
+                              echo '<button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editPracticumReport' . $d->id_laporan_praktikum . '"><i class="fa fa-edit"></i></button>';
+                            ?>
+                              <div class="modal inmodal fade" id="editPracticumReport<?= $d->id_laporan_praktikum ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                      <h4 class="modal-title">Revision Practicum Report</h4>
+                                    </div>
+                                    <form method="post" action="<?= base_url('Asprak/RevisionReport') ?>" enctype="multipart/form-data">
+                                      <div class="modal-body">
+                                        <div class="row">
+                                          <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                              <label class="font-bold">File</label>
+                                              <input type="text" name="id_laporan" id="id_laporan" value="<?= $d->id_laporan_praktikum ?>" style="display: none">
+                                              <input type="text" name="id_daftar_mk" id="id_daftar_mk" value="<?= $d->id_daftar_mk ?>" style="display: none">
+                                              <div class="custom-file">
+                                                <input type="file" name="file_laporan" id="file_laporan" accept="application/pdf" class="custom-file-input">
+                                                <label for="logo" class="custom-file-label">Choose file...</label>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            <?php
                             }
                             ?>
                           </td>

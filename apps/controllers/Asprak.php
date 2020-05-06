@@ -451,7 +451,7 @@ class Asprak extends CI_Controller
       $nama_file  = $data->ta . '_' . $data->kode_mk . '_' . preg_replace('/[^a-zA-Z0-9]/', '_', $data->nama_mk) . '.pdf';
       $input  = array(
         'tanggal_upload'  => date('Y-m-d H:i:s'),
-        'status_laporan'  => 'On Progress',
+        'status_laporan'  => '0',
         'id_daftar_mk'    => $id_daftar_mk,
         'nim_asprak'      => userdata('nim')
       );
@@ -468,6 +468,43 @@ class Asprak extends CI_Controller
       }
       $this->db->insert('laporan_praktikum', $input);
       set_flashdata('msg', '<div class="alert alert-success msg">Your practicum report successfully submited</div>');
+      redirect('Asprak/PracticumReport');
+    }
+  }
+
+  public function RevisionReport()
+  {
+    set_rules('id_laporan', 'ID Laporan', 'required|trim');
+    if (validation_run() == false) {
+      redirect('Asprak/PracticumReport');
+    } else {
+      $id_laporan   = input('id_laporan');
+      $id_daftar_mk = input('id_daftar_mk');
+      $cek_data     = $this->db->where('id_laporan_praktikum', $id_laporan)->where('id_daftar_mk', $id_daftar_mk)->get('laporan_praktikum')->row();
+      unlink($cek_data->nama_file);
+      $data = $this->db->select('tahun_ajaran.ta, daftar_mk.kode_mk, matakuliah.nama_mk')->from('daftar_mk')->join('tahun_ajaran', 'daftar_mk.id_ta = tahun_ajaran.id_ta')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_daftar_mk', $id_daftar_mk)->get()->row();
+      print_r($data);
+      echo '<br>';
+      $nama_file  = $data->ta . '_' . $data->kode_mk . '_' . preg_replace('/[^a-zA-Z0-9]/', '_', $data->nama_mk) . '.pdf';
+      $input  = array(
+        'tanggal_upload'  => date('Y-m-d H:i:s'),
+        'status_laporan'  => '0',
+        'id_daftar_mk'    => $id_daftar_mk,
+        'nim_asprak'      => userdata('nim')
+      );
+      $config['upload_path']    = 'assets/laporan/asprak/';
+      $config['allowed_types']  = 'pdf';
+      $config['max_size']       = 1024 * 100;
+      $config['overwrite']      = true;
+      $config['file_name']      = $nama_file;
+      $this->load->library('upload', $config);
+      if ($this->upload->do_upload('file_laporan')) {
+        $input['nama_file'] = $config['upload_path'] . '' . $nama_file;
+      } else {
+        print_r($this->upload->display_errors());
+      }
+      $this->db->where('id_laporan_praktikum', $id_laporan)->update('laporan_praktikum', $input);
+      set_flashdata('msg', '<div class="alert alert-success msg">Your practicum report successfully updated</div>');
       redirect('Asprak/PracticumReport');
     }
   }
