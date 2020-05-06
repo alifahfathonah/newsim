@@ -41,6 +41,20 @@ class Finance extends CI_Controller
     }
   }
 
+  public function HonorAslab()
+  {
+    set_rules('id_honor_aslab', 'ID Honor Aslab', 'required|trim');
+    if (validation_run() == false) {
+      redirect('Finance/Honor');
+    } else {
+      $id_honor_aslab = input('id_honor_aslab');
+      $pilihan        = input('pilihan');
+      $input          = array('status_honor' => '2', 'opsi_pengambilan' => $pilihan);
+      $this->db->where('id_honor_aslab', $id_honor_aslab)->update('honor_aslab', $input);
+      redirect('Finance/Honor');
+    }
+  }
+
   public function ApproveHonor()
   {
     $id = $_POST['id'];

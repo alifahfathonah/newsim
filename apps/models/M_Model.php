@@ -442,10 +442,11 @@ class M_Model extends CI_Model
 
   function daftarHonorAslab($id)
   {
-    $this->db->select('honor_aslab.id_honor_aslab, honor_aslab.jam, honor_aslab.nominal, honor_aslab.opsi_pengambilan, aslab.nim, aslab.namaLengkap, periode.bulan');
+    $this->db->select('honor_aslab.id_honor_aslab, honor_aslab.jam, honor_aslab.nominal, honor_aslab.status_honor, honor_aslab.opsi_pengambilan, aslab.nim, aslab.namaLengkap, periode.bulan, tahun_ajaran.ta');
     $this->db->from('honor_aslab');
     $this->db->join('aslab', 'honor_aslab.id_aslab = aslab.idAslab');
     $this->db->join('periode', 'honor_aslab.id_periode = periode.id_periode');
+    $this->db->join('tahun_ajaran', 'honor_aslab.id_ta = tahun_ajaran.id_ta');
     $this->db->where('honor_aslab.id_aslab', $id);
     return $this->db->get();
   }
