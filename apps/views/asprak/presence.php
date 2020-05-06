@@ -53,7 +53,7 @@
                           <td style="text-align: center">
                             <div class="tooltip-demo">
                               <?php
-                              if ($d->approve_absen == '0') {
+                              if ($d->approve_absen == '1') {
                               ?>
                                 <button class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="bottom" title="Waiting approved by lecture"><i class="fa fa-ban"></i></button>
                               <?php
@@ -61,7 +61,7 @@
                               ?>
                                 <button class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="bottom" title="Your presence approved by lecture"><i class="fa fa-check"></i></button>
                               <?php
-                              } elseif ($d->approve_absen == '1') {
+                              } elseif ($d->approve_absen == '0') {
                               ?>
                                 <a href="<?= base_url('Asprak/EditPresence/' . substr(sha1($d->id_presensi_asprak), 7, 7)) ?>">
                                   <button class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="bottom" title="Edit your presence"><i class="fa fa-edit"></i></button>
