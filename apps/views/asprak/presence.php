@@ -33,6 +33,7 @@
                         <th width="5%">End</th>
                         <th>Courses</th>
                         <th width="10%">Class</th>
+                        <th>Lecturer Code</th>
                         <th>Modul</th>
                         <th width="7%">Approval Status</th>
                       </tr>
@@ -49,6 +50,7 @@
                           <td><?= $d->selesai ?></td>
                           <td><?= $d->nama_mk ?></td>
                           <td><?= $d->kelas ?></td>
+                          <td><?= $d->kode_dosen ?></td>
                           <td><?= $d->modul ?></td>
                           <td style="text-align: center">
                             <div class="tooltip-demo">
