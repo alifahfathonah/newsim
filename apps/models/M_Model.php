@@ -428,6 +428,8 @@ class M_Model extends CI_Model
     $this->db->join('asprak', 'honor.nim_asprak = asprak.nim_asprak');
     $this->db->join('periode', 'honor.id_periode = periode.id_periode');
     $this->db->where('honor.status != "0"');
+    $this->db->order_by('honor.status', 'asc');
+    $this->db->order_by('honor.id_honor', 'desc');
     return $this->db->get();
   }
 

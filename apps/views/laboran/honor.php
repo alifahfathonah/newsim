@@ -62,11 +62,80 @@
                                     <td><?= $a->opsi_pengambilan ?></td>
                                     <td>
                                       <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#detail<?= $a->id_honor ?>"><i class="fa fa-eye"></i></button>
-                                      <div id="btn_approve_honor<?= substr(sha1($a->id_honor), 7, 7) ?>">
+                                      <?php
+                                      if ($a->status == '1') {
+                                        echo '<button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#upload_bukti' . $a->id_honor . '"><i class="fa fa-edit"></i></button>';
+                                      ?>
+                                        <div class="modal inmodal fade" id="upload_bukti<?= $a->id_honor ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                                <h4 class="modal-title">Upload Evidence of Transfer</h4>
+                                              </div>
+                                              <form method="post" action="<?= base_url('Finance/UploadEvidence') ?>" enctype="multipart/form-data">
+                                                <div class="modal-body">
+                                                  <div class="row">
+                                                    <div class="col-md-6 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">NIM</label>
+                                                        <br>
+                                                        <label><?= $a->nim_asprak ?></label>
+                                                        <input type="text" name="id_honor" id="id_honor" value="<?= $a->id_honor ?>" style="display: none">
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">Name</label>
+                                                        <br>
+                                                        <label><?= $a->nama_asprak ?></label>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-6 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">Periode</label>
+                                                        <br>
+                                                        <label><?= $a->bulan ?></label>
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">Amount</label>
+                                                        <br>
+                                                        <label>Rp <?= number_format($a->nominal, 0, '', '.') ?></label>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-12 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">Evidence of Transfer</label>
+                                                        <div class="custom-file">
+                                                          <input id="logo" type="file" class="custom-file-input" name="bukti_transfer" accept="image/*">
+                                                          <label for="logo" class="custom-file-label">Choose file...</label>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                                  <button type="submit" class="btn btn-primary">Upload</button>
+                                                </div>
+                                              </form>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <?php
+                                      }
+                                      ?>
+                                      <!-- <div id="btn_approve_honor<?= substr(sha1($a->id_honor), 7, 7) ?>">
                                         <?php
                                         if ($a->status == '1') {
                                         ?>
-                                          <button class="btn btn-success btn-sm" onclick="approve_honor('<?= substr(sha1($a->id_honor), 7, 7) ?>')"><i class="fa fa-check"></i></button>
+                                          <button class="btn btn-warning btn-sm" onclick="approve_honor('<?= substr(sha1($a->id_honor), 7, 7) ?>')"><i class="fa fa-check"></i></button>
                                         <?php
                                         } elseif ($a->status == '2') {
                                         ?>
@@ -74,7 +143,7 @@
                                         <?php
                                         }
                                         ?>
-                                      </div>
+                                      </div> -->
                                     </td>
                                   </tr>
                                   <div class="modal inmodal fade" id="detail<?= $a->id_honor ?>" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">

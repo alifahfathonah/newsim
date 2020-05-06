@@ -56,6 +56,28 @@ class Finance extends CI_Controller
     }
   }
 
+  public function UploadEvidence()
+  {
+    set_rules('id_honor', 'ID Honor', 'required|trim');
+    if (validation_run() == false) {
+      redirect('Finance/Honor');
+    } else {
+      $id_honor = input('id_honor');
+      $input    = array('status' => '2');
+      $nama_file = rand(10, 99) . '-' . str_replace(' ', '_', $_FILES['bukti_transfer']['name']);
+      $config['upload_path']    = 'assets/img/bukti_transfer/';
+      $config['allowed_types']  = 'gif|jpg|jpeg|png';
+      $config['max_size']       = 1024 * 10;
+      $config['file_name']      = $nama_file;
+      $this->load->library('upload', $config);
+      if ($this->upload->do_upload('bukti_transfer')) {
+        $input['bukti_transfer'] = $config['upload_path'] . '' . $nama_file;
+      }
+      $this->db->where('id_honor', $id_honor)->update('honor', $input);
+      redirect('Finance/Honor');
+    }
+  }
+
   public function ApproveHonor()
   {
     $id = $_POST['id'];
