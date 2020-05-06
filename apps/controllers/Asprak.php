@@ -368,7 +368,7 @@ class Asprak extends CI_Controller
                                       <td width="30%" rowspan="8" valign="top">
                                         <div align="right">
                                           <img src="' . base_url() . 'assets/img/logo_tass.png" height="70px" width="250px">
-                                          <p style="font-family: Arial; font-size: 12px;"><b>Laboratoria<br>Fakultas Ilmu Terapan</b></p>
+                                          <p style="font-family: Arial; font-size: 12px;"><b>Unit Laboratorium/Bengkel/Studio<br>Fakultas Ilmu Terapan</b></p>
                                         </div>
                                       </td>
                                     </tr>
