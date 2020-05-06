@@ -52,7 +52,7 @@ class BAP extends CI_Controller
     $id = $_POST['id'];
     $cek_data = $this->db->where('substring(sha1(id_presensi_asprak), 8, 7) = "' . $id . '"')->get('presensi_asprak')->row();
     if ($cek_data) {
-      $input  = array('approve_absen' => '1');
+      $input  = array('approve_absen' => '2');
       $this->db->where('substring(sha1(id_presensi_asprak), 8, 7) = "' . $id . '"')->update('presensi_asprak', $input);
       echo 'true';
     }
@@ -63,7 +63,7 @@ class BAP extends CI_Controller
     $id = $_POST['id'];
     $cek_data = $this->db->where('substring(sha1(id_presensi_asprak), 8, 7) = "' . $id . '"')->get('presensi_asprak')->row();
     if ($cek_data) {
-      $input  = array('approve_absen' => '2');
+      $input  = array('approve_absen' => '1');
       $this->db->where('substring(sha1(id_presensi_asprak), 8, 7) = "' . $id . '"')->update('presensi_asprak', $input);
       echo 'true';
     }
