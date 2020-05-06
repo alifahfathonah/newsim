@@ -105,6 +105,7 @@
                         <th width="12%">Amount</th>
                         <th width="12%">Status</th>
                         <th>Payment Method</th>
+                        <th>Evidence of Transfer</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -118,8 +119,43 @@
                           <td><?= $d->ta ?></td>
                           <td><?= $d->bulan . ' ' . $d->tahun ?></td>
                           <td style="text-align: right">Rp <?= number_format($d->nominal, 0, '', '.') ?></td>
-                          <td>Taken</td>
+                          <td>
+                            <?php
+                            if ($d->status == '1') {
+                              echo 'Requested';
+                            } elseif ($d->status == '2') {
+                              echo 'Taken';
+                            }
+                            ?>
+                          </td>
                           <td><?= $d->opsi_pengambilan ?></td>
+                          <td style="text-align: center">
+                            <?php
+                            if ($d->status == '1') {
+                              echo '<button class="btn btn-sm btn-danger" disabled><i class="fa fa-ban"></i></button>';
+                            } elseif ($d->status == '2') {
+                              echo '<button class="btn btn-sm btn-info" data-toggle="modal" data-target="#bukti' . $d->id_honor . '"><i class="fa fa-eye"></i></button>';
+                            ?>
+                              <div class="modal inmodal fade" id="bukti<?= $d->id_honor ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                      <h4 class="modal-title">Evidence of Transfer</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <img src="<?= base_url($d->bukti_transfer) ?>" height="350px">
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            <?php
+                            }
+                            ?>
+                          </td>
                         </tr>
                       <?php
                       }

@@ -113,7 +113,7 @@ class M_Asprak extends CI_Model
 
   function daftarHonorAsprakDiambil($nim)
   {
-    $this->db->select('honor.id_honor, matakuliah.kode_mk, matakuliah.nama_mk, tahun_ajaran.ta, periode.bulan, date_format(honor.tanggal_submit, "%Y") tahun, honor.nominal, honor.status, honor.opsi_pengambilan');
+    $this->db->select('honor.id_honor, matakuliah.kode_mk, matakuliah.nama_mk, tahun_ajaran.ta, periode.bulan, date_format(honor.tanggal_submit, "%Y") tahun, honor.nominal, honor.status, honor.opsi_pengambilan, honor.bukti_transfer');
     $this->db->from('honor');
     $this->db->join('daftar_mk', 'honor.id_daftar_mk = daftar_mk.id_daftar_mk');
     $this->db->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk');
