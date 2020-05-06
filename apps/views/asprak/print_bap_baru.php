@@ -66,7 +66,7 @@
         <div align="right">
           <img src="<?= base_url('assets/img/logo_tass.png') ?>" height="60px">
           <br><br>
-          <p>Laboratoria<br>Fakultas Ilmu Terapan</p>
+          <p>Unit Laboratorium/Bengkel/Studio<br>Fakultas Ilmu Terapan</p>
         </div>
       </td>
     </tr>
