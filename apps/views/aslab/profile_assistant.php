@@ -1,6 +1,6 @@
       <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-12">
-          <h2 style="text-align: center"><?= $profil->namaLengkap ?>'s Profile<br>School of Applied Science School's Laboratory</h2>
+          <h2 style="text-align: center"><?= $profil_aslab->namaLengkap ?>'s Profile<br>School of Applied Science School's Laboratory</h2>
         </div>
       </div>
       <div class="wrapper wrapper-content animated fadeInRight">
@@ -8,10 +8,10 @@
           <div class="col-md-9 col-sm-12" style="margin: 20px 0 20px 0">
             <div class="profile-image">
               <?php
-              if ($profil->fotoAslab == null) {
+              if ($profil_aslab->fotoAslab == null) {
                 $foto = base_url('assets/img/person-flat.png');
               } else {
-                $foto = base_url($profil->fotoAslab);
+                $foto = base_url($profil_aslab->fotoAslab);
               }
               $laboratorium = '';
               foreach ($pj as $p) {
@@ -25,8 +25,8 @@
             <div class="profile-info">
               <div>
                 <div>
-                  <h2 class="no-margins"><?= $profil->namaLengkap ?></h2>
-                  <h4><?= $profil->nim ?> | <i class="fa fa-phone-square"></i> <?= $profil->noTelp ?></h4>
+                  <h2 class="no-margins"><?= $profil_aslab->namaLengkap ?></h2>
+                  <h4><?= $profil_aslab->nim ?> | <i class="fa fa-phone-square"></i> <?= $profil_aslab->noTelp ?></h4>
                   <table>
                     <tr>
                       <td style="padding-right: 20px" width="50%"><small>Aslab in Charge:</small></td>
@@ -34,7 +34,7 @@
                     </tr>
                     <tr>
                       <td style="padding-right: 20px" width="50%"><small><?= $laboratorium ?></small></td>
-                      <td valign="top"><small><?= $profil->spesialisAslab ?></small></td>
+                      <td valign="top"><small><?= $profil_aslab->spesialisAslab ?></small></td>
                     </tr>
                   </table>
                 </div>
