@@ -29,6 +29,10 @@ class Finance extends CI_Controller
     $data           = $this->data;
     $data['title']  = 'Honor | SIM Laboratorium';
     if (userdata('login') == 'laboran') {
+      $data['prodi']            = $this->m->daftarProdi()->result();
+      $data['tahun_ajaran']     = $this->m->daftarPeriode()->result();
+      $data['laboran']          = $this->m->daftarLaboran()->result();
+      $data['submission']       = $this->m->daftarPertanggungan()->result();
       $data['withdraw_asprak']  = $this->m->daftarPengambilanHonorAsprak()->result();
       $data['withdraw_aslab']   = $this->m->daftarPengambilanHonorAslab()->result();
       view('laboran/header', $data);
@@ -39,6 +43,96 @@ class Finance extends CI_Controller
       view('aslab/header', $data);
       view('aslab/honor', $data);
       view('aslab/footer');
+    }
+  }
+
+  public function AddSubmission()
+  {
+    set_rules('tipe_submission', 'Type', 'required|trim');
+    if (validation_run() == false) {
+      redirect('Finance/Honor');
+    } else {
+      $tipe_submission  = input('tipe_submission');
+      $prodi            = input('prodi');
+      $ta               = input('ta');
+      $periode          = input('periode');
+      $pembuat          = input('pembuat');
+      $ambil_tahun      = $this->db->where('id_ta', $ta)->get('tahun_ajaran')->row()->ta;
+      $split_tahun      = explode('-', $ambil_tahun);
+      if ($split_tahun[1] == '1') {
+        $tahun = $split_tahun[0];
+      } elseif ($split_tahun[1] == '2') {
+        $tahun = $split_tahun[0] + 1;
+      }
+      $no_pk            = $tipe_submission . '-' . substr($tahun, -2) . '.' . $periode;
+      $cek_counter      = $this->db->like('no_pk', $no_pk)->order_by('no_pk', 'desc')->get('pk')->row();
+      if ($cek_counter) {
+        $ambil_counter  = substr($cek_counter->no_pk, -2);
+        $counter        = $ambil_counter + 1;
+        if (strlen($counter) == 1) {
+          $counter = '0' . $counter;
+        } else {
+          $counter = $counter;
+        }
+        $no_pk  = $no_pk . '.' . $counter;
+      } else {
+        $no_pk  = $no_pk . '.01';
+      }
+      $input  = array(
+        'no_pk'       => $no_pk,
+        'kode_prodi'  => $prodi,
+        'id_ta'       => $ta,
+        'status_pk'   => '0',
+        'pembuat'     => $pembuat
+      );
+      $total = 0;
+      if ($tipe_submission == '02' || $tipe_submission == '01') {
+        $id_periode = $this->db->where('aslab', '1')->where('bulan', bulan_panjang($periode))->get('periode')->row()->id_periode;
+        $input['id_periode']  = $id_periode;
+        $file = $_FILES['file_csv']['tmp_name'];
+        $ekstensi_file  = explode('.', $_FILES['file_csv']['name']);
+        if (strtolower(end($ekstensi_file)) === 'csv' && $_FILES['file_csv']['size'] > 0) {
+          $handle = fopen($file, 'r');
+          $i = 0;
+          while (($row = fgetcsv($handle, 2048))) {
+            $i++;
+            if ($i == 1) {
+              continue;
+            }
+            $tarif  = $this->db->where('status', '1')->get('tarif')->row()->tarif_honor;
+            $total  = $total + ((float) $row[1] * $tarif);
+            //permanen
+            // $aslab  = array(
+            //   'jam'           => (float) $row[1],
+            //   'nominal'       => (float) $row[1] * $tarif,
+            //   'status_honor'  => 0,
+            //   'id_periode'    => $id_periode,
+            //   'id_ta'         => $ta
+            // );
+            //input data dulu
+            $id_aslab = $this->db->where('nim', $row[0])->limit(1)->order_by('idAslab', 'desc')->get('aslab')->row()->idAslab;
+            $aslab  = array(
+              'jam'               => (float) $row[1],
+              'nominal'           => (float) $row[1] * $tarif,
+              'status_honor'      => 3,
+              'opsi_pengambilan'  => 'Cash',
+              'tanggal_diambil'   => '2018-07-31',
+              'id_periode'        => $id_periode,
+              'id_ta'             => $ta,
+              'id_aslab'          => $id_aslab,
+              'no_pk'             => $no_pk
+            );
+            $this->m->insertData('honor_aslab', $aslab);
+          }
+          fclose($handle);
+        }
+        $input['total'] = $total;
+      } elseif ($tipe_submission == '03') {
+        $id_periode = $this->db->where('asprak', '1')->where('bulan', bulan_panjang($periode))->get('periode')->row()->id_periode;
+        $input['id_periode']  = $id_periode;
+      }
+      $this->m->insertData('pk', $input);
+      redirect('Finance/Honor');
     }
   }
 

@@ -65,4 +65,38 @@ class Coba extends CI_Controller
       }
     }
   }
+
+  public function PK()
+  {
+    view('laboran/pk');
+  }
+
+  public function simpanPK()
+  {
+    $file = $_FILES['file_csv']['tmp_name'];
+    $ekstensi_file  = explode('.', $_FILES['file_csv']['name']);
+    if (strtolower(end($ekstensi_file)) === 'csv' && $_FILES['file_csv']['size'] > 0) {
+      $handle = fopen($file, 'r');
+      $i = 0;
+      while (($row = fgetcsv($handle, 2048))) {
+        $i++;
+        if ($i == 1) {
+          continue;
+        }
+        $no_pk  = '02-' . substr($row[0], 3);
+        $input  = array(
+          'no_pk'       => $no_pk,
+          'kode_prodi'  => $row[1],
+          'id_ta'       => $row[2],
+          'id_periode'  => $row[3],
+          'total'       => $row[4],
+          'status_pk'   => $row[5],
+          'pembuat'     => $row[6]
+        );
+        $this->db->insert('pk', $input);
+        // print_r($input);
+      }
+      fclose($handle);
+    }
+  }
 }

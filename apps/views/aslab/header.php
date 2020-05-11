@@ -32,7 +32,7 @@
   </style>
 </head>
 
-<body>
+<body class="fixed-sidebar">
   <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
       <div class="sidebar-collapse">
@@ -230,6 +230,18 @@
           <a href="<?= base_url('LaboratoryAssistant/Report') ?>">
             <i class="fa fa-file-o"></i>
             <span class="nav-label">Report</span>
+          </a>
+          </li>
+          <?php
+          if (uri('2') == 'Report') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('LaboratoryAssistant/Report') ?>">
+            <i class="fa fa-gear"></i>
+            <span class="nav-label">Setting</span>
           </a>
           </li>
           <?php

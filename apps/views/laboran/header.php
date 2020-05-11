@@ -93,10 +93,20 @@
   if (uri('1') == 'Finance') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
     <style>
-      .modal-body {
-        overflow-x: auto;
+      .select2-dropdown {
+        z-index: 10060 !important;
+        /*1051;*/
       }
+
+      .select2 {
+        width: 100% !important;
+      }
+
+      /* .modal-body {
+        overflow-x: auto;
+      } */
     </style>
   <?php
   }

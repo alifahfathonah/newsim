@@ -419,6 +419,22 @@ class M_Model extends CI_Model
     return $this->db->get();
   }
 
+  function daftarProdi()
+  {
+    return $this->db->get('prodi');
+  }
+
+  function daftarLaboran()
+  {
+    return $this->db->get('laboran');
+  }
+
+  function daftarPertanggungan()
+  {
+    // return $this->db->select('pk.no_pk, left(pk.no_pk, 2) kode_pk, pk.kode_prodi, periode.bulan, pk.total, pk.tanggal_pengajuan, pk.tanggal_cair, pk.status_pk')->from('pk')->join('periode', 'pk.id_periode = periode.id_periode')->order_by('pk.no_pk', 'desc')->get();
+    return $this->db->query('select pk.no_pk, left(pk.no_pk, 2) kode_pk, pk.kode_prodi, periode.bulan, pk.total, pk.tanggal_pengajuan, pk.tanggal_cair, pk.status_pk from pk join periode on pk.id_periode = periode.id_periode order by pk.no_pk desc');
+  }
+
   function daftarPengambilanHonorAsprak()
   {
     $this->db->select('honor.id_honor, matakuliah.kode_mk, matakuliah.nama_mk, asprak.nim_asprak, asprak.nama_asprak, asprak.norek_asprak, asprak.linkaja_asprak, periode.bulan, honor.nominal, honor.opsi_pengambilan, honor.status');
@@ -439,6 +455,7 @@ class M_Model extends CI_Model
     $this->db->from('honor_aslab');
     $this->db->join('aslab', 'honor_aslab.id_aslab = aslab.idAslab');
     $this->db->join('periode', 'honor_aslab.id_periode = periode.id_periode');
+    $this->db->order_by('honor_aslab.id_honor_aslab', 'desc');
     return $this->db->get();
   }
 

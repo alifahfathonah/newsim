@@ -623,15 +623,95 @@ if (uri('1') == 'HistoryLogin') {
 }
 if (uri('1') == 'Finance') {
 ?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/chartJs/Chart.min.js"></script>
   <script>
+    $(function() {
+      var line_data = {
+        <?php
+        $tahun_ajaran = $this->db->query('select distinct tahun_ajaran.ta, tahun_ajaran.id_ta from pk join tahun_ajaran on pk.id_ta = tahun_ajaran.id_ta')->result();
+        ?>
+        labels: ['',
+          <?php
+          foreach ($tahun_ajaran as $t) {
+            echo "'" . $t->ta . "',";
+          }
+          ?>
+        ],
+        datasets: [
+          <?php
+          $prodi = $this->db->get('prodi')->result();
+          foreach ($prodi as $p) {
+            $pk = $this->db->select('sum(total) total')->from('pk')->where('kode_prodi', $p->kode_prodi)->group_by('id_ta')->group_by('kode_prodi')->get()->result();
+          ?> {
+              label: '<?= $p->kode_prodi ?>',
+              backgroundColor: '<?= $p->color ?>',
+              borderColor: '<?= $p->color ?>',
+              data: [0,
+                <?php
+                foreach ($pk as $p) {
+                  echo $p->total . ',';
+                }
+                ?>
+              ],
+              fill: false
+            },
+          <?php
+          }
+          ?>
+        ]
+      };
+
+      var line_options = {
+        responsive: true
+      };
+
+      var ctx = document.getElementById("lineChart").getContext("2d");
+      new Chart(ctx, {
+        type: 'line',
+        data: line_data,
+        options: line_options
+      });
+    })
+
     $(document).ready(function() {
+      $('.submission').DataTable({
+        pageLength: 8,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: [],
+        aaSorting: [
+          [0, 'desc']
+        ]
+      });
+
       $('.asprak').DataTable({
         pageLength: 10,
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
+      });
+
+      $(".type_submission").select2({
+        placeholder: "Select Type",
+      });
+
+      $(".prodi").select2({
+        placeholder: "Select Major",
+      });
+
+      $(".ta").select2({
+        placeholder: "Select Year",
+      });
+
+      $(".periode").select2({
+        placeholder: "Select Period",
+      });
+
+      $(".pembuat").select2({
+        placeholder: "Select Person",
       });
 
       $('.custom-file-input').on('change', function() {
