@@ -192,7 +192,13 @@ class M_Model extends CI_Model
 
   function daftarAsprak()
   {
-    return $this->db->get('asprak');
+    // return $this->db->get('asprak');
+    $this->db->select('asprak.nim_asprak, asprak.nama_asprak, matakuliah.kode_mk, matakuliah.nama_mk');
+    $this->db->from('daftarasprak');
+    $this->db->join('asprak', 'daftarasprak.nim_asprak = asprak.nim_asprak');
+    $this->db->join('daftar_mk', 'daftarasprak.id_daftar_mk = daftar_mk.id_daftar_mk');
+    $this->db->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk');
+    return $this->db->get();
   }
 
   function daftarLaporanAsprak()

@@ -53,6 +53,7 @@
                         <th width="7%">No</th>
                         <th width="15%">NIM</th>
                         <th>Name</th>
+                        <th>Courses</th>
                         <th width="10%">Action</th>
                       </tr>
                     </thead>
@@ -65,6 +66,7 @@
                           <td><?= $no++ ?></td>
                           <td><?= $d->nim_asprak ?></td>
                           <td><?= $d->nama_asprak ?></td>
+                          <td><?= $d->kode_mk . ' - ' . $d->nama_mk ?></td>
                           <td style="text-align: center">
                             <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editAsprak<?= $d->nim_asprak ?>"><i class="fa fa-edit"></i></button>
                             <button class="btn btn-danger btn-sm" onclick="hapus_asprak(<?= $d->nim_asprak ?>)"><i class="fa fa-trash"></i></button>
