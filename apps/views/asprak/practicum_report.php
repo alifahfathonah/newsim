@@ -119,7 +119,7 @@
                                               <input type="text" name="id_laporan" id="id_laporan" value="<?= $d->id_laporan_praktikum ?>" style="display: none">
                                               <input type="text" name="id_daftar_mk" id="id_daftar_mk" value="<?= $d->id_daftar_mk ?>" style="display: none">
                                               <div class="custom-file">
-                                                <input type="file" name="file_laporan" id="file_laporan" accept="application/pdf" class="custom-file-input">
+                                                <input type="file" name="file_laporan" id="file_laporan" accept="application/pdf" class="custom-file-input" required>
                                                 <label for="logo" class="custom-file-label">Choose file...</label>
                                               </div>
                                             </div>
