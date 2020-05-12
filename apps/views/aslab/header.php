@@ -18,6 +18,7 @@
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+  <link href="<?= base_url('assets/inspinia/') ?>css/plugins/toastr/toastr.min.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/animate.css" rel="stylesheet">
   <link href="<?= base_url('assets/inspinia/') ?>css/style.css" rel="stylesheet">
   <style>
@@ -233,13 +234,13 @@
           </a>
           </li>
           <?php
-          if (uri('2') == 'Report') {
+          if (uri('1') == 'Setting') {
             echo '<li class="active">';
           } else {
             echo '<li>';
           }
           ?>
-          <a href="<?= base_url('LaboratoryAssistant/Report') ?>">
+          <a href="<?= base_url('Setting') ?>">
             <i class="fa fa-gear"></i>
             <span class="nav-label">Setting</span>
           </a>

@@ -23,6 +23,34 @@
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/iCheck/icheck.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/fullcalendar/fullcalendar.min.js"></script>
 <script src="<?= base_url('assets/inspinia/') ?>js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="<?= base_url('assets/inspinia/') ?>js/plugins/toastr/toastr.min.js"></script>
+<?php
+if ($cek_aslab->norek == null && $cek_aslab->nama_rekening == null && $cek_aslab->linkaja == null) {
+?>
+  <script>
+    $(function() {
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "progressBar": false,
+        "preventDuplicates": false,
+        "positionClass": "toast-bottom-right",
+        "onclick": null,
+        "showDuration": "400",
+        "hideDuration": "1000",
+        "timeOut": "0",
+        "extendedTimeOut": "0",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      }
+      toastr.warning("Please complete your personal information in Setting Menu");
+    });
+  </script>
+<?php
+}
+?>
 <script>
   window.setTimeout(function() {
     $(".msg").fadeTo(500, 0).slideUp(500, function() {

@@ -384,6 +384,16 @@ class M_Model extends CI_Model
     return $this->db->get_where('users', array('idUser' => $id));
   }
 
+  function profilAslab($id)
+  {
+    return $this->db->get_where('aslab', array('idAslab' => $id));
+  }
+
+  function akunAslab($id)
+  {
+    return $this->db->get_where('users', array('idAslab' => $id));
+  }
+
   function daftarBAP($id_dosen, $id_daftar_mk)
   {
     $this->db->select('honor.id_honor, matakuliah.kode_mk, matakuliah.nama_mk, asprak.nim_asprak, asprak.nama_asprak, LEFT(periode.rentang_akhir, 2) bulan');
