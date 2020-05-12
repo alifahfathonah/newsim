@@ -428,11 +428,11 @@ class Auth extends CI_Controller
   public function ajaxCekNIM()
   {
     if (!empty($_POST['nim'])) {
-      $cek_nim  = $this->auth->cekNIM($_POST['nim'])->row()->jumlah;
+      $cek_nim  = $this->auth->registerAsprak($_POST['nim'])->row()->jumlah;
       if ($cek_nim > 0) {
-        echo 'terdaftar';
+        echo 'register';
       } else {
-        echo 'tidak';
+        echo 'belum';
       }
     }
   }

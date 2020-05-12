@@ -41,6 +41,7 @@
             <form class="m-t" role="form" method="post" action="<?= base_url('Auth/RegisterAsprak') ?>">
               <div class="form-group">
                 <input type="text" name="nim_user" id="nim_user" class="form-control" placeholder="Your NIM" required onkeyup="cekNIM()">
+                <p id="status_nim" style="text-align: center"></p>
               </div>
               <div class="form-group">
                 <input type="text" name="username_user" id="username_user" class="form-control" placeholder="Username" required onkeyup="cekUsername()">
@@ -73,6 +74,8 @@
   <script src="<?= base_url('assets/inspinia/') ?>js/jquery-3.1.1.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/bootstrap.min.js"></script>
   <script>
+    var submit;
+
     function cekNIM() {
       var nim = document.getElementById('nim_user').value;
       if (nim) {
@@ -83,11 +86,17 @@
             nim: nim
           },
           success: function(response) {
-            if (response != 'tidak') {
+            if (response != 'register') {
               document.getElementById('submit').disabled = false;
+              submit = 'false';
+              $('#status_nim').html('');
               return true;
             } else {
               document.getElementById('submit').disabled = true;
+              submit = 'true';
+              var responnya = 'NIM Already Registered';
+              $('#status_nim').html(responnya);
+              $('#status_nim').css('color', '#ff0004', 'important');
               return false;
             }
           }
@@ -108,11 +117,21 @@
             if (response == 'null') {
               document.getElementById('submit').disabled = false;
               $('#status_username').html('');
+              if (submit == 'false') {
+                document.getElementById('submit').disabled = false;
+              } else if (submit == 'true') {
+                document.getElementById('submit').disabled = true;
+              }
               return true;
             } else {
               document.getElementById('submit').disabled = true;
               $('#status_username').html(response);
               $('#status_username').css('color', '#ff0004', 'important');
+              if (submit == 'false') {
+                document.getElementById('submit').disabled = false;
+              } else if (submit == 'true') {
+                document.getElementById('submit').disabled = true;
+              }
               return false;
             }
           }
