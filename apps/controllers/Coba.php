@@ -99,4 +99,66 @@ class Coba extends CI_Controller
       fclose($handle);
     }
   }
+
+  public function HonorAslab()
+  {
+    view('laboran/honor_aslab');
+  }
+
+  public function simpanHonorAslab()
+  {
+    $file = $_FILES['file_csv']['tmp_name'];
+    $ekstensi_file  = explode('.', $_FILES['file_csv']['name']);
+    $tarif  = $this->db->get_where('tarif', array('status', '1'))->row()->tarif_honor;
+    if (strtolower(end($ekstensi_file)) === 'csv' && $_FILES['file_csv']['size'] > 0) {
+      $handle = fopen($file, 'r');
+      $i = 0;
+      while (($row = fgetcsv($handle, 2048))) {
+        $i++;
+        if ($i == 1) {
+          continue;
+        }
+        $nominal  = (float) $row[6] * $tarif;
+        if ($row[8] == 'Taken') {
+          $status_honor = '3';
+        } elseif ($row[8] == 'Untaken') {
+          $status_honor = '1';
+        } else {
+          $status_honor = '4';
+        }
+        if ($row[10] == 'Cash') {
+          $opsi_pengambilan = 'Cash';
+        } else {
+          $opsi_pengambilan = null;
+        }
+        if ($row[9] == '2 Maret 2020') {
+          $tanggal_diambil  = '2020/03/02';
+        } else {
+          $tanggal_diambil  = null;
+        }
+        $id_aslab = $this->db->get_where('aslab', array('nim' => $row[4]))->row()->idAslab;
+        if ($row[2] == 'MI') {
+          $kode_prodi = 'SI';
+        } else {
+          $kode_prodi = $row[2];
+        }
+        $no_pk  = $this->db->get_where('pk', array('id_ta' => $row[0], 'id_periode' => $row[1], 'kode_prodi' => $kode_prodi))->row()->no_pk;
+        $input  = array(
+          'jam'               => (float) $row[6],
+          'nominal'           => $nominal,
+          'status_honor'      => $status_honor,
+          'opsi_pengambilan'  => $opsi_pengambilan,
+          'tanggal_diambil'   => $tanggal_diambil,
+          'id_periode'        => $row[1],
+          'id_ta'             => $row[0],
+          'id_aslab'          => $id_aslab,
+          'no_pk'             => $no_pk
+        );
+        $this->db->insert('honor_aslab', $input);
+        // print_r($input);
+        // echo '<hr>';
+      }
+      fclose($handle);
+    }
+  }
 }

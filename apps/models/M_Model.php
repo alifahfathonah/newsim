@@ -471,7 +471,8 @@ class M_Model extends CI_Model
     $this->db->from('honor_aslab');
     $this->db->join('aslab', 'honor_aslab.id_aslab = aslab.idAslab');
     $this->db->join('periode', 'honor_aslab.id_periode = periode.id_periode');
-    $this->db->order_by('honor_aslab.id_honor_aslab', 'desc');
+    $this->db->order_by('honor_aslab.no_pk', 'desc');
+    $this->db->order_by('honor_aslab.status_honor', 'asc');
     return $this->db->get();
   }
 
