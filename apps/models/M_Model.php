@@ -453,7 +453,7 @@ class M_Model extends CI_Model
 
   function daftarPengambilanHonorAsprak()
   {
-    $this->db->select('honor.id_honor, matakuliah.kode_mk, matakuliah.nama_mk, asprak.nim_asprak, asprak.nama_asprak, asprak.norek_asprak, asprak.linkaja_asprak, periode.bulan, honor.nominal, honor.opsi_pengambilan, honor.status');
+    $this->db->select('honor.id_honor, matakuliah.kode_mk, matakuliah.nama_mk, asprak.nim_asprak, asprak.nama_asprak, asprak.norek_asprak, asprak.nama_rekening, asprak.linkaja_asprak, periode.bulan, honor.nominal, honor.opsi_pengambilan, honor.status');
     $this->db->from('honor');
     $this->db->join('daftar_mk', 'honor.id_daftar_mk = daftar_mk.id_daftar_mk');
     $this->db->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk');
@@ -467,7 +467,7 @@ class M_Model extends CI_Model
 
   function daftarPengambilanHonorAslab()
   {
-    $this->db->select('honor_aslab.id_honor_aslab, honor_aslab.nominal, honor_aslab.opsi_pengambilan, aslab.nim, aslab.namaLengkap, periode.bulan');
+    $this->db->select('honor_aslab.id_honor_aslab, honor_aslab.nominal, honor_aslab.status_honor, honor_aslab.opsi_pengambilan, aslab.nim, aslab.namaLengkap, aslab.norek, aslab.nama_rekening, aslab.linkaja, periode.bulan');
     $this->db->from('honor_aslab');
     $this->db->join('aslab', 'honor_aslab.id_aslab = aslab.idAslab');
     $this->db->join('periode', 'honor_aslab.id_periode = periode.id_periode');
@@ -484,6 +484,32 @@ class M_Model extends CI_Model
     $this->db->join('periode', 'honor_aslab.id_periode = periode.id_periode');
     $this->db->join('tahun_ajaran', 'honor_aslab.id_ta = tahun_ajaran.id_ta');
     $this->db->where('honor_aslab.id_aslab', $id);
+    return $this->db->get();
+  }
+
+  function honorAslabProses($id)
+  {
+    $this->db->select('honor_aslab.id_honor_aslab, honor_aslab.jam, honor_aslab.nominal, honor_aslab.status_honor, honor_aslab.opsi_pengambilan, aslab.nim, aslab.namaLengkap, periode.bulan, tahun_ajaran.ta');
+    $this->db->from('honor_aslab');
+    $this->db->join('aslab', 'honor_aslab.id_aslab = aslab.idAslab');
+    $this->db->join('periode', 'honor_aslab.id_periode = periode.id_periode');
+    $this->db->join('tahun_ajaran', 'honor_aslab.id_ta = tahun_ajaran.id_ta');
+    $this->db->where('honor_aslab.id_aslab', $id);
+    $this->db->where('honor_aslab.status_honor < "2"');
+    $this->db->order_by('honor_aslab.id_honor_aslab', 'desc');
+    return $this->db->get();
+  }
+
+  function honorAslabSelesai($id)
+  {
+    $this->db->select('honor_aslab.id_honor_aslab, honor_aslab.jam, honor_aslab.nominal, honor_aslab.status_honor, honor_aslab.opsi_pengambilan, aslab.nim, aslab.namaLengkap, periode.bulan, tahun_ajaran.ta');
+    $this->db->from('honor_aslab');
+    $this->db->join('aslab', 'honor_aslab.id_aslab = aslab.idAslab');
+    $this->db->join('periode', 'honor_aslab.id_periode = periode.id_periode');
+    $this->db->join('tahun_ajaran', 'honor_aslab.id_ta = tahun_ajaran.id_ta');
+    $this->db->where('honor_aslab.id_aslab', $id);
+    $this->db->where('honor_aslab.status_honor >= "2"');
+    $this->db->order_by('honor_aslab.id_honor_aslab', 'asc');
     return $this->db->get();
   }
 }

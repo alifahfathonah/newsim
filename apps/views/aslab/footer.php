@@ -276,6 +276,59 @@ if ($cek_aslab->norek == null && $cek_aslab->nama_rekening == null && $cek_aslab
     ?>
   });
 </script>
+<?php
+if (uri('1') == 'Finance') {
+?>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script>
+    window.setTimeout(function() {
+      $(".msg").fadeTo(500, 0).slideUp(500, function() {
+        $(this).remove();
+      });
+    }, 3500);
+
+    $(document).ready(function() {
+      $('.dataTables').DataTable({
+        pageLength: 10,
+        responsive: true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+
+      $('.honor').click(function(event) {
+        var total = 0;
+        var id_honor = '';
+        var tmp = '';
+        $('.honor:checked').each(function() {
+          tmp = $(this).val().split('|');
+          id_honor = id_honor + '|' + tmp[1];
+          total += parseInt($(this).val());
+        });
+        document.getElementById('id_honor').value = id_honor;
+
+        if (total === 0) {
+          $('#total_honor').text('Rp 0');
+          document.getElementById('cek_alert').disabled = true;
+        } else {
+          $('#total_honor').text('Rp ' + total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+          $('#modal_total_honor').text('Rp ' + total.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+          document.getElementById('cek_alert').disabled = false;
+        }
+      });
+    });
+
+    function ya_tidak_honor() {
+      if (document.getElementById('tidak_cek').checked) {
+        document.getElementById('tampil_surat_kuasa').style.display = 'block';
+      } else {
+        document.getElementById('tampil_surat_kuasa').style.display = 'none';
+      }
+    }
+  </script>
+<?php
+}
+?>
 </body>
 
 </html>

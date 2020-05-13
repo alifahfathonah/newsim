@@ -49,9 +49,29 @@ class Finance extends CI_Controller
       view('laboran/footer');
     } elseif (userdata('login') == 'aslab') {
       $data['data'] = $this->m->daftarHonorAslab(userdata('id_aslab'))->result();
+      $data['proses'] = $this->m->honorAslabProses(userdata('id_aslab'))->result();
+      $data['selesai'] = $this->m->honorAslabSelesai(userdata('id_aslab'))->result();
       view('aslab/header', $data);
       view('aslab/honor', $data);
       view('aslab/footer');
+    }
+  }
+
+  public function TakeSalary()
+  {
+    set_rules('pilihan', 'Option', 'required|trim');
+    if (validation_run() == false) {
+      redirect('Finance/Honor');
+    } else {
+      $id_honor = input('id_honor');
+      $pilihan  = input('pilihan');
+      $tmp      = explode('|', $id_honor);
+      for ($i = 1; $i < count($tmp); $i++) {
+        $input  = array('opsi_pengambilan' => $pilihan, 'status_honor' => '2', 'tanggal_diambil' => date('Y-m-d'));
+        $this->db->where('id_honor_aslab', $tmp[$i])->update('honor_aslab', $input);
+      }
+      set_flashdata('msg', '<div class="alert alert-success msg">Your BAP successfully submited</div>');
+      redirect('Finance/Honor');
     }
   }
 
@@ -177,6 +197,28 @@ class Finance extends CI_Controller
         $input['bukti_transfer'] = $config['upload_path'] . '' . $nama_file;
       }
       $this->db->where('id_honor', $id_honor)->update('honor', $input);
+      redirect('Finance/Honor');
+    }
+  }
+
+  public function UploadEvidenceAslab()
+  {
+    set_rules('id_honor_aslab', 'ID Honor', 'required|trim');
+    if (validation_run() == false) {
+      redirect('Finance/Honor');
+    } else {
+      $id_honor = input('id_honor_aslab');
+      $input    = array('status_honor' => '3');
+      $nama_file = rand(10, 99) . '-' . str_replace(' ', '_', $_FILES['bukti_transfer']['name']);
+      $config['upload_path']    = 'assets/img/bukti_transfer/';
+      $config['allowed_types']  = 'gif|jpg|jpeg|png';
+      $config['max_size']       = 1024 * 10;
+      $config['file_name']      = $nama_file;
+      $this->load->library('upload', $config);
+      if ($this->upload->do_upload('bukti_transfer')) {
+        $input['bukti_transfer'] = $config['upload_path'] . '' . $nama_file;
+      }
+      $this->db->where('id_honor_aslab', $id_honor)->update('honor_aslab', $input);
       redirect('Finance/Honor');
     }
   }

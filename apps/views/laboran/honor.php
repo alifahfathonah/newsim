@@ -330,11 +330,11 @@
                                           </div>
                                           <div class="form-group row">
                                             <label class="col-md-5 col-sm-6 col-form-label">Bank Account Number</label>
-                                            <label class="col-md-2 col-sm-6 col-form-label"><?= $a->norek_asprak ?></label>
+                                            <label class="col-md-5 col-sm-6 col-form-label"><?= $a->norek_asprak . ' - ' . $a->nama_rekening ?></label>
                                           </div>
                                           <div class="form-group row">
                                             <label class="col-md-5 col-sm-6 col-form-label">LinkAja</label>
-                                            <label class="col-md-2 col-sm-6 col-form-label"><?= $a->linkaja_asprak ?></label>
+                                            <label class="col-md-5 col-sm-6 col-form-label"><?= $a->linkaja_asprak ?></label>
                                           </div>
                                         </div>
                                         <div class="modal-footer">
@@ -364,6 +364,7 @@
                                   <th>Amount</th>
                                   <th>Withdraw Option</th>
                                   <th>Status</th>
+                                  <th>Action</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -378,7 +379,130 @@
                                     <td><?= $w->bulan ?></td>
                                     <td style="text-align: right">Rp <?= number_format($w->nominal, 0, '', '.') ?></td>
                                     <td><?= $w->opsi_pengambilan ?></td>
-                                    <td style="text-align: center"><button class="btn btn-sm btn-info" disabled><i class="fa fa-check"></i></button></td>
+                                    <td>
+                                      <?php
+                                      if ($w->status_honor == '0') {
+                                        echo 'On Process';
+                                      } elseif ($w->status_honor == '1') {
+                                        echo 'Ready To Take';
+                                      } elseif ($w->status_honor == '2') {
+                                        echo 'Requested';
+                                      } elseif ($w->status_honor == '3') {
+                                        echo 'Taken';
+                                      }
+                                      ?>
+                                    </td>
+                                    <td style="text-align: center">
+                                      <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#detail_aslab<?= $w->id_honor_aslab ?>"><i class="fa fa-eye"></i></button>
+                                      <?php
+                                      if ($w->status_honor == '2') {
+                                        echo '<button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#upload_bukti_aslab' . $w->id_honor_aslab . '"><i class="fa fa-edit"></i></button>';
+                                      ?>
+                                        <div class="modal inmodal fade" id="upload_bukti_aslab<?= $w->id_honor_aslab ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                                <h4 class="modal-title">Upload Evidence of Transfer</h4>
+                                              </div>
+                                              <form method="post" action="<?= base_url('Finance/UploadEvidenceAslab') ?>" enctype="multipart/form-data">
+                                                <div class="modal-body">
+                                                  <div class="row">
+                                                    <div class="col-md-6 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">NIM</label>
+                                                        <br>
+                                                        <label><?= $w->nim ?></label>
+                                                        <input type="text" name="id_honor_aslab" id="id_honor_aslab" value="<?= $w->id_honor_aslab ?>" style="display: none">
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">Name</label>
+                                                        <br>
+                                                        <label><?= $w->namaLengkap ?></label>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-6 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">Periode</label>
+                                                        <br>
+                                                        <label><?= $w->bulan ?></label>
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">Amount</label>
+                                                        <br>
+                                                        <label>Rp <?= number_format($w->nominal, 0, '', '.') ?></label>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-12 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">Evidence of Transfer</label>
+                                                        <div class="custom-file">
+                                                          <input id="logo" type="file" class="custom-file-input" name="bukti_transfer" accept="image/*">
+                                                          <label for="logo" class="custom-file-label">Choose file...</label>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                                  <button type="submit" class="btn btn-primary">Upload</button>
+                                                </div>
+                                              </form>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <?php
+                                      }
+                                      ?>
+                                    </td>
+                                    <div class="modal inmodal fade" id="detail_aslab<?= $w->id_honor_aslab ?>" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Detail Withdraw</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="form-group row">
+                                              <label class="col-md-5 col-sm-6 col-form-label">NIM</label>
+                                              <label class="col-md-5 col-sm-6 col-form-label"><?= $w->nim ?></label>
+                                            </div>
+                                            <div class="form-group row">
+                                              <label class="col-md-5 col-sm-6 col-form-label">Name</label>
+                                              <label class="col-md-5 col-sm-6 col-form-label"><?= $w->namaLengkap ?></label>
+                                            </div>
+                                            <div class="form-group row">
+                                              <label class="col-md-5 col-sm-6 col-form-label">Amount</label>
+                                              <label class="col-md-5 col-sm-6 col-form-label">Rp <?= number_format($w->nominal, 0, '', '.') ?></label>
+                                            </div>
+                                            <div class="form-group row">
+                                              <label class="col-md-5 col-sm-6 col-form-label">Withdraw Option</label>
+                                              <label class="col-md-5 col-sm-6 col-form-label"><?= $w->opsi_pengambilan ?></label>
+                                            </div>
+                                            <div class="form-group row">
+                                              <label class="col-md-5 col-sm-6 col-form-label">Bank Account Number</label>
+                                              <label class="col-md-5 col-sm-6 col-form-label"><?= $w->norek . ' - ' . $w->nama_rekening ?></label>
+                                            </div>
+                                            <div class="form-group row">
+                                              <label class="col-md-5 col-sm-6 col-form-label">LinkAja</label>
+                                              <label class="col-md-2 col-sm-6 col-form-label"><?= $w->linkaja ?></label>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                                   </tr>
                                 <?php
                                 }
