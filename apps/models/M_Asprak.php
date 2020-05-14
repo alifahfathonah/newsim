@@ -93,7 +93,7 @@ class M_Asprak extends CI_Model
 
   function daftarPeriode()
   {
-    return $this->db->get('periode');
+    return $this->db->get_where('periode', array('asprak' => '1'));
   }
 
   function daftarHonorAsprak($nim)

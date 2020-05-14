@@ -91,11 +91,11 @@ if (uri('2') == 'ViewPresence') {
     $no_action  = 0;
     $jumlah = 0;
     foreach ($bap as $b) {
-      if ($b->approve_absen == '0') {
+      if ($b->approve_absen == '1') {
         $no_action = $no_action + 1;
-      } elseif ($b->approve_absen == '1') {
-        $approve = $approve + 1;
       } elseif ($b->approve_absen == '2') {
+        $approve = $approve + 1;
+      } elseif ($b->approve_absen == '0') {
         $pending = $pending + 1;
       }
       $jumlah = $jumlah + 1;

@@ -19,11 +19,11 @@
                     $no_action  = 0;
                     $jumlah = 0;
                     foreach ($bap as $b) {
-                      if ($b->approve_absen == '0') {
+                      if ($b->approve_absen == '1') {
                         $no_action = $no_action + 1;
-                      } elseif ($b->approve_absen == '1') {
-                        $approve = $approve + 1;
                       } elseif ($b->approve_absen == '2') {
+                        $approve = $approve + 1;
+                      } elseif ($b->approve_absen == '0') {
                         $pending = $pending + 1;
                       }
                       $jumlah = $jumlah + 1;
@@ -77,14 +77,14 @@
                           <td style="text-align: center"><?= $video ?></td>
                           <td style="text-align: center" class="align-middle" id="button<?= substr(sha1($b->id_presensi_asprak), 7, 7) ?>">
                             <?php
-                            if ($b->approve_absen == '0') {
+                            if ($b->approve_absen == '1') {
                             ?>
                               <button class="btn btn-success btn-sm" onclick="approve('<?= substr(sha1($b->id_presensi_asprak), 7, 7) ?>')"><i class="fa fa-check"></i> Approve</button>
                               <button class="btn btn-danger btn-sm" onclick="pending('<?= substr(sha1($b->id_presensi_asprak), 7, 7) ?>')"><i class="fa fa-ban"></i> Pending</button>
                             <?php
-                            } elseif ($b->approve_absen == '1') {
-                              echo '<button class="btn btn-success btn-sm" disabled><i class="fa fa-check"></i> Approved</button>';
                             } elseif ($b->approve_absen == '2') {
+                              echo '<button class="btn btn-success btn-sm" disabled><i class="fa fa-check"></i> Approved</button>';
+                            } elseif ($b->approve_absen == '0') {
                               echo '<button class="btn btn-danger btn-sm" disabled><i class="fa fa-ban"></i> Pending</button>';
                             }
                             ?>
