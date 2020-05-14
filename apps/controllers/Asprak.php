@@ -142,7 +142,7 @@ class Asprak extends CI_Controller
           'honor'             => $honor,
           'modul'             => $modul_praktikum,
           // 'video'             => $link_youtube,
-          'approve_absen'     => '0',
+          'approve_absen'     => '1',
           'id_jadwal_asprak'  => $jadwal_asprak,
           'nim_asprak'        => userdata('nim'),
           'id_jadwal_lab'     => $id_jadwal_lab
