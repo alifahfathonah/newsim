@@ -83,17 +83,17 @@ class Coba extends CI_Controller
         if ($i == 1) {
           continue;
         }
-        $no_pk  = '02-' . substr($row[0], 3);
-        $input  = array(
-          'no_pk'       => $no_pk,
-          'kode_prodi'  => $row[1],
-          'id_ta'       => $row[2],
-          'id_periode'  => $row[3],
-          'total'       => $row[4],
-          'status_pk'   => $row[5],
-          'pembuat'     => $row[6]
-        );
-        $this->db->insert('pk', $input);
+        // $no_pk  = '02-' . substr($row[0], 3);
+        // $input  = array(
+        //   'no_pk'       => $no_pk,
+        //   'kode_prodi'  => $row[1],
+        //   'id_ta'       => $row[2],
+        //   'id_periode'  => $row[3],
+        //   'total'       => $row[4],
+        //   'status_pk'   => $row[5],
+        //   'pembuat'     => $row[6]
+        // );
+        // $this->db->insert('pk', $input);
         // print_r($input);
       }
       fclose($handle);
@@ -157,6 +157,71 @@ class Coba extends CI_Controller
         $this->db->insert('honor_aslab', $input);
         // print_r($input);
         // echo '<hr>';
+      }
+      fclose($handle);
+    }
+  }
+
+  public function uploadAsprak()
+  {
+    view('laboran/upload_asprak');
+  }
+
+  public function simpanAsprak()
+  {
+    $file = $_FILES['file_csv']['tmp_name'];
+    $ekstensi_file  = explode('.', $_FILES['file_csv']['name']);
+    $tarif  = $this->db->get_where('tarif', array('status', '1'))->row()->tarif_honor;
+    if (strtolower(end($ekstensi_file)) === 'csv' && $_FILES['file_csv']['size'] > 0) {
+      $handle = fopen($file, 'r');
+      $i = 0;
+      while (($row = fgetcsv($handle, 2048))) {
+        $i++;
+        if ($i == 1) {
+          continue;
+        }
+        $cek_data = $this->db->get_where('asprak', array('nim_asprak' => $row[0]))->row();
+        if ($cek_data) {
+          echo '<p style="color: red">' . $row[0] . ' sudah ada</p>';
+        } else {
+          echo '<p style="color: blue">' . $row[0] . ' belum ada</p>';
+        }
+        $input  = array(
+          'nim_asprak'  => $row[0],
+          'nama_asprak' => $row[1]
+        );
+      }
+      fclose($handle);
+    }
+  }
+
+  public function uploadDaftarAsprak()
+  {
+    view('laboran/upload_daftar_asprak');
+  }
+
+  public function simpanDaftarAsprak()
+  {
+    $file = $_FILES['file_csv']['tmp_name'];
+    $ekstensi_file  = explode('.', $_FILES['file_csv']['name']);
+    $tarif  = $this->db->get_where('tarif', array('status', '1'))->row()->tarif_honor;
+    if (strtolower(end($ekstensi_file)) === 'csv' && $_FILES['file_csv']['size'] > 0) {
+      $handle = fopen($file, 'r');
+      $i = 0;
+      while (($row = fgetcsv($handle, 2048))) {
+        $i++;
+        if ($i == 1) {
+          continue;
+        }
+        $id_daftar_mk = $this->db->get_where('daftar_mk', array('id_ta' => $row[0], 'kode_mk' => $row[1]))->row()->id_daftar_mk;
+        $cek_daftar_asprak = $this->db->get_where('daftarasprak', array('nim_asprak' => $row[2], 'id_daftar_mk' => $id_daftar_mk))->row();
+        if (!$cek_daftar_asprak) {
+          $input = array(
+            'nim_asprak'    => $row[2],
+            'id_daftar_mk'  => $id_daftar_mk
+          );
+          $this->db->insert('daftarasprak', $input);
+        }
       }
       fclose($handle);
     }
