@@ -30,14 +30,24 @@
                                     <input type="radio" name="pilihan" id="cash" value="Cash">
                                     <label for="cash">Cash</label>
                                   </div>
-                                  <div class="radio">
-                                    <input type="radio" name="pilihan" id="transfer" value="Transfer">
-                                    <label for="transfer">Bank Transfer</label>
-                                  </div>
-                                  <div class="radio">
-                                    <input type="radio" name="pilihan" id="linkaja" value="LinkAja">
-                                    <label for="linkaja">Linkaja</label>
-                                  </div>
+                                  <?php
+                                  if ($cek_aslab->norek != null) {
+                                  ?>
+                                    <div class="radio">
+                                      <input type="radio" name="pilihan" id="transfer" value="Transfer">
+                                      <label for="transfer">Bank Transfer</label>
+                                    </div>
+                                  <?php
+                                  }
+                                  if ($cek_aslab->linkaja != null) {
+                                  ?>
+                                    <div class="radio">
+                                      <input type="radio" name="pilihan" id="linkaja" value="LinkAja">
+                                      <label for="linkaja">Linkaja</label>
+                                    </div>
+                                  <?php
+                                  }
+                                  ?>
                                 </div>
                               </div>
                             </div>
