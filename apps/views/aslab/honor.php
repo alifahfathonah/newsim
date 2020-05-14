@@ -26,10 +26,10 @@
                               <input type="text" name="id_honor" id="id_honor" style="display: none">
                               <div class="row" style="text-align: left; font-size: 13px">
                                 <div class="col-md-4 offset-md-5">
-                                  <div class="radio">
+                                  <!-- <div class="radio">
                                     <input type="radio" name="pilihan" id="cash" value="Cash">
                                     <label for="cash">Cash</label>
-                                  </div>
+                                  </div> -->
                                   <?php
                                   if ($cek_aslab->norek != null) {
                                   ?>
