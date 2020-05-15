@@ -190,7 +190,7 @@
           ?>
           <a href="<?= base_url('Asprak/PracticumReport') ?>">
             <i class="fa fa-file-text-o"></i>
-            <span class="nav-label">Practicum Report</span>
+            <span class="nav-label">LPJ Asprak</span>
           </a>
           </li>
           <?php
