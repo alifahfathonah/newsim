@@ -151,7 +151,7 @@ class Asprak extends CI_Controller
           );
           $screenshot               = rand(10, 99) . '-' . str_replace(' ', '_', $_FILES['screenshot_praktikum']['name']);
           $config['upload_path']    = 'assets/screenshot/';
-          $config['allowed_types']  = 'jpeg|jpg|png|gif|tiff|mov|swf|mp4|mkv|flv|wmv|avi|vob|aaf|mod|mpeg';
+          $config['allowed_types']  = 'jpeg|jpg|png|gif';
           $config['max_size']       = 1024 * 100;
           $config['file_name']      = $screenshot;
           $this->load->library('upload', $config);
