@@ -42,19 +42,27 @@ class Dashboard extends CI_Controller
   {
     $data                     = $this->data;
     $data['title']            = 'Dashboard | SIM Laboratorium';
-    $data['komplain']         = $this->m->grafikKomplain()->result();
-    $data['pengumuman']       = $this->m->daftarPengumuman()->result();
-    $data['komplain_belum']   = $this->m->hitungKomplainBelumSelesai()->row()->komplain_belum;
-    $data['komplain_selesai'] = $this->m->hitungKomplainSelesai()->row()->komplain_selesai;
-    $data['lab_belum']        = $this->m->hitungPeminjamanLabBelumSelesai()->row()->lab_belum;
-    $data['lab_selesai']      = $this->m->hitungPeminjamanLabSelesai()->row()->lab_selesai;
-    $data['alat_belum']       = $this->m->hitungPeminjamanAlatBelumSelesai()->row()->alat_belum;
-    $data['alat_selesai']     = $this->m->hitungPeminjamanAlatSelesai()->row()->alat_selesai;
     if (userdata('login') == 'laboran') {
+      $data['komplain']         = $this->m->grafikKomplain()->result();
+      $data['pengumuman']       = $this->m->daftarPengumuman()->result();
+      $data['komplain_belum']   = $this->m->hitungKomplainBelumSelesai()->row()->komplain_belum;
+      $data['komplain_selesai'] = $this->m->hitungKomplainSelesai()->row()->komplain_selesai;
+      $data['lab_belum']        = $this->m->hitungPeminjamanLabBelumSelesai()->row()->lab_belum;
+      $data['lab_selesai']      = $this->m->hitungPeminjamanLabSelesai()->row()->lab_selesai;
+      $data['alat_belum']       = $this->m->hitungPeminjamanAlatBelumSelesai()->row()->alat_belum;
+      $data['alat_selesai']     = $this->m->hitungPeminjamanAlatSelesai()->row()->alat_selesai;
       view('laboran/header', $data);
       view('laboran/dashboard', $data);
       view('laboran/footer');
     } elseif (userdata('login') == 'aslab') {
+      $data['komplain']         = $this->m->grafikKomplain()->result();
+      $data['pengumuman']       = $this->m->daftarPengumuman()->result();
+      $data['komplain_belum']   = $this->m->hitungKomplainBelumSelesai()->row()->komplain_belum;
+      $data['komplain_selesai'] = $this->m->hitungKomplainSelesai()->row()->komplain_selesai;
+      $data['lab_belum']        = $this->m->hitungPeminjamanLabBelumSelesai()->row()->lab_belum;
+      $data['lab_selesai']      = $this->m->hitungPeminjamanLabSelesai()->row()->lab_selesai;
+      $data['alat_belum']       = $this->m->hitungPeminjamanAlatBelumSelesai()->row()->alat_belum;
+      $data['alat_selesai']     = $this->m->hitungPeminjamanAlatSelesai()->row()->alat_selesai;
       view('aslab/header', $data);
       view('aslab/dashboard', $data);
       view('aslab/footer');
