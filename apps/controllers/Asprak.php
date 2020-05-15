@@ -135,7 +135,7 @@ class Asprak extends CI_Controller
           if ($nama_hari != hariInggris($cek_jadwal_hari) || $jam_masuk < $cek_jam_masuk || $jam_selesai > $cek_jam_selesai) {
             echo 'Your presence is not according to the day of practicum or start time before the schedule or end time exceeded the schedule';
             set_flashdata('msg', '<div class="alert alert-danger">Your presence is not according to the day of practicum or start time before the schedule or end time exceeded the schedule</div>');
-            //redirect('Asprak/AddPresence');
+            redirect('Asprak/AddPresence');
           }
           $input                = array(
             'asprak_masuk'      => $tanggal . ' ' . $jam_masuk,
