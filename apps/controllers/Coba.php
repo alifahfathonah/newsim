@@ -355,4 +355,9 @@ class Coba extends CI_Controller
       fclose($handle);
     }
   }
+
+  public function jadwalAsprak()
+  {
+    view('laboran/upload_jadwal_asprak');
+  }
 }
