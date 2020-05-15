@@ -75,7 +75,7 @@
                       <div class="form-group">
                         <label class="font-bold">Screenshot</label>
                         <div class="custom-file">
-                          <input type="file" name="screenshot_praktikum" id="screenshot_praktikum" accept="image/*" class="custom-file-input">
+                          <input type="file" name="screenshot_praktikum" id="screenshot_praktikum" accept="image/*" class="custom-file-input" required>
                           <label for="logo" class="custom-file-label">Choose file...</label>
                         </div>
                       </div>
@@ -84,7 +84,7 @@
                       <div class="form-group">
                         <label class="font-bold">Video</label>
                         <div class="custom-file">
-                          <input type="file" name="video_praktikum" id="video_praktikum" accept="video/*" class="custom-file-input">
+                          <input type="file" name="video_praktikum" id="video_praktikum" accept="video/*" class="custom-file-input" required>
                           <label for="logo" class="custom-file-label">Choose file...</label>
                         </div>
                       </div>
