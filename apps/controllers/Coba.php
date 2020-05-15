@@ -360,4 +360,68 @@ class Coba extends CI_Controller
   {
     view('laboran/upload_jadwal_asprak');
   }
+
+  public function simpanJadwalAsprak()
+  {
+    $file = $_FILES['file_csv']['tmp_name'];
+    $ekstensi_file  = explode('.', $_FILES['file_csv']['name']);
+    $tarif  = $this->db->get_where('tarif', array('status', '1'))->row()->tarif_honor;
+    if (strtolower(end($ekstensi_file)) === 'csv' && $_FILES['file_csv']['size'] > 0) {
+      $handle = fopen($file, 'r');
+      $i = 0;
+      while (($row = fgetcsv($handle, 2048))) {
+        $i++;
+        if ($i == 1) {
+          continue;
+        }
+        if ($row[0] == 'SENIN') {
+          $tanggal  = '2016-08-22';
+          $hari     = 1;
+        } elseif ($row[0] == 'SELASA') {
+          $tanggal = '2016-08-23';
+          $hari     = 2;
+        } elseif ($row[0] == 'RABU') {
+          $tanggal = '2016-08-24';
+          $hari     = 3;
+        } elseif ($row[0] == 'KAMIS') {
+          $tanggal = '2016-08-25';
+          $hari     = 4;
+        } elseif ($row[0] == 'JUMAT') {
+          $tanggal = '2016-08-26';
+          $hari     = 5;
+        } elseif ($row[0] == 'SABTU') {
+          $tanggal = '2016-08-27';
+          $hari     = 6;
+        }
+
+        $jam_masuk    = $tanggal . ' ' . $row[1];
+        $jam_selesai  = $tanggal . ' ' . $row[2];
+        $kelas        = $row[6];
+        $kode_dosen   = $row[7];
+        $hari_ke      = $hari;
+        $where        = array(
+          'jam_masuk'   => $jam_masuk,
+          'jam_selesai' => $jam_selesai,
+          'kelas'       => $kelas,
+          'kode_dosen'  => $kode_dosen,
+          'hari_ke'     => $hari_ke
+        );
+        $cek_jadwal_lab = $this->db->get_where('jadwal_lab', $where)->row();
+        if ($cek_jadwal_lab) {
+          $nim_asprak = $row[9];
+          $id_jadwal_lab  = $cek_jadwal_lab->id_jadwal_lab;
+          $input  = array(
+            'nim_asprak'    => $nim_asprak,
+            'id_jadwal_lab' => $id_jadwal_lab
+          );
+          // print_r($input);
+          // echo '<hr>';
+          $this->db->insert('jadwal_asprak', $input);
+        }
+        //print_r($kode_mk);
+        //echo '<hr>';
+      }
+      fclose($handle);
+    }
+  }
 }

@@ -287,21 +287,28 @@
                                           </div>
                                         </div>
                                       <?php
+                                      } elseif ($a->status == '2') {
+                                      ?>
+                                        <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#bukti_transfer_asprak<?= $a->id_honor ?>"><i class="fa fa-file"></i></button>
+                                        <div class="modal inmodal" id="bukti_transfer_asprak<?= $a->id_honor ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content animated bounceInRight">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                                <h4 class="modal-title">Evidence of Transfer</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                <img src="<?= base_url($a->bukti_transfer) ?>">
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <?php
                                       }
                                       ?>
-                                      <!-- <div id="btn_approve_honor<?= substr(sha1($a->id_honor), 7, 7) ?>">
-                                        <?php
-                                        if ($a->status == '1') {
-                                        ?>
-                                          <button class="btn btn-warning btn-sm" onclick="approve_honor('<?= substr(sha1($a->id_honor), 7, 7) ?>')"><i class="fa fa-check"></i></button>
-                                        <?php
-                                        } elseif ($a->status == '2') {
-                                        ?>
-                                          <button class="btn btn-success btn-sm" disabled><i class="fa fa-check"></i></button>
-                                        <?php
-                                        }
-                                        ?>
-                                      </div> -->
                                     </td>
                                   </tr>
                                   <div class="modal inmodal fade" id="detail<?= $a->id_honor ?>" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
@@ -457,6 +464,26 @@
                                                   <button type="submit" class="btn btn-primary">Upload</button>
                                                 </div>
                                               </form>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      <?php
+                                      } elseif ($w->status_honor == '3') {
+                                      ?>
+                                        <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#bukti_transfer_aslab<?= $w->id_honor_aslab ?>"><i class="fa fa-file"></i></button>
+                                        <div class="modal inmodal" id="bukti_transfer_aslab<?= $w->id_honor_aslab ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content animated bounceInRight">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                                <h4 class="modal-title">Evidence of Transfer</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                <img src="<?= base_url($w->bukti_transfer) ?>">
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
