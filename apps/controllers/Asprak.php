@@ -75,11 +75,11 @@ class Asprak extends CI_Controller
   {
     $target = '2020-05-20';
     if (date('Y-m-d') <= $target) {
-      set_rules('jadwal_asprak', 'Schedule', 'required|trim');
-      set_rules('tgl_asprak', 'Date', 'required|trim');
+      // set_rules('jadwal_asprak', 'Schedule', 'required|trim');
+      // set_rules('tgl_asprak', 'Date', 'required|trim');
       set_rules('jam_masuk', 'Start', 'required|trim');
       set_rules('jam_selesai', 'End', 'required|trim');
-      set_rules('modul_praktikum', 'Practicum Modul', 'required|trim');
+      // set_rules('modul_praktikum', 'Practicum Modul', 'required|trim');
       if (validation_run() == false) {
         $data           = $this->data;
         $data['title']  = 'Add Presence | SIM Laboratorium';
