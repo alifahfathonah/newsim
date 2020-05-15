@@ -265,3 +265,34 @@ if (!function_exists('bulan_panjang')) {
     }
   }
 }
+
+if (!function_exists('convert_bulan_indo')) {
+  function convert_bulan_indo($bulan)
+  {
+    if ($bulan == 'Januari') {
+      return '01';
+    } elseif ($bulan == 'Februari') {
+      return '02';
+    } elseif ($bulan == 'Maret') {
+      return '03';
+    } elseif ($bulan == 'April') {
+      return '04';
+    } elseif ($bulan == 'Mei') {
+      return '05';
+    } elseif ($bulan == 'Juni') {
+      return '06';
+    } elseif ($bulan == 'Juli') {
+      return '07';
+    } elseif ($bulan == 'Agustus') {
+      return '08';
+    } elseif ($bulan == 'September') {
+      return '09';
+    } elseif ($bulan == 'Oktober') {
+      return '10';
+    } elseif ($bulan == 'November') {
+      return '11';
+    } elseif ($bulan == 'Desember') {
+      return '12';
+    }
+  }
+}

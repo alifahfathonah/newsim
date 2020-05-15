@@ -95,6 +95,135 @@ class Coba extends CI_Controller
         // );
         // $this->db->insert('pk', $input);
         // print_r($input);
+        if ($row[1] == 'SI') {
+          $kode_prodi = 'MI';
+        } elseif ($row[1] == 'SIA') {
+          $kode_prodi = 'KA';
+        } elseif ($row[1] == 'RPLA') {
+          $kode_prodi = 'IF';
+        } elseif ($row[1] == 'TRM') {
+          $kode_prodi = 'SM';
+        } else {
+          $kode_prodi = $row[1];
+        }
+        if ($row[5] == 'Done') {
+          $status_pk = '3';
+        }
+        if ($row[6] == 'L3') {
+          $pembuat  = '3';
+        }
+        $tanggal_pengajuan = $row[7];
+        $pecah_tanggal_pengajuan = explode(' ', $tanggal_pengajuan);
+        $bulan_pengajuan  = convert_bulan_indo($pecah_tanggal_pengajuan[1]);
+        $tanggal_pengajuan  = $pecah_tanggal_pengajuan[2] . '-' . $bulan_pengajuan . '-' . $pecah_tanggal_pengajuan[0];
+
+        $tanggal_cair = $row[10];
+        $pecah_tanggal_cair = explode(' ', $tanggal_cair);
+        $bulan_cair         = convert_bulan_indo($pecah_tanggal_cair[1]);
+        $tanggal_cair       = $pecah_tanggal_cair[2] . '-' . $bulan_cair . '-' . $pecah_tanggal_cair[0];
+
+        if ($row[13] == 'L3') {
+          $penerima_cair  = '3';
+        }
+        $input  = array(
+          'no_pk'               => $row[0],
+          'kode_prodi'          => $kode_prodi,
+          'id_ta'               => $row[2],
+          'id_periode'          => $row[3],
+          'total'               => $row[4],
+          'status_pk'           => $status_pk,
+          'pembuat'             => $pembuat,
+          'tanggal_pengajuan'   => $tanggal_pengajuan,
+          'penerima_pengajuan'  => $row[8],
+          'tanggal_cair'        => $tanggal_cair,
+          'pemberi'             => $row[11],
+          'penerima_cair'       => $penerima_cair
+        );
+        // print_r($input);
+        // echo '<hr>';
+        $this->db->insert('pk', $input);
+      }
+      fclose($handle);
+    }
+  }
+
+  public function HonorAsprak()
+  {
+    view('laboran/honor_asprak');
+  }
+
+  public function simpanHonorAsprak()
+  {
+    $file = $_FILES['file_csv']['tmp_name'];
+    $ekstensi_file  = explode('.', $_FILES['file_csv']['name']);
+    $tarif  = $this->db->get_where('tarif', array('status', '1'))->row()->tarif_honor;
+    if (strtolower(end($ekstensi_file)) === 'csv' && $_FILES['file_csv']['size'] > 0) {
+      $handle = fopen($file, 'r');
+      $i = 0;
+      $counter = 1;
+      while (($row = fgetcsv($handle, 2048))) {
+        $i++;
+        if ($i == 1) {
+          continue;
+        }
+        //Februari
+        // $id_daftar_mk = $this->db->get_where('daftar_mk', array('kode_mk' => $row[3]))->row()->id_daftar_mk;
+
+        // if ($row[7] == 'Taken') {
+        //   $status = '2';
+        // } elseif ($row[7] == 'Untaken') {
+        //   $status = '0';
+        // }
+
+        // $tanggal_diambil = $row[8];
+        // if ($tanggal_diambil == null) {
+        //   $tanggal_diambil  = null;
+        // } else {
+        //   $pecah_tanggal_diambil = explode(' ', $tanggal_diambil);
+        //   $bulan_tanggal_cair = convert_bulan_indo($pecah_tanggal_diambil[1]);
+        //   $tanggal_diambil  = $pecah_tanggal_diambil[2] . '-' . $bulan_tanggal_cair . '-' . $pecah_tanggal_diambil[0];
+        // }
+
+        // $input = array(
+        //   'no_pk'             => $row[0],
+        //   'id_periode'        => $row[1],
+        //   'nim_asprak'        => $row[2],
+        //   'id_daftar_mk'      => $id_daftar_mk,
+        //   'hari'              => $row[4],
+        //   'jam'               => $row[5],
+        //   'nominal'           => $row[6],
+        //   'status'            => $status,
+        //   'tanggal_ambil'     => $tanggal_diambil,
+        //   'pengambil'         => $row[9],
+        //   'opsi_pengambilan'  => $row[10],
+        //   'approve_dosen'     => '1'
+        // );
+        // echo $counter++ . ' ';
+        // print_r($input);
+        // echo '<hr>';
+
+        //Maret
+        $id_daftar_mk = $this->db->get_where('daftar_mk', array('kode_mk' => $row[3]))->row()->id_daftar_mk;
+
+        if ($row[7] == 'Taken') {
+          $status = '2';
+        } elseif ($row[7] == 'Untaken') {
+          $status = '0';
+        }
+        $input  = array(
+          'no_pk'         => $row[0],
+          'id_periode'    => $row[1],
+          'nim_asprak'    => $row[2],
+          'id_daftar_mk'  => $id_daftar_mk,
+          'hari'          => $row[4],
+          'jam'           => $row[5],
+          'nominal'       => $row[6],
+          'status'        => $status,
+          'approve_dosen' => '1'
+        );
+        // print_r($input);
+        // echo '<hr>';
+        $this->db->insert('honor', $input);
       }
       fclose($handle);
     }
