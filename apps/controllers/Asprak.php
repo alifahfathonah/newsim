@@ -75,11 +75,11 @@ class Asprak extends CI_Controller
   {
     $target = '2020-05-20';
     if (date('Y-m-d') <= $target) {
-      // set_rules('jadwal_asprak', 'Schedule', 'required|trim');
-      // set_rules('tgl_asprak', 'Date', 'required|trim');
+      set_rules('jadwal_asprak', 'Schedule', 'required|trim');
+      set_rules('tgl_asprak', 'Date', 'required|trim');
       set_rules('jam_masuk', 'Start', 'required|trim');
       set_rules('jam_selesai', 'End', 'required|trim');
-      // set_rules('modul_praktikum', 'Practicum Modul', 'required|trim');
+      set_rules('modul_praktikum', 'Practicum Modul', 'required|trim');
       if (validation_run() == false) {
         $data           = $this->data;
         $data['title']  = 'Add Presence | SIM Laboratorium';
@@ -135,7 +135,7 @@ class Asprak extends CI_Controller
           if ($nama_hari != hariInggris($cek_jadwal_hari) || $jam_masuk < $cek_jam_masuk || $jam_selesai > $cek_jam_selesai) {
             echo 'Your presence is not according to the day of practicum or start time before the schedule or end time exceeded the schedule';
             set_flashdata('msg', '<div class="alert alert-danger">Your presence is not according to the day of practicum or start time before the schedule or end time exceeded the schedule</div>');
-            redirect('Asprak/AddPresence');
+            //redirect('Asprak/AddPresence');
           }
           $input                = array(
             'asprak_masuk'      => $tanggal . ' ' . $jam_masuk,
