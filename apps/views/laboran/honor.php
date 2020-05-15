@@ -448,6 +448,22 @@
                                                     </div>
                                                   </div>
                                                   <div class="row">
+                                                    <div class="col-md-6 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">Bank Account Number</label>
+                                                        <br>
+                                                        <label><?= $w->norek . '<br>' . $w->nama_rekening ?></label>
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                      <div class="form-group">
+                                                        <label class="font-bold">LinkAja</label>
+                                                        <br>
+                                                        <label><?= $w->linkaja ?></label>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
                                                     <div class="col-md-12 col-sm-12">
                                                       <div class="form-group">
                                                         <label class="font-bold">Evidence of Transfer</label>
