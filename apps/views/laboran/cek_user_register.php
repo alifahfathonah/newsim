@@ -119,7 +119,7 @@
                       </thead>
                       <tbody>
                         <?php
-                        $query = $this->db->select('asprak.nim_asprak, asprak.nama_asprak')->from('users')->join('asprak', 'users.nimAsprak = asprak.nim_asprak')->get()->result();
+                        $query = $this->db->select('asprak.nim_asprak, asprak.nama_asprak')->from('users')->join('asprak', 'users.nimAsprak = asprak.nim_asprak')->order_by('asprak.nim_asprak')->get()->result();
                         $no = 1;
                         foreach ($query as $q) {
                         ?>
