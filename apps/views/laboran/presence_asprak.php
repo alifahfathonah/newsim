@@ -61,7 +61,7 @@
                                 <div class="col-md-6">
                                   <div class="form-group">
                                     <label class="font-bold">Date</label>
-                                    <input type="text" name="id_presensi" id="id_presensi" value="<?= $d->id_presensi_asprak ?>" style="display: none" required>
+                                    <input type="text" name="id_presensi" id="id_presensi" value="<?= $d->id_presensi_asprak ?>" style="display: none">
                                     <input type="text" value="<?= tanggal_inggris2($d->tanggal) ?>" class="form-control" readonly>
                                   </div>
                                 </div>
@@ -108,13 +108,13 @@
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label class="font-bold">Screenshot</label>
-                                    <input type="file" accept="image/*" name="screenshot" id="screenshot" class="form-control" required>
+                                    <input type="file" accept="image/*" name="screenshot" id="screenshot" class="form-control">
                                   </div>
                                 </div>
                                 <div class="col-md-3">
                                   <div class="form-group">
                                     <label class="font-bold">Video</label>
-                                    <input type="file" accept="video/*" name="video" id="video" class="form-control" required>
+                                    <input type="file" accept="video/*" name="video" id="video" class="form-control">
                                   </div>
                                 </div>
                               </div>
