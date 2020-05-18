@@ -107,6 +107,7 @@ class M_Asprak extends CI_Model
     $this->db->where('honor.nim_asprak', $nim);
     $this->db->where('honor.status', '0');
     $this->db->where('honor.approve_dosen', '1');
+    $this->db->where('honor.no_pk is not null');
     $this->db->order_by('honor.id_honor', 'desc');
     return $this->db->get();
   }
