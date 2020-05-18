@@ -253,8 +253,14 @@
             ?>
             <a href="<?= base_url('Practicum/PracticumAssistant') ?>">Practicum Assistant</a>
             </li>
-            <li>
-              <a href="<?= base_url('Laboran/#') ?>">Presence Asprak</a>
+            <?php
+            if (uri('2') == 'PresenceAsprak') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Practicum/PresenceAsprak') ?>">Presence Asprak</a>
             </li>
             <?php
             if (uri('2') == 'BAP') {

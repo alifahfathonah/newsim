@@ -100,6 +100,42 @@ class Practicum extends CI_Controller
     view('laboran/footer');
   }
 
+  public function PresenceAsprak()
+  {
+    $data           = $this->data;
+    $data['title']  = 'Presence Practicum Assistant | SIM Laboratorium';
+    $data['data']   = $this->m->daftarAbsenAsprak()->result();
+    view('laboran/header', $data);
+    view('laboran/presence_asprak', $data);
+    view('laboran/footer');
+  }
+
+  public function EditPresenceAsprak()
+  {
+    $id_presensi  = input('id_presensi');
+    $modul        = input('modul');
+    $input        = array('modul' => $modul);
+    $screenshot               = rand(10, 99) . '-' . str_replace(' ', '_', $_FILES['screenshot']['name']);
+    $config['upload_path']    = 'assets/screenshot/';
+    $config['allowed_types']  = 'jpeg|jpg|png|gif';
+    $config['max_size']       = 1024 * 100;
+    $config['file_name']      = $screenshot;
+    $this->load->library('upload', $config);
+    if ($this->upload->do_upload('screenshot')) {
+      $input['screenshot']     = $config['upload_path'] . '' . $screenshot;
+    }
+    if (!empty($_FILES['video'])) {
+      $target_folder  = 'assets/video/';
+      $nama_file      = rand(10, 99) . '-' . str_replace(' ', '_', $_FILES['video']['name']);
+      $upload_file    = $target_folder . $nama_file;
+      $input['video'] = $upload_file;
+      move_uploaded_file($_FILES['video']['tmp_name'], $upload_file);
+    }
+    $this->m->updateData('presensi_asprak', $input, 'id_presensi_asprak', $id_presensi);
+    set_flashdata('msg', '<div class="alert alert-success msg">Presence Practicum Assistant Successfully Updated</div>');
+    redirect('Practicum/PresenceAsprak');
+  }
+
   public function AddAsprakCSV()
   {
     if (empty($_FILES['file']['name'])) {
