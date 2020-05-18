@@ -236,10 +236,11 @@ class M_Model extends CI_Model
 
   function daftarAbsenAsprak()
   {
-    $this->db->select('presensi_asprak.id_presensi_asprak, date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") jam_masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") jam_selesai, matakuliah.kode_mk, matakuliah.nama_mk, jadwal_lab.kelas, jadwal_lab.kode_dosen, presensi_asprak.modul');
+    $this->db->select('presensi_asprak.id_presensi_asprak, date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") jam_masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") jam_selesai, matakuliah.kode_mk, matakuliah.nama_mk, jadwal_lab.kelas, jadwal_lab.kode_dosen, presensi_asprak.modul, asprak.nama_asprak');
     $this->db->from('presensi_asprak');
     $this->db->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
     $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
+    $this->db->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak');
     $this->db->order_by('presensi_asprak.asprak_masuk', 'desc');
     return $this->db->get();
   }

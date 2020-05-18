@@ -21,6 +21,7 @@
                   <th>Date</th>
                   <th>Start</th>
                   <th>End</th>
+                  <th>Name Asprak</th>
                   <th>Courses</th>
                   <th>Class</th>
                   <th>Lecturer Code</th>
@@ -38,6 +39,7 @@
                     <td><?= tanggal_inggris2($d->tanggal) ?></td>
                     <td><?= $d->jam_masuk ?></td>
                     <td><?= $d->jam_selesai ?></td>
+                    <td><?= $d->nama_asprak ?></td>
                     <td><?= $d->kode_mk . ' | ' . $d->nama_mk ?></td>
                     <td><?= $d->kelas ?></td>
                     <td><?= $d->kode_dosen ?></td>
