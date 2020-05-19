@@ -67,7 +67,7 @@ class Dashboard extends CI_Controller
       view('aslab/dashboard', $data);
       view('aslab/footer');
     } elseif (userdata('login') == 'dosen') {
-      $data['pengumuman'] = $this->a->daftarPengumuman()->result();
+      $data['pengumuman'] = $this->a->daftarPengumumanDosen()->result();
       view('dosen/header', $data);
       view('dosen/dashboard', $data);
       view('dosen/footer');

@@ -24,6 +24,16 @@ class M_Asprak extends CI_Model
     return $this->db->get();
   }
 
+  function daftarPengumumanDosen()
+  {
+    $this->db->select('*');
+    $this->db->from('pengumuman');
+    $this->db->where('tipePengumuman', 'Lecture');
+    $this->db->order_by('tglPengumuman', 'desc');
+    $this->db->limit('7');
+    return $this->db->get();
+  }
+
   function akunAsprak($nim)
   {
     return $this->db->get_where('users', array('nimAsprak' => $nim));

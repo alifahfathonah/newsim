@@ -9,17 +9,9 @@
                   foreach ($pengumuman as $p) {
                   ?>
                     <div class="vertical-timeline-block">
-                      <?php
-                      if ($p->tipePengumuman == 'Meeting') {
-                        echo '<div class="vertical-timeline-icon navy-bg"><i class="fa fa-briefcase"></i></div>';
-                      } elseif ($p->tipePengumuman == 'Sharing Knowledge') {
-                        echo '<div class="vertical-timeline-icon blue-bg"><i class="fa fa-share-alt"></i></div>';
-                      } elseif ($p->tipePengumuman == 'General') {
-                        echo '<div class="vertical-timeline-icon yellow-bg"><i class="fa fa-bullhorn"></i></div>';
-                      } elseif ($p->tipePengumuman == 'Practicum Assistant') {
-                        echo '<div class="vertical-timeline-icon red-bg"><i class="fa fa-users"></i></div>';
-                      }
-                      ?>
+                      <div class="vertical-timeline-icon yellow-bg">
+                        <i class="fa fa-bullhorn"></i>
+                      </div>
                       <div class="vertical-timeline-content">
                         <h2><?= $p->namaPengumuman ?></h2>
                         <p><?= $p->isiPengumuman ?></p>
