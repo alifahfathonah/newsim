@@ -59,7 +59,7 @@ class Dashboard extends CI_Controller
       $data['pengumuman']       = $this->m->daftarPengumuman()->result();
       $data['komplain_belum']   = $this->m->hitungKomplainBelumSelesai()->row()->komplain_belum;
       $data['komplain_selesai'] = $this->m->hitungKomplainSelesai()->row()->komplain_selesai;
-      $data['lab_belum']        = $this->m->hitungPeminjamanLabBelumSelesai()->row()->lab_belum;
+      $data['lab_belum']        = $this->m->hitungPeminjamanLabBelumSelesai()->row();
       $data['lab_selesai']      = $this->m->hitungPeminjamanLabSelesai()->row()->lab_selesai;
       $data['alat_belum']       = $this->m->hitungPeminjamanAlatBelumSelesai()->row()->alat_belum;
       $data['alat_selesai']     = $this->m->hitungPeminjamanAlatSelesai()->row()->alat_selesai;
