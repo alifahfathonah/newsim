@@ -29,7 +29,10 @@
                       $jumlah = $jumlah + 1;
                     }
                     if ($jumlah == $approve) {
-                      echo '<button class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve BAP</button>';
+                      echo '
+                      <a href="' . base_url('BAP/ApproveBAP/' . substr(sha1($total->id_honor), 19, 9)) . '">
+                      <button class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve BAP</button>
+                      </a>';
                     } elseif ($pending > 0) {
                       echo '<button class="btn btn-danger btn-sm" disabled><i class="fa fa-check"></i> Waiting to fix their presence</button>';
                     } elseif ($no_action > 0) {
