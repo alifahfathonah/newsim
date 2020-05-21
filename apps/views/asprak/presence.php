@@ -14,20 +14,13 @@
               echo flashdata('msg');
             }
             ?>
-            <?php
-            $target = '2020-05-20';
-            if (date('Y-m-d') <= $target) {
-            ?>
-              <div class="row">
-                <div class="col-md-2 col-sm-2" style="margin-bottom: 5px">
-                  <a href="<?= base_url('Asprak/AddPresence') ?>">
-                    <button class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Presence</button>
-                  </a>
-                </div>
+            <div class="row">
+              <div class="col-md-2 col-sm-2" style="margin-bottom: 5px">
+                <a href="<?= base_url('Asprak/AddPresence') ?>">
+                  <button class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Presence</button>
+                </a>
               </div>
-            <?php
-            }
-            ?>
+            </div>
             <div class="ibox">
               <div class="ibox-content">
                 <div class="table-responsive">
