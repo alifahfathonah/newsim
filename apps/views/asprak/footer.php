@@ -141,6 +141,9 @@ if (uri('2') == 'AddPresence' || uri('2') == 'EditPresence') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/clockpicker/clockpicker.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/datapicker/bootstrap-datepicker.js"></script>
   <script>
+    var tanggal_sekarang = new Date();
+    // tanggal_sekarang.setDate(tanggal_sekarang.getDate());
+    tanggal_sekarang.setFullYear(2020, 2, 16);
     $(document).ready(function() {
       $(".jadwal").select2({
         placeholder: "Select Schedule"
@@ -153,7 +156,8 @@ if (uri('2') == 'AddPresence' || uri('2') == 'EditPresence') {
         keyboardNavigation: false,
         forceParse: false,
         calendarWeeks: true,
-        autoclose: true
+        autoclose: true,
+        startDate: tanggal_sekarang
       });
 
       $('.custom-file-input').on('change', function() {
