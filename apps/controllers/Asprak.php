@@ -73,8 +73,12 @@ class Asprak extends CI_Controller
 
   public function AddPresence()
   {
-    $target = '2020-05-20';
-    if (date('Y-m-d') <= $target) {
+    // $target = '2020-05-20';
+    // if (date('Y-m-d') <= $target) {
+    $tanggal = '2020-05-22';
+    $jam_awal = '14:00';
+    $jam_selesai = '17:00';
+    if (date('Y-m-d') == $tanggal && (date('H:i') >= $jam_awal && date('H:i') <= $jam_selesai)) {
       set_rules('jadwal_asprak', 'Schedule', 'required|trim');
       set_rules('tgl_asprak', 'Date', 'required|trim');
       set_rules('jam_masuk', 'Start', 'required|trim');

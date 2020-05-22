@@ -15,8 +15,12 @@
             }
             ?>
             <?php
-            $target = '2020-05-20';
-            if (date('Y-m-d') <= $target) {
+            // $target = '2020-05-20';
+            // if (date('Y-m-d') <= $target) {
+            $tanggal = '2020-05-22';
+            $jam_awal = '14:00';
+            $jam_selesai = '17:00';
+            if (date('Y-m-d') == $tanggal && (date('H:i') >= $jam_awal && date('H:i') <= $jam_selesai)) {
             ?>
               <div class="row">
                 <div class="col-md-2 col-sm-2" style="margin-bottom: 5px">
