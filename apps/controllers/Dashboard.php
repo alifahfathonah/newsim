@@ -45,12 +45,12 @@ class Dashboard extends CI_Controller
     if (userdata('login') == 'laboran') {
       $data['komplain']         = $this->m->grafikKomplain()->result();
       $data['pengumuman']       = $this->m->daftarPengumuman()->result();
-      $data['komplain_belum']   = $this->m->hitungKomplainBelumSelesai()->row()->komplain_belum;
-      $data['komplain_selesai'] = $this->m->hitungKomplainSelesai()->row()->komplain_selesai;
+      $data['komplain_belum']   = $this->m->hitungKomplainBelumSelesai()->row();
+      $data['komplain_selesai'] = $this->m->hitungKomplainSelesai()->row();
       $data['lab_belum']        = $this->m->hitungPeminjamanLabBelumSelesai()->row();
-      $data['lab_selesai']      = $this->m->hitungPeminjamanLabSelesai()->row()->lab_selesai;
-      $data['alat_belum']       = $this->m->hitungPeminjamanAlatBelumSelesai()->row()->alat_belum;
-      $data['alat_selesai']     = $this->m->hitungPeminjamanAlatSelesai()->row()->alat_selesai;
+      $data['lab_selesai']      = $this->m->hitungPeminjamanLabSelesai()->row();
+      $data['alat_belum']       = $this->m->hitungPeminjamanAlatBelumSelesai()->row();
+      $data['alat_selesai']     = $this->m->hitungPeminjamanAlatSelesai()->row();
       view('laboran/header', $data);
       view('laboran/dashboard', $data);
       view('laboran/footer');
@@ -85,7 +85,7 @@ class Dashboard extends CI_Controller
     } else {
       $nama_pengumuman    = input('nama_pengumuman');
       $tanggal_pengumuman = input('tanggal_pengumuman');
-      $isi_pengumuman     = input('isi_pengumuman');
+      $isi_pengumuman     = nl2br(htmlspecialchars_decode(input('isi_pengumuman'), ENT_HTML5));
       $tipe_pengumuman    = input('tipe_pengumuman');
       $pisah_tanggal      = explode('/', $tanggal_pengumuman);
       $urut_tanggal       = array($pisah_tanggal[2], $pisah_tanggal[0], $pisah_tanggal[1]);
@@ -113,7 +113,7 @@ class Dashboard extends CI_Controller
     } else {
       $nama_pengumuman    = input('nama_pengumuman');
       $tanggal_pengumuman = input('tanggal_pengumuman');
-      $isi_pengumuman     = input('isi_pengumuman');
+      $isi_pengumuman     = nl2br(htmlspecialchars_decode(input('isi_pengumuman'), ENT_HTML5));
       $tipe_pengumuman    = input('tipe_pengumuman');
       $pisah_tanggal      = explode('/', $tanggal_pengumuman);
       $urut_tanggal       = array($pisah_tanggal[2], $pisah_tanggal[0], $pisah_tanggal[1]);
