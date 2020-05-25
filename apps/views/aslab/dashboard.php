@@ -25,11 +25,23 @@
                 <div class="row">
                   <div class="col-6">
                     <small class="stats-label">Complaint Not Resolved</small>
-                    <h4><?= $komplain_belum ?></h4>
+                    <?php
+                    if ($komplain_belum != null) {
+                      echo '<h4>' . $komplain_belum->komplain_belum . '</h4>';
+                    } else {
+                      echo '<h4>0</h4>';
+                    }
+                    ?>
                   </div>
                   <div class="col-6">
                     <small class="stats-label">Complaint Resolved</small>
-                    <h4><?= $komplain_selesai ?></h4>
+                    <?php
+                    if ($komplain_selesai != null) {
+                      echo '<h4>' . $komplain_selesai->komplain_selesai . '</h4>';
+                    } else {
+                      echo '<h4>0</h4>';
+                    }
+                    ?>
                   </div>
                 </div>
               </div>
@@ -37,11 +49,37 @@
                 <div class="row">
                   <div class="col-6">
                     <small class="stats-label">Borrowing Not Finished</small>
-                    <h4><?= $lab_belum + $alat_belum ?></h4>
+                    <?php
+                    $belum = 0;
+                    if ($lab_belum != null) {
+                      $belum = $belum + $lab_belum;
+                    } else {
+                      $belum = $belum + 0;
+                    }
+                    if ($alat_belum != null) {
+                      $belum = $belum + $alat_belum;
+                    } else {
+                      $belum = $belum + 0;
+                    }
+                    ?>
+                    <h4><?= $belum ?></h4>
                   </div>
                   <div class="col-6">
                     <small class="stats-label">Borrowing Finished</small>
-                    <h4><?= $lab_selesai + $alat_selesai ?></h4>
+                    <?php
+                    $selesai = 0;
+                    if ($lab_selesai != null) {
+                      $selesai = $selesai + $lab_selesai->lab_selesai;
+                    } else {
+                      $selesai = $selesai + 0;
+                    }
+                    if ($alat_selesai != null) {
+                      $selesai = $selesai + $alat_selesai->alat_selesai;
+                    } else {
+                      $selesai = $selesai + 0;
+                    }
+                    ?>
+                    <h4><?= $selesai ?></h4>
                   </div>
                 </div>
               </div>
