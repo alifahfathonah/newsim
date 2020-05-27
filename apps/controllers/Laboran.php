@@ -265,4 +265,27 @@ class Laboran extends CI_Controller
     }
     redirect('Schedule');
   }
+
+  public function GenerateBAPMei()
+  {
+    $daftar_asprak = $this->db->get('asprak')->result();
+    foreach ($daftar_asprak as $da) {
+      if ($da->nim_asprak == '1301198509') {
+        $profil_asprak  = $this->db->where('nim_asprak', $da->nim_asprak)->get('asprak')->row();
+        $daftar_mk      = $this->db->where('nim_asprak', $da->nim_asprak)->get('daftarasprak')->result();
+        foreach ($daftar_mk as $dmk) {
+          $prodi = $this->db->select('prodi.strata, prodi.nama_prodi, matakuliah.nama_mk, matakuliah.kode_mk')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_daftar_mk', $dmk->id_daftar_mk)->get()->row();
+          $dosen = $this->db->select('dosen.nama_dosen, dosen.ttd_dosen')->from('daftar_mk')->join('dosen', 'daftar_mk.koordinator_mk = dosen.id_dosen')->where('daftar_mk.id_daftar_mk', $dmk->id_daftar_mk)->get()->row();
+          $data['title']  = 'Generate BAP Mei';
+          $data['asprak'] = $profil_asprak;
+          $data['prodi']  = $prodi;
+          $data['dosen']  = $dosen;
+          view('laboran/generate_bap', $data);
+        }
+        // $presensi_asprak = $this->db->where('nim_asprak', $da->nim_asprak)->order_by('asprak_masuk', 'asc')->get('presensi_asprak')->result();
+
+        // print_r($data['asprak']);
+      }
+    }
+  }
 }

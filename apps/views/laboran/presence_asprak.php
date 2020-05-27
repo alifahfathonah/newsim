@@ -25,6 +25,7 @@
                   <th>Courses</th>
                   <th>Class</th>
                   <th>Lecturer Code</th>
+                  <th>Status Approve Presence</th>
                   <th>Modul</th>
                   <th width="10%">Action</th>
                 </tr>
@@ -43,6 +44,17 @@
                     <td><?= $d->kode_mk . ' | ' . $d->nama_mk ?></td>
                     <td><?= $d->kelas ?></td>
                     <td><?= $d->kode_dosen ?></td>
+                    <td>
+                      <?php
+                      if ($d->approve_absen == '0') {
+                        echo 'Must be edit from Asprak';
+                      } elseif ($d->approve_absen == '1') {
+                        echo 'Waiting to approve';
+                      } elseif ($d->approve_absen == '2') {
+                        echo 'Approve';
+                      }
+                      ?>
+                    </td>
                     <td><?= $d->modul ?></td>
                     <td style="text-align: center">
                       <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#edit<?= $d->id_presensi_asprak ?>"><i class="fa fa-edit"></i></button>
