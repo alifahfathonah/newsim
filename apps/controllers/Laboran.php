@@ -266,26 +266,165 @@ class Laboran extends CI_Controller
     redirect('Schedule');
   }
 
+  public function ImportBAP()
+  {
+    view('laboran/import_bap_bermasalah');
+  }
+
+  public function ImportBAPBermasalah()
+  {
+    $file = $_FILES['file_csv']['tmp_name'];
+    $ekstensi_file  = explode('.', $_FILES['file_csv']['name']);
+    if (strtolower(end($ekstensi_file)) === 'csv' && $_FILES['file_csv']['size'] > 0) {
+      $handle = fopen($file, 'r');
+      $i = 0;
+      $tmp_nim      = '';
+      $nim          = '';
+      $tmp_kode_mk  = '';
+      $kode_mk      = '';
+      while (($row = fgetcsv($handle, 2048))) {
+        $i++;
+        if ($i == 1) {
+          continue;
+        }
+        if ($row[0] != null) {
+          $nim  = $row[0];
+          $tmp_nim  = $row[0];
+        } else {
+          $nim  = $tmp_nim;
+        }
+        if ($row[4] != null) {
+          $kode_mk      = str_replace(' ', '', $row[4]);
+          $tmp_kode_mk  = str_replace(' ', '', $row[4]);
+        } else {
+          $kode_mk      = $tmp_kode_mk;
+        }
+        $tanggal        = $row[5];
+        $jam_masuk      = str_replace('.', ':', $row[6]);
+        $jam_selesai    = str_replace('.', ':', $row[7]);
+        $asprak_masuk   = $tanggal . ' ' . $jam_masuk;
+        $asprak_selesai = $tanggal . ' ' . $jam_selesai;
+        $start          = date_create($asprak_masuk);
+        $end            = date_create($asprak_selesai);
+        $diff           = date_diff($end, $start);
+        //print_r($row[0]);
+        $hari_ke      = date('N', strtotime($tanggal));
+        $honor        = $this->db->where('status', '1')->get('tarif')->row();
+        $id_mk        = $this->db->where('kode_mk', $kode_mk)->get('matakuliah')->row();
+        $cek_jadwal_lab = $this->db->where('hari_ke', $hari_ke)->where('id_mk', $id_mk->id_mk)->get('jadwal_lab')->row();
+        $input          = array(
+          'asprak_masuk'    => $asprak_masuk,
+          'asprak_selesai'  => $asprak_selesai,
+          'durasi'          => $diff->h,
+          'honor'           => $diff->h * $honor->tarif_honor,
+          'modul'           => $row[8],
+          'screenshot'      => 'Praktikum Onsite',
+          'approve_absen'   => '2',
+          'nim_asprak'      => $nim,
+          'id_jadwal_lab'   => $cek_jadwal_lab->id_jadwal_lab
+        );
+        $this->db->insert('presensi_asprak', $input);
+      }
+      fclose($handle);
+    }
+  }
+
   public function GenerateBAPMei()
+  {
+    set_rules('kode_mk', 'Kode MK', 'required|trim');
+    if (validation_run() == false) {
+      view('laboran/generate_bap_mei');
+    } else {
+      $kode_mk = input('kode_mk');
+      $cek_daftar_mk = $this->db->where('kode_mk', $kode_mk)->get('daftar_mk')->row();
+      if ($cek_daftar_mk == true) {
+        //$prodi  = $this->db->where('kode_prodi', $cek_daftar_mk->kode_prodi)->get('prodi')->row();
+        $prodi  = $this->db->select('prodi.strata, prodi.nama_prodi, matakuliah.nama_mk, matakuliah.kode_mk')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('matakuliah.kode_mk', $kode_mk)->where('prodi.kode_prodi', $cek_daftar_mk->kode_prodi)->get()->row();
+        $dosen  = $this->db->where('id_dosen', $cek_daftar_mk->koordinator_mk)->get('dosen')->row();
+        $cek_daftar_asprak = $this->db->where('id_daftar_mk', $cek_daftar_mk->id_daftar_mk)->get('daftarasprak')->result();
+        if ($cek_daftar_asprak == true) {
+          foreach ($cek_daftar_asprak as $da) {
+            $profil_asprak  = $this->db->where('nim_asprak', $da->nim_asprak)->get('asprak')->row();
+            $bap = $this->db->select('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") selesai, presensi_asprak.durasi, presensi_asprak.modul, presensi_asprak.screenshot, asprak.ttd_asprak')->from('presensi_asprak')->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab')->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk')->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk')->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak')->where('daftar_mk.kode_mk', $kode_mk)->where('daftar_mk.koordinator_mk', $dosen->id_dosen)->where('presensi_asprak.nim_asprak', $da->nim_asprak)->order_by('presensi_asprak.asprak_masuk', 'asc')->get()->result();
+            $total_jam = $this->db->select('sum(presensi_asprak.durasi) jam, count(presensi_asprak.id_presensi_asprak) hari')->from('presensi_asprak')->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab')->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk')->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk')->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak')->where('daftar_mk.kode_mk', $kode_mk)->where('daftar_mk.koordinator_mk', $dosen->id_dosen)->where('presensi_asprak.nim_asprak', $da->nim_asprak)->get()->row();
+            $tanggal_bap = $this->db->select('tanggal_approve')->from('honor')->where('nim_asprak', $da->nim_asprak)->where('id_daftar_mk', $cek_daftar_mk->id_daftar_mk)->where('id_dosen', $dosen->id_dosen)->where('id_dosen is not null')->where('tanggal_approve is not null')->get()->row();
+            if ($tanggal_bap == true) {
+              $tanggal_bap = $tanggal_bap->tanggal_approve;
+            } else {
+              $tanggal_bap = 'xx';
+            }
+            if ($bap == true) {
+              $data['title']  = 'B4-2_' . $prodi->kode_mk . '_' . $profil_asprak->nim_asprak;
+              $data['asprak'] = $profil_asprak;
+              $data['prodi']  = $prodi;
+              $data['dosen']  = $dosen;
+              $data['bap']    = $bap;
+              $data['total']  = $total_jam;
+              $data['tanggal']  = $tanggal_bap;
+              view('laboran/generate_bap', $data);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public function GenerateBAPMei_()
   {
     $daftar_asprak = $this->db->get('asprak')->result();
     foreach ($daftar_asprak as $da) {
-      if ($da->nim_asprak == '1301198509') {
-        $profil_asprak  = $this->db->where('nim_asprak', $da->nim_asprak)->get('asprak')->row();
-        $daftar_mk      = $this->db->where('nim_asprak', $da->nim_asprak)->get('daftarasprak')->result();
-        foreach ($daftar_mk as $dmk) {
-          $prodi = $this->db->select('prodi.strata, prodi.nama_prodi, matakuliah.nama_mk, matakuliah.kode_mk')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_daftar_mk', $dmk->id_daftar_mk)->get()->row();
-          $dosen = $this->db->select('dosen.nama_dosen, dosen.ttd_dosen')->from('daftar_mk')->join('dosen', 'daftar_mk.koordinator_mk = dosen.id_dosen')->where('daftar_mk.id_daftar_mk', $dmk->id_daftar_mk)->get()->row();
-          $data['title']  = 'Generate BAP Mei';
-          $data['asprak'] = $profil_asprak;
-          $data['prodi']  = $prodi;
-          $data['dosen']  = $dosen;
-          view('laboran/generate_bap', $data);
+      // if ($da->nim_asprak == '1501188418') {
+      $profil_asprak  = $this->db->where('nim_asprak', $da->nim_asprak)->get('asprak')->row();
+      $daftar_mk      = $this->db->where('nim_asprak', $da->nim_asprak)->get('daftarasprak')->result();
+      foreach ($daftar_mk as $dmk) {
+        $prodi = $this->db->select('prodi.strata, prodi.nama_prodi, matakuliah.nama_mk, matakuliah.kode_mk')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_daftar_mk', $dmk->id_daftar_mk)->get()->row();
+        $dosen = $this->db->select('dosen.id_dosen, dosen.nama_dosen, dosen.kode_dosen, dosen.ttd_dosen')->from('daftar_mk')->join('dosen', 'daftar_mk.koordinator_mk = dosen.id_dosen')->where('daftar_mk.id_daftar_mk', $dmk->id_daftar_mk)->where('daftar_mk.koordinator_mk is not null')->get()->row();
+        if ($dosen == true) {
+          $bap   = $this->db->select('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") selesai, presensi_asprak.durasi, presensi_asprak.honor, presensi_asprak.modul, presensi_asprak.screenshot, presensi_asprak.approve_absen, presensi_asprak.id_jadwal_asprak, presensi_asprak.nim_asprak, presensi_asprak.id_jadwal_lab, asprak.ttd_asprak')->from('presensi_asprak')->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab')->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak')->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk')->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk')->where('presensi_asprak.nim_asprak', $da->nim_asprak)->where('presensi_asprak.asprak_masuk >= "2020-03-16"')->where('daftar_mk.koordinator_mk', $dosen->id_dosen)->order_by('presensi_asprak.asprak_masuk', 'asc')->get()->result();
+          $total_jam  = $this->db->select('sum(presensi_asprak.durasi) jam, count(presensi_asprak.id_presensi_asprak) hari')->from('presensi_asprak')->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab')->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak')->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk')->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk')->where('presensi_asprak.nim_asprak', $da->nim_asprak)->where('presensi_asprak.asprak_masuk >= "2020-03-16"')->where('daftar_mk.koordinator_mk', $dosen->id_dosen)->order_by('presensi_asprak.asprak_masuk', 'asc')->get()->row();
+          $tanggal_bap = $this->db->select('tanggal_approve')->from('honor')->where('nim_asprak', $da->nim_asprak)->where('id_daftar_mk', $dmk->id_daftar_mk)->where('id_dosen', $dosen->id_dosen)->where('id_dosen is not null')->get()->row();
+          if ($bap == true) {
+            // $data['title']  = 'Generate BAP Mei';
+            $data['title']    = 'B4-2_' . $prodi->kode_mk . '_' . $profil_asprak->nim_asprak;
+            $data['asprak'] = $profil_asprak;
+            $data['prodi']  = $prodi;
+            $data['dosen']  = $dosen;
+            $data['bap']    = $bap;
+            $data['total']  = $total_jam;
+            $data['tanggal']  = $tanggal_bap;
+            view('laboran/generate_bap', $data);
+            $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
+            $html = view('laboran/generate_bap', $data, true);
+            $mpdf->WriteHTML($html);
+            $mpdf->Output('assets/bap/' . $data['title'] . '.pdf', 'F');
+            $cek_bap = $this->db->where('tanggal_submit is not null')->where('no_pk is null')->where('nim_asprak', $da->nim_asprak)->get('honor')->result();
+            $tanggal_submit = $this->db->where('tanggal_submit is not null')->where('no_pk is null')->where('nim_asprak', $da->nim_asprak)->get('honor')->row();
+            $tarif    = $this->db->where('status', '1')->get('tarif')->row();
+            // $this->db->where('tanggal_submit is not null')->where('no_pk is null')->where('nim_asprak', $da->nim_asprak)->delete('honor');
+            if ($cek_bap == true) {
+              $input  = array(
+                'hari'            => $total_jam->hari,
+                'jam'             => $total_jam->jam,
+                'nominal'         => $total_jam->jam * $tarif->tarif_honor,
+                'tanggal_submit'  => $tanggal_submit->tanggal_submit,
+                'status'          => '0',
+                'id_daftar_mk'    => $dmk->id_daftar_mk,
+                'id_periode'      => 'B4-2',
+                'nim_asprak'      => $da->nim_asprak,
+                'id_dosen'        => $dosen->id_dosen,
+                'approve_dosen'   => $tanggal_submit->approve_dosen,
+                'tanggal_approve' => $tanggal_submit->tanggal_approve,
+                'file_bap'        => 'assets/bap/' . $data['title'] . '.pdf'
+              );
+              $this->db->insert('honor', $input);
+            }
+          }
         }
-        // $presensi_asprak = $this->db->where('nim_asprak', $da->nim_asprak)->order_by('asprak_masuk', 'asc')->get('presensi_asprak')->result();
-
-        // print_r($data['asprak']);
       }
+      // $presensi_asprak = $this->db->where('nim_asprak', $da->nim_asprak)->order_by('asprak_masuk', 'asc')->get('presensi_asprak')->result();
+
+      // print_r($data['asprak']);
+      //}
     }
   }
 }

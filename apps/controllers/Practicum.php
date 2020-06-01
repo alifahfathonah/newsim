@@ -186,6 +186,51 @@ class Practicum extends CI_Controller
     #
   }
 
+  public function BAP()
+  {
+    echo 'hai';
+  }
+
+  public function ajaxBAP()
+  {
+    $hasil  = array();
+    $tampil = array();
+    $id_lab = uri('3');
+    if ($id_lab == true) {
+      $data = $this->db->select('alatlab.idAlat, alatlab.barcode, alatlab.namaAlat, laboratorium.namaLab, alatlab.jumlah, alatlab.kondisi, alatlab.spesifikasi')->from('alatlab')->join('laboratorium', 'alatlab.idLab = laboratorium.idLab')->where('substring(sha1(alatlab.idLab), 7, 4) = "' . $id_lab . '"')->order_by('alatlab.barcode')->get()->result();
+    } else {
+      $data = $this->db->select('alatlab.idAlat, alatlab.barcode, alatlab.namaAlat, laboratorium.namaLab, alatlab.jumlah, alatlab.kondisi, alatlab.spesifikasi')->from('alatlab')->join('laboratorium', 'alatlab.idLab = laboratorium.idLab')->order_by('alatlab.barcode')->get()->result();
+    }
+    $no     = 1;
+    foreach ($data as $d) {
+      if (userdata('login') == 'laboran') {
+        $hasil[]  = array(
+          'no'            => $no++,
+          'barcode'       => $d->barcode,
+          'tools'         => $d->namaAlat,
+          'lab'           => $d->namaLab,
+          'qty'           => $d->jumlah,
+          'condition'     => $d->kondisi,
+          'spesification' => $d->spesifikasi,
+          'action'        => '<center><a href="' . base_url('StockLists/EditStockList/' . substr(sha1($d->idAlat), 6, 4)) . '"><button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button></a><button class="btn btn-danger btn-sm" style="margin-left: 5px" onclick="hapus_inventaris(' . $d->idAlat . ')"><i class="fa fa-trash"></i></button></center>'
+        );
+      } elseif (userdata('login') == 'aslab') {
+        $hasil[]  = array(
+          'no'            => $no++,
+          'barcode'       => $d->barcode,
+          'tools'         => $d->namaAlat,
+          'lab'           => $d->namaLab,
+          'qty'           => $d->jumlah,
+          'condition'     => $d->kondisi,
+          'spesification' => $d->spesifikasi,
+          'action'        => '<center><a href="' . base_url('StockLists/EditStockList/' . substr(sha1($d->idAlat), 6, 4)) . '"><button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button></a></center>'
+        );
+      }
+    }
+    $tampil = array('data' => $hasil);
+    echo json_encode($tampil);
+  }
+
   public function Report()
   {
     set_rules('tahun_ajaran', 'Year', 'required|trim');
