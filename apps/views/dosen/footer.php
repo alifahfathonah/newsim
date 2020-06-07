@@ -90,6 +90,7 @@ if (uri('2') == 'ViewPresence') {
     $pending  = 0;
     $no_action  = 0;
     $jumlah = 0;
+    $delete = 0;
     foreach ($bap as $b) {
       if ($b->approve_absen == '1') {
         $no_action = $no_action + 1;
@@ -151,6 +152,26 @@ if (uri('2') == 'ViewPresence') {
           }
         }
       });
+    }
+
+    function hapus(id) {
+      $.ajax({
+        url: '<?= base_url('BAP/DeletePresence/') ?>' + id,
+        method: 'post',
+        data: {
+          id: id
+        },
+        success: function(response) {
+          if (response == 'true') {
+            document.getElementById('button' + id).innerHTML = '';
+            document.getElementById('button' + id).innerHTML = '<button class="btn btn-danger btn-sm" disabled><i class="fa fa-ban"></i> Deleted</button>';
+            jumlah = jumlah - 1;
+            if (iya == jumlah) {
+              document.getElementById('refresh').innerHTML = '<a href="<?= base_url('BAP/ApproveBAP/' . substr(sha1($total->id_honor), 19, 9)) ?>"><button class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve BAP</button></a>';
+            }
+          }
+        }
+      })
     }
   </script>
 <?php

@@ -193,7 +193,7 @@ class M_Model extends CI_Model
   function daftarAsprak()
   {
     // return $this->db->get('asprak');
-    $this->db->select('asprak.nim_asprak, asprak.nama_asprak, matakuliah.kode_mk, matakuliah.nama_mk');
+    $this->db->select('asprak.nim_asprak, asprak.nama_asprak, asprak.kontak_asprak, matakuliah.kode_mk, matakuliah.nama_mk');
     $this->db->from('daftarasprak');
     $this->db->join('asprak', 'daftarasprak.nim_asprak = asprak.nim_asprak');
     $this->db->join('daftar_mk', 'daftarasprak.id_daftar_mk = daftar_mk.id_daftar_mk');
@@ -432,7 +432,57 @@ class M_Model extends CI_Model
     $this->db->where('presensi_asprak.nim_asprak', $nim);
     $this->db->where('daftar_mk.id_daftar_mk', $id_daftar_mk);
     $this->db->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $between);
+    // $this->db->where('presensi_asprak.approve_absen', '2');
     $this->db->order_by('tanggal', 'asc');
+    return $this->db->get();
+  }
+
+  function previewBAPAsprak_($nim, $id_daftar_mk, $between)
+  {
+    $this->db->select('presensi_asprak.id_presensi_asprak, date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") selesai, presensi_asprak.durasi, presensi_asprak.modul, presensi_asprak.screenshot, presensi_asprak.video, presensi_asprak.approve_absen, asprak.ttd_asprak');
+    $this->db->from('presensi_asprak');
+    $this->db->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak');
+    $this->db->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
+    $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
+    $this->db->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk');
+    $this->db->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak');
+    $this->db->where('presensi_asprak.nim_asprak', $nim);
+    $this->db->where('daftar_mk.id_daftar_mk', $id_daftar_mk);
+    $this->db->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $between);
+    $this->db->where('presensi_asprak.approve_absen', '2');
+    $this->db->order_by('tanggal', 'asc');
+    return $this->db->get();
+  }
+
+  function totalBAPAsprak_($nim, $id_daftar_mk, $between)
+  {
+    $this->db->select('sum(presensi_asprak.durasi) jam, count(presensi_asprak.id_presensi_asprak) hari');
+    $this->db->from('presensi_asprak');
+    $this->db->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak');
+    $this->db->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
+    $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
+    $this->db->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk');
+    $this->db->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak');
+    $this->db->where('presensi_asprak.nim_asprak', $nim);
+    $this->db->where('daftar_mk.id_daftar_mk', $id_daftar_mk);
+    $this->db->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $between);
+    $this->db->where('presensi_asprak.approve_absen', '2');
+    return $this->db->get();
+  }
+
+  function hitungDurasiBAP($nim, $id_daftar_mk, $between)
+  {
+    $this->db->select('sum(presensi_asprak.durasi) durasi, count(presensi_asprak.id_presensi_asprak) hari');
+    $this->db->from('presensi_asprak');
+    $this->db->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak');
+    $this->db->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
+    $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
+    $this->db->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk');
+    $this->db->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak');
+    $this->db->where('presensi_asprak.nim_asprak', $nim);
+    $this->db->where('daftar_mk.id_daftar_mk', $id_daftar_mk);
+    $this->db->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $between);
+    $this->db->where('presensi_asprak.approve_absen', '2');
     return $this->db->get();
   }
 

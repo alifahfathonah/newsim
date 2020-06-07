@@ -99,10 +99,31 @@
             echo '<li>';
           }
           ?>
-          <a href="<?= base_url('BAP') ?>">
+          <a href="#">
             <i class="fa fa-book"></i>
             <span class="nav-label">BAP</span>
+            <span class="fa arrow"></span>
           </a>
+          <ul class="nav nav-second-level collapse">
+            <?php
+            if (uri('1') == 'BAP' && uri('2') != 'Approved') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('BAP') ?>">Not Yed Approved</a>
+            </li>
+            <?php
+            if (uri('1') == 'BAP' && uri('2') == 'Approved') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('BAP/Approved') ?>">Approved</a>
+            </li>
+          </ul>
           </li>
           <?php
           if (uri('1') == 'Setting') {

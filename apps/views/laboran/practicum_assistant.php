@@ -53,6 +53,7 @@
                         <th width="7%">No</th>
                         <th width="15%">NIM</th>
                         <th>Name</th>
+                        <th>Contact</th>
                         <th>Courses</th>
                         <th width="10%">Action</th>
                       </tr>
@@ -65,6 +66,7 @@
                         <tr>
                           <td><?= $no++ ?></td>
                           <td><?= $d->nim_asprak ?></td>
+                          <td><?= $d->kontak_asprak ?></td>
                           <td><?= $d->nama_asprak ?></td>
                           <td><?= $d->kode_mk . ' - ' . $d->nama_mk ?></td>
                           <td style="text-align: center">

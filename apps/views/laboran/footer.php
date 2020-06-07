@@ -405,12 +405,41 @@ if (uri('1') == 'Practicum') {
         buttons: []
       });
 
+      $('.bap').DataTable({
+        pageLength: 10,
+        responsive: true,
+        'ajax': '<?= base_url('Practicum/ajaxBAP') ?>',
+        'columns': [{
+          'data': 'no'
+        }, {
+          'data': 'nim_asprak'
+        }, {
+          'data': 'nama_asprak'
+        }, {
+          'data': 'matakuliah'
+        }, {
+          'data': 'approve'
+        }, {
+          'data': 'periode'
+        }, {
+          'data': 'tahun'
+        }, {
+          'data': 'action'
+        }],
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+
       $(".tahun_ajaran").select2({
         placeholder: "Select Year",
       });
 
       $(".daftar_mk").select2({
         placeholder: "Select Courses",
+      });
+
+      $(".periode").select2({
+        placeholder: "Select Periode",
       });
     });
   </script>

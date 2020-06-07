@@ -188,7 +188,12 @@ class Practicum extends CI_Controller
 
   public function BAP()
   {
-    echo 'hai';
+    $data           = $this->data;
+    $data['title']  = 'BAP | SIM Laboratorium';
+    $data['data']   = $this->m->daftarAbsenAsprak()->result();
+    view('laboran/header', $data);
+    view('laboran/list_bap', $data);
+    view('laboran/footer');
   }
 
   public function ajaxBAP()
@@ -199,33 +204,25 @@ class Practicum extends CI_Controller
     if ($id_lab == true) {
       $data = $this->db->select('alatlab.idAlat, alatlab.barcode, alatlab.namaAlat, laboratorium.namaLab, alatlab.jumlah, alatlab.kondisi, alatlab.spesifikasi')->from('alatlab')->join('laboratorium', 'alatlab.idLab = laboratorium.idLab')->where('substring(sha1(alatlab.idLab), 7, 4) = "' . $id_lab . '"')->order_by('alatlab.barcode')->get()->result();
     } else {
-      $data = $this->db->select('alatlab.idAlat, alatlab.barcode, alatlab.namaAlat, laboratorium.namaLab, alatlab.jumlah, alatlab.kondisi, alatlab.spesifikasi')->from('alatlab')->join('laboratorium', 'alatlab.idLab = laboratorium.idLab')->order_by('alatlab.barcode')->get()->result();
+      $data = $this->db->select('asprak.nim_asprak, asprak.nama_asprak, matakuliah.kode_mk, matakuliah.nama_mk, periode.bulan, tahun_ajaran.ta, honor.file_bap, honor.approve_dosen')->from('honor')->join('daftar_mk', 'honor.id_daftar_mk = daftar_mk.id_daftar_mk')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->join('tahun_ajaran', 'daftar_mk.id_ta = tahun_ajaran.id_ta')->join('periode', 'honor.id_periode = periode.id_periode')->join('asprak', 'honor.nim_asprak = asprak.nim_asprak')->order_by('honor.id_honor', 'desc')->get()->result();
     }
     $no     = 1;
     foreach ($data as $d) {
-      if (userdata('login') == 'laboran') {
-        $hasil[]  = array(
-          'no'            => $no++,
-          'barcode'       => $d->barcode,
-          'tools'         => $d->namaAlat,
-          'lab'           => $d->namaLab,
-          'qty'           => $d->jumlah,
-          'condition'     => $d->kondisi,
-          'spesification' => $d->spesifikasi,
-          'action'        => '<center><a href="' . base_url('StockLists/EditStockList/' . substr(sha1($d->idAlat), 6, 4)) . '"><button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button></a><button class="btn btn-danger btn-sm" style="margin-left: 5px" onclick="hapus_inventaris(' . $d->idAlat . ')"><i class="fa fa-trash"></i></button></center>'
-        );
-      } elseif (userdata('login') == 'aslab') {
-        $hasil[]  = array(
-          'no'            => $no++,
-          'barcode'       => $d->barcode,
-          'tools'         => $d->namaAlat,
-          'lab'           => $d->namaLab,
-          'qty'           => $d->jumlah,
-          'condition'     => $d->kondisi,
-          'spesification' => $d->spesifikasi,
-          'action'        => '<center><a href="' . base_url('StockLists/EditStockList/' . substr(sha1($d->idAlat), 6, 4)) . '"><button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></button></a></center>'
-        );
+      if ($d->approve_dosen == '0') {
+        $approved = 'Not Yet Approved';
+      } elseif ($d->approve_dosen == '1') {
+        $approved = 'Approved';
       }
+      $hasil[]  = array(
+        'no'          => $no++,
+        'nim_asprak'  => $d->nim_asprak,
+        'nama_asprak' => $d->nama_asprak,
+        'matakuliah'  => $d->kode_mk . ' - ' . $d->nama_mk,
+        'approve'     => $approved,
+        'periode'     => $d->bulan,
+        'tahun'       => $d->ta,
+        'action'      => '<center><a href="' . base_url($d->file_bap) . '" target="_blank"><button type="button" class="btn btn-sm btn-success"><i class="fa fa-eye"></i></button></a></center>'
+      );
     }
     $tampil = array('data' => $hasil);
     echo json_encode($tampil);

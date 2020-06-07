@@ -82,8 +82,9 @@
                             <?php
                             if ($b->approve_absen == '1') {
                             ?>
-                              <button class="btn btn-success btn-sm" onclick="approve('<?= substr(sha1($b->id_presensi_asprak), 7, 7) ?>')"><i class="fa fa-check"></i> Approve</button>
-                              <button class="btn btn-danger btn-sm" onclick="pending('<?= substr(sha1($b->id_presensi_asprak), 7, 7) ?>')"><i class="fa fa-ban"></i> Pending</button>
+                              <button class="btn btn-success btn-sm" onclick="approve('<?= substr(sha1($b->id_presensi_asprak), 7, 7) ?>')" style="margin-bottom: 5px;"><i class="fa fa-check"></i> Approve</button>&nbsp;&nbsp;
+                              <button class="btn btn-warning btn-sm" onclick="pending('<?= substr(sha1($b->id_presensi_asprak), 7, 7) ?>')" style="margin-bottom: 5px;"><i class="fa fa-ban"></i> Pending</button>&nbsp;&nbsp;
+                              <button class="btn btn-danger btn-sm" onclick="hapus('<?= substr(sha1($b->id_presensi_asprak), 7, 7) ?>')" style="margin-bottom: 5px;"><i class="fa fa-trash"></i> Delete</button>
                             <?php
                             } elseif ($b->approve_absen == '2') {
                               echo '<button class="btn btn-success btn-sm" disabled><i class="fa fa-check"></i> Approved</button>';
