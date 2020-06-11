@@ -39,6 +39,18 @@ class M_Asprak extends CI_Model
     return $this->db->get_where('users', array('nimAsprak' => $nim));
   }
 
+  function jadwalMKAsprak($nim)
+  {
+    $this->db->select('jadwal_lab.id_jadwal_lab, concat(matakuliah.kode_mk, "\n", matakuliah.nama_mk, "\n", jadwal_lab.kelas, " / ", jadwal_lab.kode_dosen) title, jadwal_lab.jam_masuk start, jadwal_lab.jam_selesai end, jadwal_lab.hari_ke');
+    $this->db->from('jadwal_lab');
+    $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
+    $this->db->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk');
+    $this->db->join('daftarasprak', 'daftar_mk.id_daftar_mk = daftarasprak.id_daftar_mk');
+    $this->db->where('daftarasprak.nim_asprak', $nim);
+    $this->db->where('jadwal_lab.id_jadwal_lab not in (select jadwal_lab.id_jadwal_lab from jadwal_asprak join jadwal_lab on jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab where jadwal_asprak.nim_asprak = ' . $nim . ')');
+    return $this->db->get();
+  }
+
   function jadwalAsprak($nim)
   {
     // $this->db->select('jadwal_asprak.nim_asprak, concat(matakuliah.kode_mk, "\n", matakuliah.nama_mk, "\n", jadwal_lab.kelas, " / ", jadwal_lab.kode_dosen, "\n", laboratorium.namaLab, " Laboratory (", laboratorium.kodeRuang, ")") title, jadwal_lab.jam_masuk start, jadwal_lab.jam_selesai end, jadwal_lab.hari_ke');
@@ -47,7 +59,7 @@ class M_Asprak extends CI_Model
     // $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
     // $this->db->join('laboratorium', 'jadwal_lab.id_lab = laboratorium.idLab');
     // $this->db->where('jadwal_asprak.nim_asprak', $nim);
-    $this->db->select('jadwal_asprak.nim_asprak, concat(matakuliah.kode_mk, "\n", matakuliah.nama_mk, "\n", jadwal_lab.kelas, " / ", jadwal_lab.kode_dosen) title, jadwal_lab.jam_masuk start, jadwal_lab.jam_selesai end, jadwal_lab.hari_ke');
+    $this->db->select('jadwal_asprak.nim_asprak, jadwal_lab.id_jadwal_lab, concat(matakuliah.kode_mk, "\n", matakuliah.nama_mk, "\n", jadwal_lab.kelas, " / ", jadwal_lab.kode_dosen) title, jadwal_lab.jam_masuk start, jadwal_lab.jam_selesai end, jadwal_lab.hari_ke');
     $this->db->from('jadwal_asprak');
     $this->db->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
     $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
@@ -73,6 +85,19 @@ class M_Asprak extends CI_Model
     $this->db->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
     $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
     $this->db->where('nim_asprak', $nim);
+    $this->db->order_by('approve_absen', 'asc');
+    $this->db->order_by('asprak_masuk', 'desc');
+    return $this->db->get();
+  }
+
+  function daftarPresensiAsprakPeriode($nim, $between)
+  {
+    $this->db->select('presensi_asprak.id_presensi_asprak, date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") selesai, presensi_asprak.modul, presensi_asprak.approve_absen, jadwal_lab.kelas, jadwal_lab.kode_dosen, matakuliah.nama_mk');
+    $this->db->from('presensi_asprak');
+    $this->db->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
+    $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
+    $this->db->where('nim_asprak', $nim);
+    $this->db->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $between);
     $this->db->order_by('approve_absen', 'asc');
     $this->db->order_by('asprak_masuk', 'desc');
     return $this->db->get();

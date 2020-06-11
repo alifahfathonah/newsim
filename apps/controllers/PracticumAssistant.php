@@ -20,10 +20,29 @@ class PracticumAssistant extends CI_Controller
 
   public function index()
   {
-    $data           = $this->data;
-    $data['title']  = 'Practicum Assistant | SIM Laboratorium';
-    view('dosen/header', $data);
-    view('dosen/practicum_assistant', $data);
-    view('dosen/footer');
+    set_rules('mk', 'Courses', 'required|trim');
+    set_rules('tahun', 'Year', 'required|trim');
+    if (validation_run() == false) {
+      $data               = $this->data;
+      $data['title']      = 'Practicum Assistant | SIM Laboratorium';
+      $id_dosen           = $this->db->get_where('users', array('idUser' => userdata('id')))->row();
+      $id_ta              = $this->db->get_where('tahun_ajaran', array('status' => '1'))->row()->id_ta;
+      $daftar_mk          = $this->db->select('id_daftar_mk, kode_mk')->from('daftar_mk')->where('id_ta', $id_ta)->where('koordinator_mk', $id_dosen->id_dosen)->get()->result();
+      $data['daftar_mk']  = $daftar_mk;
+      view('dosen/header', $data);
+      view('dosen/practicum_assistant', $data);
+      view('dosen/footer');
+    } else {
+      $mk     = input('mk');
+      $tahun  = input('tahun');
+      $data               = $this->data;
+      $data['title']      = 'Practicum Assistant | SIM Laboratorium';
+      $id_dosen           = $this->db->get_where('users', array('idUser' => userdata('id')))->row();
+      $daftar_mk          = $this->db->select('id_daftar_mk, kode_mk')->from('daftar_mk')->where('id_ta', $tahun)->where('koordinator_mk', $id_dosen->id_dosen)->where('kode_mk', $mk)->get()->result();
+      $data['daftar_mk']  = $daftar_mk;
+      view('dosen/header', $data);
+      view('dosen/practicum_assistant', $data);
+      view('dosen/footer');
+    }
   }
 }

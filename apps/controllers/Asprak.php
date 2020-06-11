@@ -40,13 +40,24 @@ class Asprak extends CI_Controller
   public function ajaxJadwal()
   {
     $hasil  = array();
+    $jadwal = $this->a->jadwalMKAsprak(userdata('nim'))->result();
+    foreach ($jadwal as $j) {
+      $tmp['title']           = $j->title;
+      $tmp['start']           = $j->start;
+      $tmp['end']             = $j->end;
+      $tmp['dow']             = $j->hari_ke;
+      $tmp['backgroundColor'] = '#ff6b6b';
+      $tmp['borderColor']     = '#ff6b6b';
+      array_push($hasil, $tmp);
+    }
     $data = $this->a->jadwalAsprak(userdata('nim'))->result();
     foreach ($data as $d) {
       $tmp['title']           = $d->title;
       $tmp['start']           = $d->start;
       $tmp['end']             = $d->end;
       $tmp['dow']             = $d->hari_ke;
-      // $tmp['backgroundColor'] = $d->color;
+      $tmp['backgroundColor'] = '#1ab394';
+      $tmp['borderColor']     = '#1ab394';
       array_push($hasil, $tmp);
     }
     echo json_encode($hasil);
@@ -63,12 +74,33 @@ class Asprak extends CI_Controller
 
   public function Presence()
   {
-    $data           = $this->data;
-    $data['title']  = 'Presence | SIM Laboratorium';
-    $data['data']   = $this->a->daftarPresensiAsprak(userdata('nim'))->result();
-    view('asprak/header', $data);
-    view('asprak/presence', $data);
-    view('asprak/footer');
+    set_rules('ta', 'Year', 'required|trim');
+    if (validation_run() == false) {
+      $data           = $this->data;
+      $data['title']  = 'Presence | SIM Laboratorium';
+      $data['data']   = $this->a->daftarPresensiAsprak(userdata('nim'))->result();
+      view('asprak/header', $data);
+      view('asprak/presence', $data);
+      view('asprak/footer');
+    } else {
+      $ta = input('ta');
+      $tahun_ajaran = $this->db->where('id_ta', $ta)->get('tahun_ajaran')->row();
+      if ($tahun_ajaran == true) {
+        $semester   = substr($tahun_ajaran->ta, -1);
+        $tahun      = substr($tahun_ajaran->ta, 0, 4);
+        if ($semester == '1') {
+          $between  = '"' . $tahun . '-07-01" and "' . $tahun . '-12-31"';
+        } elseif ($semester == '2') {
+          $between  = '"' . ($tahun + 1) . '-01-01" and "' . ($tahun + 1) . '-06-30"';
+        }
+        $data           = $this->data;
+        $data['title']  = 'Presence | SIM Laboratorium';
+        $data['data']   = $this->a->daftarPresensiAsprakPeriode(userdata('nim'), $between)->result();
+        view('asprak/header', $data);
+        view('asprak/presence', $data);
+        view('asprak/footer');
+      }
+    }
   }
 
   public function AddPresence()
@@ -364,8 +396,14 @@ class Asprak extends CI_Controller
     $id_daftar_mk               = input('idMK');
     $ambil                      = input('bulan');
     $tmp                        = explode("|", $ambil);
-    $bulan                      = $tmp[0];
-    $namaBulan                  = $bulan_indo[$tmp[1]];
+    if ($ambil == true) {
+      if ($tmp[1] == '5') {
+        $bulan                  = '"2020-01-01" and "2020-07-01"';
+        $namaBulan              = $bulan_indo[$tmp[1]];
+      }
+    }
+    // $bulan                      = $tmp[0];
+    // $namaBulan                  = $bulan_indo[$tmp[1]];
     $ambil_mk                   = $this->db->select('matakuliah.id_mk, matakuliah.kode_mk, matakuliah.nama_mk, prodi.strata, prodi.kode_prodi, prodi.nama_prodi')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_daftar_mk', $id_daftar_mk)->get()->row();
     $id_mk                      = $ambil_mk->id_mk;
     $durasi                     = $this->db->select('sum(presensi_asprak.durasi) durasi')->from('presensi_asprak')->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak')->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab')->where('jadwal_lab.id_mk', $id_mk)->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $bulan)->where('presensi_asprak.nim_asprak', $nim_asprak)->order_by('presensi_asprak.asprak_masuk')->get()->row();

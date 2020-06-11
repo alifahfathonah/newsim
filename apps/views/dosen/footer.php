@@ -69,6 +69,7 @@ if (uri('1') == 'PracticumAssistant') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
   <script>
     $(document).ready(function() {
       $('.dataTables').DataTable({
@@ -76,6 +77,14 @@ if (uri('1') == 'PracticumAssistant') {
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
+      });
+
+      $(".mk").select2({
+        placeholder: "Select Courses"
+      });
+
+      $(".tahun").select2({
+        placeholder: "Select Year"
       });
     });
   </script>

@@ -14,24 +14,56 @@
               echo flashdata('msg');
             }
             ?>
-            <?php
-            // $target = '2020-05-20';
-            // if (date('Y-m-d') <= $target) {
-            $tanggal = '2020-05-22';
-            $jam_awal = '14:00';
-            $jam_selesai = '17:00';
-            if (date('Y-m-d') == $tanggal && (date('H:i') >= $jam_awal && date('H:i') <= $jam_selesai)) {
-            ?>
-              <div class="row">
+            <div class="row">
+              <?php
+              // $target = '2020-05-20';
+              // if (date('Y-m-d') <= $target) {
+              $tanggal = '2020-05-22';
+              $jam_awal = '14:00';
+              $jam_selesai = '17:00';
+              if (date('Y-m-d') == $tanggal && (date('H:i') >= $jam_awal && date('H:i') <= $jam_selesai)) {
+              ?>
                 <div class="col-md-2 col-sm-2" style="margin-bottom: 5px">
                   <a href="<?= base_url('Asprak/AddPresence') ?>">
                     <button class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Presence</button>
                   </a>
                 </div>
+              <?php
+              } else {
+              ?>
+                <div class="offset-md-1"></div>
+              <?php
+              }
+              ?>
+              <div class="col-md-11">
+                <form method="post" action="<?= base_url('Asprak/Presence') ?>">
+                  <div class="row">
+                    <div class="col-md-2 col-sm-2 offset-md-4" style="margin-bottom: 5px;">
+                      <select name="ta" class="ta form-control">
+                        <option></option>
+                        <?php
+                        $ta = $this->db->get('tahun_ajaran')->result();
+                        foreach ($ta as $ta) {
+                          $belakang = substr($ta->ta, -1);
+                          $tahun    = substr($ta->ta, 0, 4);
+                          $tmp      = $tahun + 1;
+                          if ($belakang == '1') {
+                            $semester = 'Odd';
+                          } elseif ($belakang == '2') {
+                            $semester = 'Even';
+                          }
+                          echo '<option value="' . $ta->id_ta . '">' . $tahun . '/' . $tmp . ' ' . $semester . '</option>';
+                        }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                      <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-filter"></i> Filter</button>
+                    </div>
+                  </div>
+                </form>
               </div>
-            <?php
-            }
-            ?>
+            </div>
             <div class="ibox">
               <div class="ibox-content">
                 <div class="table-responsive">

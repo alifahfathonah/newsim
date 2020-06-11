@@ -35,14 +35,24 @@
                                     <input type="radio" name="pilihan" id="cash" value="Cash">
                                     <label for="cash">Cash</label>
                                   </div> -->
-                                  <div class="radio">
-                                    <input type="radio" name="pilihan" id="transfer" value="Transfer">
-                                    <label for="transfer">Bank Transfer</label>
-                                  </div>
-                                  <div class="radio">
-                                    <input type="radio" name="pilihan" id="linkaja" value="LinkAja">
-                                    <label for="linkaja">Linkaja</label>
-                                  </div>
+                                  <?php
+                                  $cek_akun = $this->db->where('nim_asprak', userdata('nim'))->get('asprak')->row();
+                                  if ($cek_akun == true) {
+                                    if ($cek_akun->norek_asprak != null || $cek_akun->norek_asprak != '') {
+                                      echo '<div class="radio">
+                                      <input type="radio" name="pilihan" id="transfer" value="Transfer">
+                                      <label for="transfer">Bank Transfer</label>
+                                    </div>';
+                                    } elseif ($cek_akun->linkaja_asprak != null || $cek_akun->linkaja_asprak != '') {
+                                      echo '<div class="radio">
+                                      <input type="radio" name="pilihan" id="linkaja" value="LinkAja">
+                                      <label for="linkaja">Linkaja</label>
+                                    </div>';
+                                    } elseif (($cek_akun->norek_asprak == null || $cek_akun->norek_asprak == '') && ($cek_akun->linkaja_asprak == null || $cek_akun->linkaja_asprak == '')) {
+                                      echo '<h4>Please complete your profile</h4>';
+                                    }
+                                  }
+                                  ?>
                                 </div>
                               </div>
                             </div>

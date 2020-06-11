@@ -30,7 +30,7 @@ if ($laporan_asprak > 0) {
   <script>
     $(function() {
       toastr.options = {
-        "closeButton": false,
+        "closeButton": true,
         "debug": false,
         "progressBar": false,
         "preventDuplicates": false,
@@ -45,6 +45,9 @@ if ($laporan_asprak > 0) {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
       }
+      toastr.options.onclick = function() {
+        window.location.href = '<?= base_url('Practicum/Report') ?>'
+      }
       toastr.warning("You have <?= $laporan_asprak ?> practicum report to check. Please go to Practicum &rarr; Practicum Report");
     });
   </script>
@@ -55,7 +58,7 @@ if ($honor_asprak > 0) {
   <script>
     $(function() {
       toastr.options = {
-        "closeButton": false,
+        "closeButton": true,
         "debug": false,
         "progressBar": false,
         "preventDuplicates": false,
@@ -69,6 +72,9 @@ if ($honor_asprak > 0) {
         "hideEasing": "linear",
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
+      }
+      toastr.options.onclick = function() {
+        window.location.href = '<?= base_url('Finance/Honor') ?>'
       }
       toastr.info("You have <?= $honor_asprak ?> practicum assistant salary withdrawals to check. Please go to Finance &rarr; Honor");
     });

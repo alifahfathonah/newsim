@@ -15,6 +15,19 @@
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
+    <style>
+      /* .fc-agendaWeek-view tr {
+        height: 0.5px !important;
+      }
+
+      .fc-agendaDay-view tr {
+        height: 1px;
+      } */
+      .fc-time-grid .fc-slats td {
+        height: 0px;
+        border-bottom: 0;
+      }
+    </style>
   <?php
   }
   ?>
@@ -29,6 +42,7 @@
   if (uri('2') == 'Presence') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/inspinia/') ?>css/plugins/select2/select2.min.css" rel="stylesheet">
   <?php
   }
   if (uri('2') == 'AddPresence' || uri('2') == 'EditPresence') {

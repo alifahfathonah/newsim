@@ -84,8 +84,18 @@ if (uri('2') == 'Schedule') {
         },
         editable: false,
         droppable: false,
-        contentHeight: 600,
+        contentHeight: 400,
         eventSources: ['<?= base_url('Asprak/ajaxJadwal') ?>'],
+        // dengan bootstrap
+        eventRender: function(event, element) {
+          $(element).tooltip({
+            title: event.title
+          });
+        },
+        // tanpa bootstrap
+        // eventRender: function(event, element) {
+        //   element[0].title = event.title;
+        // },
         axisFormat: 'H:mm',
         timeFormat: {
           agenda: 'H:mm'
@@ -117,6 +127,7 @@ if (uri('2') == 'Presence') {
 ?>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/datatables.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('assets/inspinia/') ?>js/plugins/select2/select2.full.min.js"></script>
   <script>
     window.setTimeout(function() {
       $(".msg").fadeTo(500, 0).slideUp(500, function() {
@@ -130,6 +141,10 @@ if (uri('2') == 'Presence') {
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: []
+      });
+
+      $(".ta").select2({
+        placeholder: "Select Year"
       });
     });
   </script>
