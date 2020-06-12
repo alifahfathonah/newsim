@@ -57,6 +57,73 @@ class Finance extends CI_Controller
     }
   }
 
+  public function ajaxSubmission()
+  {
+    $hasil  = array();
+    $tampil = array();
+    $submission = $this->m->daftarPertanggungan()->result();
+    foreach ($submission as $s) {
+      if ($s->kode_pk == '01') {
+        $informasi = 'Pertanggungan Umum ' . $s->kode_prodi . ' - ' . $s->bulan;
+      } elseif ($s->kode_pk == '02') {
+        $informasi = 'Honor Aslab ' . $s->kode_prodi . ' - ' . $s->bulan;
+      } elseif ($s->kode_pk == '03') {
+        $informasi = 'Honor Asprak ' . $s->kode_prodi . ' - ' . $s->bulan;
+      }
+      if ($s->status_pk == '1') {
+        $status = 'On Process';
+      } elseif ($s->status_pk == '2') {
+        $status = 'Revision';
+      } elseif ($s->status_pk == '3') {
+        $status = 'Done';
+      }
+      $hasil[]  = array(
+        'no_pk'         => $s->no_pk,
+        'informasi'     => $informasi,
+        'total'         => 'Rp ' . number_format($s->total, 0, '', '.'),
+        'tgl_pengajuan' => $s->tanggal_pengajuan,
+        'tgl_cair'      => $s->tanggal_cair,
+        'status'        => $status,
+        'action'        => 'Under Maintenance'
+      );
+    }
+    $tampil = array('data' => $hasil);
+    echo json_encode($tampil);
+  }
+
+  public function ajaxSalaryAsprak()
+  {
+    $no     = 1;
+    $hasil  = array();
+    $tampil = array();
+    $asprak = $this->m->daftarPengambilanHonorAsprak()->result();
+    foreach ($asprak as $a) {
+      if ($a->status == '1') {
+        $status_ambil = 'Ready To Take';
+      } elseif ($a->status == '2') {
+        $status_ambil = 'Taken';
+      } elseif (($a->status == '0' || $a->status == null) && ($a->no_pk == null || $a->no_pk == '')) {
+        $status_ambil = 'Not Yet Submitted To Finance';
+      } elseif (($a->status == '0' || $a->status == null) && $a->no_pk != '') {
+        $status_ambil = 'Untaken';
+      }
+      $hasil[]  = array(
+        'no'      => $no++,
+        'kode_mk' => $a->kode_mk,
+        'nama_mk' => $a->nama_mk,
+        'nim'     => $a->nim_asprak,
+        'nama'    => $a->nama_asprak,
+        'periode' => $a->bulan,
+        'jumlah'  => 'Rp ' . number_format($a->nominal, 0, '', '.'),
+        'opsi'    => $a->opsi_pengambilan,
+        'status'  => $status_ambil,
+        'action'  => '3',
+      );
+    }
+    $tampil = array('data' => $hasil);
+    echo json_encode($tampil);
+  }
+
   public function TakeSalary()
   {
     set_rules('pilihan', 'Option', 'required|trim');
@@ -232,5 +299,25 @@ class Finance extends CI_Controller
       $this->db->where('substring(sha1(id_honor), 8, 7) = "' . $id . '"')->update('honor', $input);
       echo 'true';
     }
+  }
+
+  public function DaftarBayar()
+  {
+    $prodi    = input('prodi');
+    $ta       = input('ta');
+    $periode  = input('periode');
+    $periode  = bulan_panjang($periode);
+    $periode  = $this->db->select('id_periode')->from('periode')->where('bulan', $periode)->where('asprak', '1')->get()->row()->id_periode;
+    $daftar_mk  = $this->db->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('kode_prodi', $prodi)->where('id_ta', $ta)->order_by('matakuliah.nama_mk')->get('daftar_mk')->result();
+    $prodi  = $this->db->where('kode_prodi', $prodi)->get('prodi')->row()->nama_prodi;
+    $data['title']      = 'Honor Asprak ' . $prodi;
+    $data['daftar_mk']  = $daftar_mk;
+    $data['periode']    = $periode;
+    $data['prodi']      = $prodi;
+    // view('laboran/daftar_bayar', $data);
+    $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
+    $html = view('laboran/daftar_bayar', $data, true);
+    $mpdf->WriteHTML($html);
+    $mpdf->Output();
   }
 }

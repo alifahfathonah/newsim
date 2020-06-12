@@ -104,6 +104,10 @@
         width: 100% !important;
       }
 
+      .dt-right {
+        text-align: right;
+      }
+
       /* .modal-body {
         overflow-x: auto;
       } */

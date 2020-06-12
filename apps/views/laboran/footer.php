@@ -715,6 +715,23 @@ if (uri('1') == 'Finance') {
       $('.submission').DataTable({
         pageLength: 8,
         responsive: true,
+        'ajax': '<?= base_url('Finance/ajaxSubmission') ?>',
+        'columns': [{
+          'data': 'no_pk'
+        }, {
+          'data': 'informasi'
+        }, {
+          'data': 'total',
+          'className': 'dt-right'
+        }, {
+          'data': 'tgl_pengajuan'
+        }, {
+          'data': 'tgl_cair'
+        }, {
+          'data': 'status'
+        }, {
+          'data': 'action'
+        }],
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [],
         aaSorting: [
@@ -723,6 +740,35 @@ if (uri('1') == 'Finance') {
       });
 
       $('.asprak').DataTable({
+        pageLength: 10,
+        responsive: true,
+        // 'ajax': '<?= base_url('Finance/ajaxSalaryAsprak') ?>',
+        // 'columns': [{
+        //   'data': 'no'
+        // }, {
+        //   'data': 'kode_mk'
+        // }, {
+        //   'data': 'nama_mk',
+        // }, {
+        //   'data': 'nim'
+        // }, {
+        //   'data': 'nama'
+        // }, {
+        //   'data': 'periode'
+        // }, {
+        //   'data': 'jumlah'
+        // }, {
+        //   'data': 'opsi'
+        // }, {
+        //   'data': 'status'
+        // }, {
+        //   'data': 'action'
+        // }],
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: []
+      });
+
+      $('.aslab').DataTable({
         pageLength: 10,
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
