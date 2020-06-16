@@ -52,7 +52,10 @@
                             <td><?= $b->nama_asprak ?></td>
                             <td><?= bulanPanjang($b->bulan) ?></td>
                             <td style="text-align: center">
-                              <a href="<?= base_url($b->file_bap) ?>" target="_blank">
+                              <!-- <a href="<?= base_url($b->file_bap) ?>" target="_blank">
+                                <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> See BAP</button>
+                              </a> -->
+                              <a href="<?= base_url('BAP/SeeBAP/' . substr(sha1($b->id_honor), 7, 7)) ?>" target="_blank">
                                 <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> See BAP</button>
                               </a>
                             </td>

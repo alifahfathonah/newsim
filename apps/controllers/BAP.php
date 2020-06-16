@@ -109,6 +109,43 @@ class BAP extends CI_Controller
     $mpdf->Output();
   }
 
+  public function SeeBAP($id)
+  {
+    $honor = $this->db->where('substring(sha1(id_honor), 8, 7) = "' . $id . '"')->get('honor')->row();
+    if ($honor == true) {
+      $between  = '"2020-01-01" and "2020-07-01"';
+      $bap    = $this->m->previewBAPAsprak($honor->nim_asprak, $honor->id_daftar_mk, $between)->result();
+      $durasi = $this->m->hitungDurasiBAP($honor->nim_asprak, $honor->id_daftar_mk, $between)->row();
+      $periode  = $this->db->get_where('periode', array('id_periode' => $honor->id_periode))->row();
+      $between  = '"2020-01-01" and "2020-07-01"';
+      $bap    = $this->m->previewBAPAsprak_($honor->nim_asprak, $honor->id_daftar_mk, $between)->result();
+      $total  = $this->m->totalBAPAsprak_($honor->nim_asprak, $honor->id_daftar_mk, $between)->row();
+      $asprak = $this->db->get_where('asprak', array('nim_asprak' => $honor->nim_asprak))->row();
+      $prodi  = $this->m->tampilProdiBAP($honor->id_daftar_mk)->row();
+      $dosen  = $this->db->get_where('dosen', array('id_dosen' => $honor->id_dosen))->row();
+
+      $tanggal_bap = $this->db->select('tanggal_approve')->from('honor')->where('nim_asprak', $honor->nim_asprak)->where('id_daftar_mk', $honor->id_daftar_mk)->where('id_dosen', $dosen->id_dosen)->where('id_dosen is not null')->where('tanggal_approve is not null')->get()->row();
+      if ($tanggal_bap == true) {
+        $tanggal_bap = $tanggal_bap->tanggal_approve;
+      } else {
+        $tanggal_bap = 'xx';
+      }
+      $data['title']    = $periode->id_periode . '_' . $prodi->kode_mk . '_' . $asprak->nim_asprak;
+      $data['bap']      = $bap;
+      $data['asprak']   = $asprak;
+      // $data['periode']  = $periode;
+      $data['prodi']    = $prodi;
+      $data['total']    = $total;
+      $data['dosen']    = $dosen;
+      $data['tanggal']  = $tanggal_bap;
+      //view('laboran/generate_bap', $data);
+      $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
+      $html = view('laboran/generate_bap', $data, true);
+      $mpdf->WriteHTML($html);
+      $mpdf->Output('');
+    }
+  }
+
   public function ApproveBAP($id)
   {
     $honor  = $this->db->where('substring(sha1(id_honor), 20, 9) = "' . $id . '"')->get('honor')->row();
