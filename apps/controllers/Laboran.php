@@ -336,13 +336,14 @@ class Laboran extends CI_Controller
       view('laboran/generate_bap_mei');
     } else {
       $kode_mk = input('kode_mk');
-      $nim     = input('nim');
+      //$nim     = input('nim');
       $cek_daftar_mk = $this->db->where('kode_mk', $kode_mk)->get('daftar_mk')->row();
       if ($cek_daftar_mk == true) {
         //$prodi  = $this->db->where('kode_prodi', $cek_daftar_mk->kode_prodi)->get('prodi')->row();
         $prodi  = $this->db->select('prodi.strata, prodi.nama_prodi, matakuliah.nama_mk, matakuliah.kode_mk')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('matakuliah.kode_mk', $kode_mk)->where('prodi.kode_prodi', $cek_daftar_mk->kode_prodi)->get()->row();
         $dosen  = $this->db->where('id_dosen', $cek_daftar_mk->koordinator_mk)->get('dosen')->row();
-        $cek_daftar_asprak = $this->db->where('id_daftar_mk', $cek_daftar_mk->id_daftar_mk)->where('nim_asprak', $nim)->get('daftarasprak')->result();
+        // $cek_daftar_asprak = $this->db->where('id_daftar_mk', $cek_daftar_mk->id_daftar_mk)->where('nim_asprak', $nim)->get('daftarasprak')->result();
+        $cek_daftar_asprak = $this->db->where('id_daftar_mk', $cek_daftar_mk->id_daftar_mk)->get('daftarasprak')->result();
         if ($cek_daftar_asprak == true) {
           foreach ($cek_daftar_asprak as $da) {
             $profil_asprak  = $this->db->where('nim_asprak', $da->nim_asprak)->get('asprak')->row();
@@ -374,11 +375,11 @@ class Laboran extends CI_Controller
               $data['bap']    = $bap;
               $data['total']  = $total_jam;
               $data['tanggal']  = $tanggal_bap;
-              //view('laboran/generate_bap', $data);
-              $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
-              $html = view('laboran/generate_bap', $data, true);
-              $mpdf->WriteHTML($html);
-              $mpdf->Output('assets/bap/' . $data['title'] . '.pdf', 'F');
+              view('laboran/generate_bap', $data);
+              // $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
+              // $html = view('laboran/generate_bap', $data, true);
+              // $mpdf->WriteHTML($html);
+              // $mpdf->Output('assets/bap/' . $data['title'] . '.pdf', 'F');
               $input  = array(
                 'hari'            => $total_jam->hari,
                 'jam'             => $total_jam->jam,
@@ -393,7 +394,7 @@ class Laboran extends CI_Controller
                 'tanggal_approve' => $tanggal_bap,
                 'file_bap'        => 'assets/bap/' . $data['title'] . '.pdf'
               );
-              $this->db->insert('honor', $input);
+              //$this->db->insert('honor', $input);
             }
           }
         }

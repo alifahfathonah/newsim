@@ -587,51 +587,52 @@ class Asprak extends CI_Controller
 
   public function Setting()
   {
-    set_rules('nim_asprak', 'NIM', 'required|trim');
-    if (validation_run() == false) {
-      $data           = $this->data;
-      $data['title']  = 'Setting | SIM Laboratorium';
-      $data['akun']   = $this->a->akunAsprak(userdata('nim'))->row();
-      $data['bank']   = $this->a->daftarBank()->result();
-      view('asprak/header', $data);
-      view('asprak/setting', $data);
-      view('asprak/footer');
+    $data           = $this->data;
+    $data['title']  = 'Setting | SIM Laboratorium';
+    $data['akun']   = $this->a->akunAsprak(userdata('nim'))->row();
+    $data['bank']   = $this->a->daftarBank()->result();
+    view('asprak/header', $data);
+    view('asprak/setting', $data);
+    view('asprak/footer');
+  }
+
+  public function cobaSubmitAjax()
+  {
+    $nim_asprak     = input('nim_asprak');
+    $nama_asprak    = input('nama_asprak');
+    $kontak_asprak  = input('kontak_asprak');
+    $norek_asprak   = input('norek_asprak');
+    $nama_rekening  = input('nama_rekening');
+    $linkaja_asprak = input('linkaja_asprak');
+    $nama_linkaja   = input('nama_linkaja');
+    $input          = array(
+      'nama_asprak'     => $nama_asprak,
+      'kontak_asprak'   => $kontak_asprak,
+      'norek_asprak'    => $norek_asprak,
+      'nama_rekening'   => $nama_rekening,
+      'linkaja_asprak'  => $linkaja_asprak,
+      'nama_linkaja'    => $nama_linkaja
+    );
+    $this->a->updateData('asprak', $input, 'nim_asprak', $nim_asprak);
+    $username_asprak  = input('username_asprak');
+    $password_lama    = input('password_lama');
+    $password_baru    = input('password_baru');
+    $konfirm_password = input('konfirm_password');
+    if ($password_lama == null) {
+      echo 'true';
     } else {
-      $nim_asprak     = input('nim_asprak');
-      $nama_asprak    = input('nama_asprak');
-      $kontak_asprak  = input('kontak_asprak');
-      $norek_asprak   = input('norek_asprak');
-      $nama_rekening  = input('nama_rekening');
-      $linkaja_asprak = input('linkaja_asprak');
-      $input          = array(
-        'nama_asprak'     => $nama_asprak,
-        'kontak_asprak'   => $kontak_asprak,
-        'norek_asprak'    => $norek_asprak,
-        'nama_rekening'   => $nama_rekening,
-        'linkaja_asprak'  => $linkaja_asprak
-      );
-      $this->a->updateData('asprak', $input, 'nim_asprak', $nim_asprak);
-      $username_asprak  = input('username_asprak');
-      $password_lama    = input('password_lama');
-      $password_baru    = input('password_baru');
-      $konfirm_password = input('konfirm_password');
-      if ($password_lama == null) {
-        set_flashdata('msg', '<div class="alert alert-success msg">Data successfully updated.</div>');
-      } else {
-        $cek_password = $this->a->cekPassword($username_asprak)->row()->password;
-        if ($cek_password == sha1($password_lama)) {
-          if ($password_baru == $konfirm_password) {
-            $input  = array('password' => sha1($password_baru));
-            $this->a->updateData('users', $input, 'username', $username_asprak);
-            set_flashdata('msg', '<div class="alert alert-success msg">Your password successfully updated.</div>');
-          } else {
-            set_flashdata('msg', '<div class="alert alert-danger">New password and confirm password not match. Please try again.</div>');
-          }
+      $cek_password = $this->a->cekPassword($username_asprak)->row()->password;
+      if ($cek_password == sha1($password_lama)) {
+        if ($password_baru == $konfirm_password) {
+          $input  = array('password' => sha1($password_baru));
+          $this->a->updateData('users', $input, 'username', $username_asprak);
+          echo 'true';
         } else {
-          set_flashdata('msg', '<div class="alert alert-danger">Old password not match. Please try again.</div>');
+          echo 'false1';
         }
+      } else {
+        echo 'false2';
       }
-      redirect('Asprak/Setting');
     }
   }
 
@@ -639,18 +640,22 @@ class Asprak extends CI_Controller
   {
     $result = array();
     $image_data = base64_decode($_POST['img_data']);
-    $file_name  = $_POST['nim_asprak'];
-    $cek_data   = $this->db->get_where('asprak', array('nim_asprak' => $_POST['nim_asprak']))->row();
-    if ($cek_data->ttd_asprak) {
-      unlink($cek_data->ttd_asprak);
+    $convert    = substr(sha1(date('Y-m-d H:i:s')), 5, 9);
+    $file_name  = $_POST['nim_asprak'] . '_' . $convert;
+    $cek_ttd    = substr(sha1($_POST['img_data']), 5, 20);
+    if ($cek_ttd != '746d1ff79db1b124917d') {
+      $cek_data   = $this->db->get_where('asprak', array('nim_asprak' => $_POST['nim_asprak']))->row();
+      if ($cek_data->ttd_asprak) {
+        unlink($cek_data->ttd_asprak);
+      }
+      $save_file  = 'assets/signature/asprak/' . $file_name . '.png';
+      $input      = array('ttd_asprak' => $save_file);
+      $this->db->where('nim_asprak', $_POST['nim_asprak'])->update('asprak', $input);
+      file_put_contents($save_file, $image_data);
+      $result['status'] = 1;
+      $result['file_name'] = $save_file;
+      echo json_encode($result);
     }
-    $save_file  = 'assets/signature/asprak/' . $file_name . '.png';
-    $input      = array('ttd_asprak' => $save_file);
-    $this->db->where('nim_asprak', $_POST['nim_asprak'])->update('asprak', $input);
-    file_put_contents($save_file, $image_data);
-    $result['status'] = 1;
-    $result['file_name'] = $save_file;
-    echo json_encode($result);
   }
 
   public function DeleteSignature()
