@@ -42,7 +42,7 @@
                       <tbody>
                         <?php
                         $no = 1;
-                        $bap  = $this->db->select('honor.id_honor, honor.file_bap, asprak.nim_asprak, asprak.nama_asprak, left(periode.rentang_akhir, 2) bulan')->from('honor')->join('asprak', 'honor.nim_asprak = asprak.nim_asprak')->join('periode', 'honor.id_periode = periode.id_periode')->where('honor.approve_dosen', '1')->where('honor.id_dosen', $id_dosen)->order_by('honor.nim_asprak')->get()->result();
+                        $bap  = $this->db->select('honor.id_honor, honor.file_bap, asprak.nim_asprak, asprak.nama_asprak, left(periode.rentang_akhir, 2) bulan')->from('honor')->join('asprak', 'honor.nim_asprak = asprak.nim_asprak')->join('periode', 'honor.id_periode = periode.id_periode')->where('honor.approve_dosen', '1')->where('honor.id_dosen', $id_dosen)->where('honor.id_daftar_mk', $d->id_daftar_mk)->order_by('honor.nim_asprak')->get()->result();
                         // $bap  = $this->m->daftarBAP($id_dosen, $d->id_daftar_mk)->result();
                         foreach ($bap as $b) {
                         ?>
