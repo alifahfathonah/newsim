@@ -56,7 +56,7 @@ class Dashboard extends CI_Controller
       view('laboran/footer');
     } elseif (userdata('login') == 'aslab') {
       $data['komplain']         = $this->m->grafikKomplain()->result();
-      $data['pengumuman']       = $this->m->daftarPengumuman()->result();
+      $data['pengumuman']       = $this->m->daftarPengumumanAslab()->result();
       $data['komplain_belum']   = $this->m->hitungKomplainBelumSelesai()->row();
       $data['komplain_selesai'] = $this->m->hitungKomplainSelesai()->row();
       $data['lab_belum']        = $this->m->hitungPeminjamanLabBelumSelesai()->row();
