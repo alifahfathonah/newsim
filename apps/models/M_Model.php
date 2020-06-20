@@ -134,6 +134,16 @@ class M_Model extends CI_Model
     return $this->db->get();
   }
 
+  function daftarPengumumanAslab()
+  {
+    $this->db->select('*');
+    $this->db->from('pengumuman');
+    $this->db->where('tipePengumuman != "Lecture"');
+    $this->db->order_by('tglPengumuman', 'desc');
+    $this->db->limit('7');
+    return $this->db->get();
+  }
+
   function daftarLaboratorium()
   {
     $this->db->select('*');
