@@ -8,7 +8,7 @@
           <div class="col-md-12 col-sm-12">
             <div class="row">
               <div class="col-md-4 offset-md-4" style="margin-bottom: 5px">
-                <select class="form-control laboratorium" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                <select class="form-control periode_aslab" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
                   <option></option>
                   <option value="<?= base_url('LaboratoryAssistant/index/2016/2017') ?>">2016/2017</option>
                   <option value="<?= base_url('LaboratoryAssistant/index/2017/2018') ?>">2017/2018</option>
@@ -23,7 +23,7 @@
               foreach ($data as $d) {
               ?>
                 <div class="col-md-3">
-                  <div class=" contact-box center-version" style="height: 500px">
+                  <div class=" contact-box center-version" style="height: 400px; margin-bottom: 10px">
                     <a href="<?= base_url('LaboratoryAssistant/ProfileAssistant/' . substr(sha1($d->idAslab), 6, 4)) ?>">
                       <?php
                       if ($d->fotoAslab == null) {
