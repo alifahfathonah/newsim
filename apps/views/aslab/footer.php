@@ -199,6 +199,10 @@ if ($cek_aslab->norek == null && $cek_aslab->nama_rekening == null && $cek_aslab
       placeholder: "Select a Laboratory",
     });
 
+    $(".periode_aslab").select2({
+      placeholder: "Select Periode",
+    });
+
     $(".periode").select2({
       placeholder: "Select a Periode of Journal",
     });
