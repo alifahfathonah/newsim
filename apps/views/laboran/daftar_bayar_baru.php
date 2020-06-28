@@ -118,10 +118,10 @@
         $daftar_honor = $this->db->select('asprak.nim_asprak, asprak.nama_asprak, matakuliah.nama_mk, honor.hari, honor.jam, asprak.ttd_asprak')->from('honor')->join('asprak', 'honor.nim_asprak = asprak.nim_asprak')->join('daftar_mk', 'honor.id_daftar_mk = daftar_mk.id_daftar_mk')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('honor.id_daftar_mk', $d->id_daftar_mk)->where('honor.id_periode', $periode)->where('honor.approve_dosen', '1')->order_by('asprak.nama_asprak', 'asc')->get()->result();
         foreach ($daftar_honor as $dh) {
           $no++;
+          $total_hari = $total_hari + $dh->hari;
+          $total_jam  = $total_jam + $dh->jam;
+          $total_dibayar  = $total_dibayar + ($dh->jam * $tarif);
           if ($no >= 1 && $no <= 36) {
-            $total_hari = $total_hari + $dh->hari;
-            $total_jam  = $total_jam + $dh->jam;
-            $total_dibayar  = $total_dibayar + ($dh->jam * $tarif);
       ?>
             <tr>
               <td style="text-align: center"><?= $no ?></td>
