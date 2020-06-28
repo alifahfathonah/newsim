@@ -172,10 +172,10 @@
       ?>
       <tr>
         <td colspan="4" style="font-weight: bold; text-align: center">Total</td>
-        <td style="font-weight: bold; text-align: center; padding-left: 3px; padding-right: 3px"><?= $tmp_hari ?></td>
-        <td style="font-weight: bold; text-align: center; padding-left: 3px; padding-right: 3px"><?= $tmp_jam ?></td>
+        <td style="font-weight: bold; text-align: center; padding-left: 3px; padding-right: 3px"><?= $total_hari ?></td>
+        <td style="font-weight: bold; text-align: center; padding-left: 3px; padding-right: 3px"><?= $total_jam ?></td>
         <td style="font-weight: bold; text-align: center; padding-left: 3px; padding-right: 3px"></td>
-        <td style="font-weight: bold; text-align: right; padding-left: 3px; padding-right: 3px"><?= number_format($tmp_dibayar, 0, '.', ',') ?></td>
+        <td style="font-weight: bold; text-align: right; padding-left: 3px; padding-right: 3px"><?= number_format($total_dibayar, 0, '.', ',') ?></td>
         <td style="font-weight: bold; text-align: center; padding-left: 3px; padding-right: 3px"></td>
       </tr>
     </tbody>
