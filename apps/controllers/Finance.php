@@ -314,9 +314,9 @@ class Finance extends CI_Controller
     $data['daftar_mk']  = $daftar_mk;
     $data['periode']    = $periode;
     $data['prodi']      = $prodi;
-    // view('laboran/daftar_bayar', $data);
+    //view('laboran/daftar_bayar_baru', $data);
     $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
-    $html = view('laboran/daftar_bayar', $data, true);
+    $html = view('laboran/daftar_bayar_baru', $data, true);
     $mpdf->WriteHTML($html);
     $mpdf->Output();
   }
