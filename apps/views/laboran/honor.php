@@ -169,18 +169,12 @@
                                     <div class="col-sm-10">
                                       <select name="periode" id="periode" class="periode form-control">
                                         <option></option>
-                                        <option value="01">January</option>
-                                        <option value="02">February</option>
-                                        <option value="03">March</option>
-                                        <option value="04">April</option>
-                                        <option value="05">May</option>
-                                        <option value="06">June</option>
-                                        <option value="07">July</option>
-                                        <option value="08">August</option>
-                                        <option value="09">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
+                                        <?php
+                                        $periode_asprak = $this->db->where('asprak', '1')->order_by('angka_bulan')->get('periode')->result();
+                                        foreach ($periode_asprak as $pa) {
+                                          echo '<option value="' . $pa->angka_bulan . '">' . bulanPanjang($pa->angka_bulan) . '</option>';
+                                        }
+                                        ?>
                                       </select>
                                     </div>
                                   </div>
