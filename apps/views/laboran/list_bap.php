@@ -9,7 +9,7 @@
             <div class="row" style="margin-bottom: 5px">
               <div class="col-md-1">
                 <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#printBAP"><i class="fa fa-print"></i> Print BAP</button>
-                <div class="modal inmodal fade" id="printBAP" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal inmodal fade" id="printBAP" role="dialog" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
