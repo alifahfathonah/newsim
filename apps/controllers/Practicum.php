@@ -192,8 +192,8 @@ class Practicum extends CI_Controller
     $data['title']  = 'BAP | SIM Laboratorium';
     $data['data']   = $this->m->daftarAbsenAsprak()->result();
     view('laboran/header', $data);
-    // view('laboran/list_bap', $data);
-    // view('laboran/footer');
+    view('laboran/list_bap', $data);
+    view('laboran/footer');
   }
 
   public function PrintBAP()
