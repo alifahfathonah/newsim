@@ -121,7 +121,7 @@
           $total_hari = $total_hari + $dh->hari;
           $total_jam  = $total_jam + $dh->jam;
           $total_dibayar  = $total_dibayar + ($dh->jam * $tarif);
-          if ($no >= 1 && $no <= 36) {
+          if ($no >= 1 && $no <= 35) {
       ?>
             <tr>
               <td style="text-align: center"><?= $no ?></td>
@@ -135,9 +135,9 @@
               <td style="text-align: center; padding-left: 10px"><img src="<?= base_url($dh->ttd_asprak) ?>" style="height: 18px"></td>
             </tr>
           <?php
-          } elseif ($no == 37 || $no == 79) {
+          } elseif ($no == 36 || $no == 78) {
             echo '</tbody></table>';
-            echo '<br><br><br><br><br><br><br><br><br><br>';
+            echo '<br><br><br><br><br><br><br><br><br><br><br><br>';
             echo '<table border="1" width="100%" class="table-isi"><thead><tr><td class="thead-isi" width="4%">NO</td><td class="thead-isi" width="10%">NIM</td><td class="thead-isi" width="20%">NAMA</td><td class="thead-isi" width="28%">MATA KULIAH</td><td class="thead-isi" width="6%">&#x3A3; HARI</td><td class="thead-isi" width="6%">&#x3A3; JAM</td><td class="thead-isi" width="8%">TARIF PER JAM</td><td class="thead-isi" width="11%">JUMLAH DIBAYAR</td><td class="thead-isi" width="7%">TANDA TANGAN</td></tr></thead><tbody>';
           ?>
             <tr>
