@@ -8,15 +8,15 @@
           <div class="col-md-12 col-sm-12">
             <div class="row" style="margin-bottom: 5px">
               <div class="col-md-1">
-                <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#printBAP"><i class="fa fa-print"></i> Print BAP</button>
-                <div class="modal inmodal" id="printBAP" tabindex="-1" role="dialog" aria-hidden="true">
+                <!-- <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#printBAP"><i class="fa fa-print"></i> Print BAP</button> -->
+                <!-- <div class="modal inmodal fade" id="printBAP" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog">
-                    <div class="modal-content animated bounceInRight">
+                    <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">Modal title</h4>
+                        <h4 class="modal-title">Print BAP</h4>
                       </div>
-                      <form>
+                      <form method="post" action="<?= base_url('Practicum/PrintBAP') ?>" target="_blank">
                         <div class="modal-body">
                           <div class="form-group row">
                             <label class="col-sm-2 col-form-label font-bold">Courses</label>
@@ -26,8 +26,7 @@
                                 <?php
                                 $matkul = $this->db->order_by('kode_mk')->get('matakuliah')->result();
                                 foreach ($matkul as $m) {
-                                  // echo '<option value="' . $p->kode_prodi . '">' . $p->strata . ' ' . $p->nama_prodi . '</option>';
-                                  echo '<option>' . $m->kode_mk . ' - ' . $m->nama_mk . '</option>';
+                                  echo '<option value="' . $m->kode_mk . '">' . $m->kode_mk . ' - ' . $m->nama_mk . '</option>';
                                 }
                                 ?>
                               </select>
@@ -39,6 +38,7 @@
                               <select name="ta" id="ta" class="ta form-control">
                                 <option></option>
                                 <?php
+                                $tahun_ajaran = $this->db->get('tahun_ajaran')->result();
                                 foreach ($tahun_ajaran as $t) {
                                   echo '<option value="' . $t->id_ta . '">' . $t->ta . '</option>';
                                 }
@@ -54,7 +54,7 @@
                                 <?php
                                 $periode_asprak = $this->db->where('asprak', '1')->order_by('angka_bulan')->get('periode')->result();
                                 foreach ($periode_asprak as $pa) {
-                                  echo '<option value="' . $pa->angka_bulan . '">' . bulanPanjang($pa->angka_bulan) . '</option>';
+                                  echo '<option value="' . $pa->id_periode . '">' . bulanPanjang($pa->angka_bulan) . '</option>';
                                 }
                                 ?>
                               </select>
@@ -68,7 +68,7 @@
                       </form>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="col-md-5 offset-md-1">
                 <select name="matakuliah" class="form-control daftar_mk">
