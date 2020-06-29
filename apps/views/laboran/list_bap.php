@@ -7,7 +7,70 @@
         <div class="row">
           <div class="col-md-12 col-sm-12">
             <div class="row" style="margin-bottom: 5px">
-              <div class="col-md-6 offset-md-1">
+              <div class="col-md-1">
+                <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#printBAP"><i class="fa fa-print"></i> Print BAP</button>
+                <div class="modal inmodal fade" id="printBAP" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Print BAP</h4>
+                      </div>
+                      <form method="post" action="<?= base_url('Practicum/PrintBAP') ?>" target="_blank">
+                        <div class="modal-body">
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label font-bold">Courses</label>
+                            <div class="col-sm-10">
+                              <select name="matkul" id="matkul" class="matkul form-control">
+                                <option></option>
+                                <?php
+                                $matkul = $this->db->order_by('kode_mk')->get('matakuliah')->result();
+                                foreach ($matkul as $m) {
+                                  echo '<option value="' . $m->kode_mk . '">' . $m->kode_mk . ' - ' . $m->nama_mk . '</option>';
+                                }
+                                ?>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label font-bold">Year</label>
+                            <div class="col-sm-10">
+                              <select name="ta" id="ta" class="ta form-control">
+                                <option></option>
+                                <?php
+                                $tahun_ajaran = $this->db->get('tahun_ajaran')->result();
+                                foreach ($tahun_ajaran as $t) {
+                                  echo '<option value="' . $t->id_ta . '">' . $t->ta . '</option>';
+                                }
+                                ?>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <label class="col-sm-2 col-form-label font-bold">Period</label>
+                            <div class="col-sm-10">
+                              <select name="periode" id="periode" class="periode form-control">
+                                <option></option>
+                                <?php
+                                $periode_asprak = $this->db->where('asprak', '1')->order_by('angka_bulan')->get('periode')->result();
+                                foreach ($periode_asprak as $pa) {
+                                  echo '<option value="' . $pa->id_periode . '">' . bulanPanjang($pa->angka_bulan) . '</option>';
+                                }
+                                ?>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Print</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 offset-md-1">
                 <select name="matakuliah" class="form-control daftar_mk">
                   <option></option>
                   <?php
@@ -22,9 +85,9 @@
                 <select name="periode" class="form-control periode">
                   <option>
                     <?php
-                    $periode = $this->db->where('asprak', '1')->order_by('id_periode')->get('periode')->result();
+                    $periode = $this->db->where('asprak', '1')->order_by('angka_bulan')->get('periode')->result();
                     foreach ($periode as $p) {
-                      echo '<option value="' . $p->id_periode . '">' . $p->id_periode . ' | ' . $p->bulan . '</option>';
+                      echo '<option value="' . $p->id_periode . '">' . $p->id_periode . ' | ' . bulanPanjang($p->angka_bulan) . '</option>';
                     }
                     ?>
                   </option>

@@ -447,6 +447,14 @@ if (uri('1') == 'Practicum') {
       $(".periode").select2({
         placeholder: "Select Periode",
       });
+
+      $(".ta").select2({
+        placeholder: "Select Year",
+      });
+
+      $(".matkul").select2({
+        placeholder: "Select Courses",
+      });
     });
   </script>
 <?php
@@ -742,6 +750,34 @@ if (uri('1') == 'Finance') {
       $('.asprak').DataTable({
         pageLength: 10,
         responsive: true,
+        'ajax': '<?= base_url('Finance/ajaxSalaryAsprak') ?>',
+        'columns': [{
+          'data': 'no'
+        }, {
+          'data': 'kode_mk'
+        }, {
+          'data': 'nama_mk'
+        }, {
+          'data': 'nim'
+        }, {
+          'data': 'nama'
+        }, {
+          'data': 'periode'
+        }, {
+          'data': 'jumlah',
+          'className': 'dt-right'
+        }, {
+          'data': 'opsi'
+        }, {
+          'data': 'status'
+        }, {
+          'data': 'action'
+        }],
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: [],
+        aaSorting: [
+          [8, 'asc']
+        ]
         // 'ajax': '<?= base_url('Finance/ajaxSalaryAsprak') ?>',
         // 'columns': [{
         //   'data': 'no'
@@ -764,8 +800,8 @@ if (uri('1') == 'Finance') {
         // }, {
         //   'data': 'action'
         // }],
-        dom: '<"html5buttons"B>lTfgitp',
-        buttons: []
+        // dom: '<"html5buttons"B>lTfgitp',
+        // buttons: []
       });
 
       $('.aslab').DataTable({

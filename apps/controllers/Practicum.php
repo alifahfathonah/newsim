@@ -196,6 +196,57 @@ class Practicum extends CI_Controller
     view('laboran/footer');
   }
 
+  public function PrintBAP()
+  {
+    $matkul = input('matkul');
+    $ta     = input('ta');
+    $periode  = input('periode');
+    $bulan    = $this->db->where('id_periode', $periode)->get('periode')->row();
+    $data['bulan']  = $bulan->bulan;
+    $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
+    $daftar_mk  = $this->db->where('id_ta', $ta)->where('kode_mk', $matkul)->get('daftar_mk')->row();
+    if ($daftar_mk == true) {
+      $daftar_asprak  = $this->db->distinct()->select('asprak.nim_asprak, asprak.nama_asprak')->from('honor')->join('asprak', 'honor.nim_asprak = asprak.nim_asprak')->join('daftarasprak', 'honor.id_daftar_mk = daftarasprak.id_daftar_mk')->where('honor.id_daftar_mk', $daftar_mk->id_daftar_mk)->where('honor.id_periode', $periode)->order_by('asprak.nama_asprak', 'asc')->get()->result();
+      $prodi          = $this->db->select('prodi.strata, prodi.nama_prodi, matakuliah.kode_mk, matakuliah.nama_mk')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->get()->row();
+      $jumlah_da = $this->db->distinct()->select('asprak.nim_asprak, asprak.nama_asprak')->from('honor')->join('asprak', 'honor.nim_asprak = asprak.nim_asprak')->join('daftarasprak', 'honor.id_daftar_mk = daftarasprak.id_daftar_mk')->where('honor.id_daftar_mk', $daftar_mk->id_daftar_mk)->where('honor.id_periode', $periode)->order_by('asprak.nama_asprak', 'asc')->get()->num_rows();
+      $data['title']  = $periode . ' Full BAP ' . $prodi->kode_mk . ' - ' . $prodi->nama_mk;
+      $no = 0;
+      foreach ($daftar_asprak as $da) {
+        $no++;
+        $between  = '"2020-01-01" and "2020-07-01"';
+        $bap    = $this->m->previewBAPAsprak_($da->nim_asprak, $daftar_mk->id_daftar_mk, $between)->result();
+        $total  = $this->m->totalBAPAsprak_($da->nim_asprak, $daftar_mk->id_daftar_mk, $between)->row();
+        $dosen  = $this->db->select('dosen.nama_dosen, dosen.ttd_dosen, honor.tanggal_approve')->from('honor')->join('dosen', 'honor.id_dosen = dosen.id_dosen')->where('honor.id_daftar_mk', $daftar_mk->id_daftar_mk)->where('honor.id_periode', $periode)->where('honor.nim_asprak', $da->nim_asprak)->get()->row();
+        $data['nama_asprak']  = $da->nama_asprak;
+        $data['nim_asprak']   = $da->nim_asprak;
+        $data['prodi']        = $prodi;
+        $data['total']        = $total;
+        $data['bap']          = $bap;
+        $data['dosen']        = $dosen;
+        $html = view('laboran/print_bap', $data, true);
+        $mpdf->WriteHTML($html);
+        if ($no > 0 && $no <= ($jumlah_da - 1)) {
+          $mpdf->AddPage();
+        }
+      }
+      $mpdf->Output();
+      //view('laboran/print_bap', $data);
+    } else {
+      echo 'gak';
+    }
+    // $data           = $this->data;
+    // $data['title']  = 'BAP | SIM Laboratorium';
+    // $data['data']   = $this->m->daftarAbsenAsprak()->result();
+    // view('laboran/print_bap', $data);
+    // $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
+    // $html = view('laboran/print_bap', $data, true);
+    // $mpdf->WriteHTML($html);
+    // $mpdf->AddPage();
+    // $html = view('laboran/print_bap', $data, true);
+    // $mpdf->WriteHTML($html);
+    // $mpdf->Output();
+  }
+
   public function ajaxBAP()
   {
     $hasil  = array();
