@@ -207,7 +207,7 @@ class Practicum extends CI_Controller
     $daftar_mk  = $this->db->where('id_ta', $ta)->where('kode_mk', $matkul)->get('daftar_mk')->row();
     if ($daftar_mk == true) {
       $daftar_asprak  = $this->db->distinct()->select('asprak.nim_asprak, asprak.nama_asprak')->from('honor')->join('asprak', 'honor.nim_asprak = asprak.nim_asprak')->join('daftarasprak', 'honor.id_daftar_mk = daftarasprak.id_daftar_mk')->where('honor.id_daftar_mk', $daftar_mk->id_daftar_mk)->where('honor.id_periode', $periode)->order_by('asprak.nama_asprak', 'asc')->get()->result();
-      $prodi          = $this->db->select('prodi.strata, prodi.nama_prodi, matakuliah.kode_mk, matakuliah.nama_mk')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->get()->row();
+      $prodi          = $this->db->select('prodi.strata, prodi.nama_prodi, matakuliah.kode_mk, matakuliah.nama_mk')->from('daftar_mk')->join('prodi', 'daftar_mk.kode_prodi = prodi.kode_prodi')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.kode_mk', $matkul)->get()->row();
       $jumlah_da = $this->db->distinct()->select('asprak.nim_asprak, asprak.nama_asprak')->from('honor')->join('asprak', 'honor.nim_asprak = asprak.nim_asprak')->join('daftarasprak', 'honor.id_daftar_mk = daftarasprak.id_daftar_mk')->where('honor.id_daftar_mk', $daftar_mk->id_daftar_mk)->where('honor.id_periode', $periode)->order_by('asprak.nama_asprak', 'asc')->get()->num_rows();
       $data['title']  = $periode . ' Full BAP ' . $prodi->kode_mk . ' - ' . $prodi->nama_mk;
       $no = 0;
