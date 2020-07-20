@@ -214,8 +214,8 @@ class Practicum extends CI_Controller
       foreach ($daftar_asprak as $da) {
         $no++;
         $between  = '"2020-01-01" and "2020-07-01"';
-        $bap    = $this->m->previewBAPAsprak_($da->nim_asprak, $daftar_mk->id_daftar_mk, $between)->result();
-        $total  = $this->m->totalBAPAsprak_($da->nim_asprak, $daftar_mk->id_daftar_mk, $between)->row();
+        $bap    = $this->m->previewBAPAsprakLaboran($da->nim_asprak, $daftar_mk->id_daftar_mk, $between)->result();
+        $total  = $this->m->totalBAPAsprakLaboran($da->nim_asprak, $daftar_mk->id_daftar_mk, $between)->row();
         $dosen  = $this->db->select('dosen.nama_dosen, dosen.ttd_dosen, honor.tanggal_approve')->from('honor')->join('dosen', 'honor.id_dosen = dosen.id_dosen')->where('honor.id_daftar_mk', $daftar_mk->id_daftar_mk)->where('honor.id_periode', $periode)->where('honor.nim_asprak', $da->nim_asprak)->get()->row();
         $data['nama_asprak']  = $da->nama_asprak;
         $data['nim_asprak']   = $da->nim_asprak;
@@ -277,6 +277,39 @@ class Practicum extends CI_Controller
     }
     $tampil = array('data' => $hasil);
     echo json_encode($tampil);
+  }
+
+  public function Certificate()
+  {
+    set_rules('tahun_ajaran', 'Year', 'required|trim');
+    set_rules('prodi', 'Majors', 'required|trim');
+    $data           = $this->data;
+    $data['title']  = 'Certificate Practicum Assistant | SIM Laboratorium';
+    $data['ta']     = $this->db->get_where('tahun_ajaran')->result();
+    $data['prodi']  = $this->m->daftarProdi()->result();
+    if (validation_run() == true) {
+      $id_ta              = input('tahun_ajaran');
+      $kode_prodi         = input('prodi');
+      $data['daftar_mk']  = $this->db->select('daftar_mk.id_daftar_mk, matakuliah.kode_mk, matakuliah.nama_mk')->from('daftar_mk')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_ta', $id_ta)->where('daftar_mk.kode_prodi', $kode_prodi)->order_by('matakuliah.kode_mk')->get()->result();
+    }
+    view('laboran/header', $data);
+    view('laboran/sertifikat_asprak', $data);
+    view('laboran/footer');
+  }
+
+  public function DetailCertificate($id_daftar_mk)
+  {
+    $id_daftar_mk = $this->db->where('substring(sha1(id_daftar_mk), 8, 5) = "' . $id_daftar_mk . '"')->get('daftar_mk')->row();
+    if ($id_daftar_mk == true) {
+      $data           = $this->data;
+      $data['title']  = 'Certificate Practicum Assistant | SIM Laboratorium';
+      $data['dmk']    = $id_daftar_mk;
+      view('laboran/header', $data);
+      view('laboran/detail_sertifikat', $data);
+      view('laboran/footer');
+    } else {
+      redirect('Practicum/Certificate');
+    }
   }
 
   public function Report()
