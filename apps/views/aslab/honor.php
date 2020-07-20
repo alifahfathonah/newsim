@@ -120,6 +120,7 @@
                         <th>Nominal</th>
                         <th>Status</th>
                         <th>Withdraw Option</th>
+                        <th>View Evidence</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -147,6 +148,33 @@
                             ?>
                           </td>
                           <td><?= $p->opsi_pengambilan ?></td>
+                          <td style="text-align: center">
+                            <?php
+                            if ($p->opsi_pengambilan == 'Cash') {
+                              echo '<button class="btn btn-sm btn-danger" disabled><i class="fa fa-ban"></i></button>';
+                            } else {
+                            ?>
+                              <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#evidence<?= $p->id_honor_aslab ?>"><i class="fa fa-eye"></i></button>
+                              <div class="modal inmodal fade" id="evidence<?= $p->id_honor_aslab ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                      <h4 class="modal-title">Evidence for Salary <?= $p->bulan ?></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <img src="<?= base_url($p->bukti_transfer) ?>" height="400px">
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            <?php
+                            }
+                            ?>
+                          </td>
                         </tr>
                       <?php
                       }

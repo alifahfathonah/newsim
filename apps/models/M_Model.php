@@ -464,12 +464,43 @@ class M_Model extends CI_Model
     return $this->db->get();
   }
 
+  function previewBAPAsprakLaboran($nim, $id_daftar_mk, $between)
+  {
+    $this->db->select('presensi_asprak.id_presensi_asprak, date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") tanggal, date_format(presensi_asprak.asprak_masuk, "%H:%i") masuk, date_format(presensi_asprak.asprak_selesai, "%H:%i") selesai, presensi_asprak.durasi, presensi_asprak.modul, presensi_asprak.screenshot, presensi_asprak.video, presensi_asprak.approve_absen, asprak.ttd_asprak');
+    $this->db->from('presensi_asprak');
+    $this->db->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
+    $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
+    $this->db->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk');
+    $this->db->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak');
+    $this->db->where('presensi_asprak.nim_asprak', $nim);
+    $this->db->where('daftar_mk.id_daftar_mk', $id_daftar_mk);
+    $this->db->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $between);
+    $this->db->where('presensi_asprak.approve_absen', '2');
+    $this->db->order_by('tanggal', 'asc');
+    return $this->db->get();
+  }
+
   function totalBAPAsprak_($nim, $id_daftar_mk, $between)
   {
     $this->db->select('sum(presensi_asprak.durasi) jam, count(presensi_asprak.id_presensi_asprak) hari');
     $this->db->from('presensi_asprak');
     $this->db->join('jadwal_asprak', 'presensi_asprak.id_jadwal_asprak = jadwal_asprak.id_jadwal_asprak');
     $this->db->join('jadwal_lab', 'jadwal_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
+    $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
+    $this->db->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk');
+    $this->db->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak');
+    $this->db->where('presensi_asprak.nim_asprak', $nim);
+    $this->db->where('daftar_mk.id_daftar_mk', $id_daftar_mk);
+    $this->db->where('date_format(presensi_asprak.asprak_masuk, "%Y-%m-%d") between ' . $between);
+    $this->db->where('presensi_asprak.approve_absen', '2');
+    return $this->db->get();
+  }
+
+  function totalBAPAsprakLaboran($nim, $id_daftar_mk, $between)
+  {
+    $this->db->select('sum(presensi_asprak.durasi) jam, count(presensi_asprak.id_presensi_asprak) hari');
+    $this->db->from('presensi_asprak');
+    $this->db->join('jadwal_lab', 'presensi_asprak.id_jadwal_lab = jadwal_lab.id_jadwal_lab');
     $this->db->join('matakuliah', 'jadwal_lab.id_mk = matakuliah.id_mk');
     $this->db->join('daftar_mk', 'matakuliah.kode_mk = daftar_mk.kode_mk');
     $this->db->join('asprak', 'presensi_asprak.nim_asprak = asprak.nim_asprak');
@@ -574,7 +605,7 @@ class M_Model extends CI_Model
 
   function honorAslabSelesai($id)
   {
-    $this->db->select('honor_aslab.id_honor_aslab, honor_aslab.jam, honor_aslab.nominal, honor_aslab.status_honor, honor_aslab.opsi_pengambilan, aslab.nim, aslab.namaLengkap, periode.bulan, tahun_ajaran.ta');
+    $this->db->select('honor_aslab.id_honor_aslab, honor_aslab.jam, honor_aslab.nominal, honor_aslab.status_honor, honor_aslab.opsi_pengambilan, honor_aslab.bukti_transfer, aslab.nim, aslab.namaLengkap, periode.bulan, tahun_ajaran.ta');
     $this->db->from('honor_aslab');
     $this->db->join('aslab', 'honor_aslab.id_aslab = aslab.idAslab');
     $this->db->join('periode', 'honor_aslab.id_periode = periode.id_periode');

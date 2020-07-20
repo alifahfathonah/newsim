@@ -452,6 +452,10 @@ if (uri('1') == 'Practicum') {
         placeholder: "Select Year",
       });
 
+      $(".prodi").select2({
+        placeholder: "Select Majors",
+      });
+
       $(".matkul").select2({
         placeholder: "Select Courses",
       });
