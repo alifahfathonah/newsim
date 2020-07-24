@@ -296,6 +296,15 @@
             ?>
             <a href="<?= base_url('Practicum/Report') ?>">Practicum Report</a>
             </li>
+            <?php
+            if (uri('2') == 'Certificate' || uri('2') == 'DetailCertificate') {
+              echo '<li class="active">';
+            } else {
+              echo '<li>';
+            }
+            ?>
+            <a href="<?= base_url('Practicum/Certificate') ?>">Certificate</a>
+            </li>
           </ul>
           </li>
           <?php

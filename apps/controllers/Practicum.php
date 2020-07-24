@@ -312,6 +312,158 @@ class Practicum extends CI_Controller
     }
   }
 
+  public function GenerateCertificate($id)
+  {
+    //echo $id;
+    $tgl_generate = date('Y-m-d H:i:s');
+    $no_sertifikat = $this->db->select('no_sertifikat')->from('sertifikat')->order_by('no_sertifikat', 'desc')->limit('1')->get()->row();
+    if ($no_sertifikat == true) {
+      $no_sertifikat = $no_sertifikat->no_sertifikat + 1;
+    } else {
+      $no_sertifikat = '763';
+    }
+    $daftar_asprak = $this->db->select('asprak.nim_asprak, asprak.nama_asprak')->from('daftarasprak')->join('asprak', 'daftarasprak.nim_asprak = asprak.nim_asprak')->where('daftarasprak.id_daftar_mk', $id)->order_by('asprak.nama_asprak')->get()->result();
+    //echo '<table border="1"><thead><tr><td>No Sertifikat</td><td>NIM</td><td>Nama</td><td>B1</td><td>B2</td><td>B3</td><td>B4</td><td>Total</td><td>Standar</td><td>Percent</td><td>Val</td><td>Keterangan Val</td></tr></thead><tbody>';
+    $sum = 0;
+    $counter = 0;
+    foreach ($daftar_asprak as $da) {
+      $counter++;
+      $b1 = $this->db->select('jam')->from('honor')->where('id_daftar_mk', $id)->where('nim_asprak', $da->nim_asprak)->like('id_periode', 'B1')->get()->row();
+      $b2 = $this->db->select('jam')->from('honor')->where('id_daftar_mk', $id)->where('nim_asprak', $da->nim_asprak)->like('id_periode', 'B2')->get()->row();
+      $b3 = $this->db->select('jam')->from('honor')->where('id_daftar_mk', $id)->where('nim_asprak', $da->nim_asprak)->like('id_periode', 'B3')->get()->row();
+      $b4 = $this->db->select('jam')->from('honor')->where('id_daftar_mk', $id)->where('nim_asprak', $da->nim_asprak)->like('id_periode', 'B4')->get()->row();
+      if ($b1 == true) {
+        $b1 = $b1->jam;
+      } else {
+        $b1 = 0;
+      }
+      if ($b2 == true) {
+        $b2 = $b2->jam;
+      } else {
+        $b2 = 0;
+      }
+      if ($b3 == true) {
+        $b3 = $b3->jam;
+      } else {
+        $b3 = 0;
+      }
+      if ($b4 == true) {
+        $b4 = $b4->jam;
+      } else {
+        $b4 = 0;
+      }
+      $total = $b1 + $b2 + $b3 + $b4;
+      $sum    = $sum + $total;
+    }
+    $rata = $sum / $counter;
+    $rata2 = floor(($sum / $counter) / 2);
+    // echo 'Total Jam Keseluruhan: ' . $sum;
+    // echo '<br>Total Asprak: ' . $counter;
+    // echo '<br>Rata-rata: ' . $rata;
+    // echo '<br>Rata-rata/2: ' . $rata2;
+    $sum = 0;
+    $counter = 0;
+    foreach ($daftar_asprak as $da) {
+      $counter++;
+      $b1 = $this->db->select('jam')->from('honor')->where('id_daftar_mk', $id)->where('nim_asprak', $da->nim_asprak)->like('id_periode', 'B1')->get()->row();
+      $b2 = $this->db->select('jam')->from('honor')->where('id_daftar_mk', $id)->where('nim_asprak', $da->nim_asprak)->like('id_periode', 'B2')->get()->row();
+      $b3 = $this->db->select('jam')->from('honor')->where('id_daftar_mk', $id)->where('nim_asprak', $da->nim_asprak)->like('id_periode', 'B3')->get()->row();
+      $b4 = $this->db->select('jam')->from('honor')->where('id_daftar_mk', $id)->where('nim_asprak', $da->nim_asprak)->like('id_periode', 'B4')->get()->row();
+      if ($b1 == true) {
+        $b1 = $b1->jam;
+      } else {
+        $b1 = 0;
+      }
+      if ($b2 == true) {
+        $b2 = $b2->jam;
+      } else {
+        $b2 = 0;
+      }
+      if ($b3 == true) {
+        $b3 = $b3->jam;
+      } else {
+        $b3 = 0;
+      }
+      if ($b4 == true) {
+        $b4 = $b4->jam;
+      } else {
+        $b4 = 0;
+      }
+      $total = $b1 + $b2 + $b3 + $b4;
+      if ($total < $rata2) {
+        $validasi = 'No';
+        $keterangan = $total . '&emsp;< ' . $rata2;
+      } else {
+        $validasi = 'Yes';
+        $keterangan = $total . '&emsp;< ' . $rata2;
+      }
+      // echo '<tr>
+      // <td>' . $no_sertifikat . '</td>
+      // <td>' . $da->nim_asprak . '</td>
+      // <td>' . $da->nama_asprak . '</td>
+      // <td>' . $b1 . '</td>
+      // <td>' . $b2 . '</td>
+      // <td>' . $b3 . '</td>
+      // <td>' . $b4 . '</td>
+      // <td>' . $total . '</td>
+      // <td></td>
+      // <td></td>
+      // <td>' . $validasi . '</td>
+      // <td>' . $keterangan . '</td>
+      // </tr>';
+      $input = array(
+        'no_sertifikat'   => $no_sertifikat,
+        'nim_asprak'      => $da->nim_asprak,
+        'id_daftar_mk'    => $id,
+        'b1'              => $b1,
+        'b2'              => $b2,
+        'b3'              => $b3,
+        'b4'              => $b4,
+        'presensi'        => $total,
+        'validasi'        => $validasi,
+        'tgl_generate'    => $tgl_generate
+      );
+      $this->m->insertData('sertifikat', $input);
+      $no_sertifikat = $no_sertifikat + 1;
+      if (strlen($no_sertifikat) == 1) {
+        $no_sertifikat = '00' . $no_sertifikat;
+      } elseif (strlen($no_sertifikat) == 2) {
+        $no_sertifikat = '0' . $no_sertifikat;
+      } elseif (strlen($no_sertifikat) == 3) {
+        $no_sertifikat = $no_sertifikat;
+      }
+    }
+    //echo '</tbody></table>';
+    redirect('Practicum/Certificate');
+  }
+
+  public function PrintCertificate($id_daftar_mk)
+  {
+    $id_daftar_mk = $this->db->where('substring(sha1(id_daftar_mk), 8, 5) = "' . $id_daftar_mk . '"')->get('daftar_mk')->row();
+    if ($id_daftar_mk == true) {
+      $tgl_cetak = date('Y-m-d H:i:s');
+      $input = array('tgl_cetak' => $tgl_cetak);
+      $this->db->where('id_daftar_mk', $id_daftar_mk->id_daftar_mk);
+      $this->db->where('validasi', 'Yes');
+      $this->db->update('sertifikat', $input);
+      redirect('Practicum/Certificate');
+    } else {
+      redirect('Practicum/Certificate');
+    }
+  }
+
+  public function ajaxCertificate()
+  {
+    $hasil  = '';
+    $id     = input('id');
+    // $id     = '4';
+    $cek    = $this->db->select('matakuliah.nama_mk')->from('daftar_mk')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_daftar_mk', $id)->get()->row();
+    if ($cek == true) {
+      $hasil .= $cek->nama_mk;
+    }
+    echo $hasil;
+  }
+
   public function Report()
   {
     set_rules('tahun_ajaran', 'Year', 'required|trim');

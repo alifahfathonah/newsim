@@ -92,21 +92,47 @@
                     <?php
                     $daftar_asprak = $this->db->select('asprak.nim_asprak, asprak.nama_asprak, daftarasprak.posisi')->from('daftarasprak')->join('asprak', 'daftarasprak.nim_asprak = asprak.nim_asprak')->where('daftarasprak.id_daftar_mk', $dmk->id_daftar_mk)->order_by('asprak.nama_asprak')->get()->result();
                     foreach ($daftar_asprak as $da) {
+                      $detail_sertifikat = $this->db->where('nim_asprak', $da->nim_asprak)->where('id_daftar_mk', $dmk->id_daftar_mk)->get('sertifikat')->row();
+                      if ($detail_sertifikat == true) {
+                        $no_sertifikat = $detail_sertifikat->no_sertifikat;
+                        $b1 = $detail_sertifikat->b1;
+                        $b2 = $detail_sertifikat->b2;
+                        $b3 = $detail_sertifikat->b3;
+                        $b4 = $detail_sertifikat->b4;
+                        $total = $detail_sertifikat->presensi;
+                        $validasi = $detail_sertifikat->validasi;
+                        if ($detail_sertifikat->validasi == 'Yes' && $detail_sertifikat->tgl_diambil == null) {
+                          $status = 'Untaken';
+                        } elseif ($detail_sertifikat->validasi == 'Yes' && $detail_sertifikat->tgl_diambil != null) {
+                          $status = 'Taken';
+                        } elseif ($detail_sertifikat->validasi == 'No') {
+                          $status = null;
+                        }
+                      } else {
+                        $no_sertifikat = null;
+                        $b1 = null;
+                        $b2 = null;
+                        $b3 = null;
+                        $b4 = null;
+                        $total = null;
+                        $validasi = null;
+                        $status = null;
+                      }
                     ?>
                       <tr>
-                        <td></td>
+                        <td><?= $no_sertifikat ?></td>
                         <td><?= $da->nim_asprak ?></td>
                         <td><?= $da->nama_asprak ?></td>
                         <td><?= $da->posisi ?></td>
+                        <td><?= $b1 ?></td>
+                        <td><?= $b2 ?></td>
+                        <td><?= $b3 ?></td>
+                        <td><?= $b4 ?></td>
+                        <td><?= $total ?></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><?= $validasi ?></td>
+                        <td><?= $status ?></td>
                         <td></td>
                       </tr>
                     <?php

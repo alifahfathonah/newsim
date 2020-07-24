@@ -389,6 +389,30 @@ if (uri('1') == 'Practicum') {
       });
     }
 
+    function generate_sertifikat(id) {
+      $.ajax({
+        url: '<?= base_url('Practicum/ajaxCertificate') ?>',
+        method: 'post',
+        data: {
+          id: id
+        },
+        success: function(response) {
+          swal({
+            title: 'Are you sure?',
+            text: 'Do you want to generate certificate "' + response + '"',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            closeOnConfirm: false
+          }, function() {
+            window.location.href = '<?= base_url('Practicum/GenerateCertificate/') ?>' + id;
+          });
+        }
+      });
+    }
+
     $(document).ready(function() {
       $('.courses').DataTable({
         pageLength: 10,

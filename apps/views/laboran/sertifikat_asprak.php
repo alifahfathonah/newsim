@@ -51,7 +51,23 @@
                   $daftar_asprak = $this->db->select('asprak.nim_asprak, asprak.nama_asprak, daftarasprak.posisi')->from('daftarasprak')->join('asprak', 'daftarasprak.nim_asprak = asprak.nim_asprak')->where('daftarasprak.id_daftar_mk', $dmk->id_daftar_mk)->order_by('asprak.nama_asprak')->get()->result();
               ?>
                   <div class="ibox collapsed">
-                    <div class="ibox-title collapse-link" style="background-color: #ff7675; color: white;">
+                    <?php
+                    $cek_sertifikat = $this->db->distinct()->select('*')->from('sertifikat')->where('id_daftar_mk', $dmk->id_daftar_mk)->get()->row();
+                    $style_file = null;
+                    $style_file = '<td width="4%" style="text-align: center;"><i class="fa fa-file fa-2x"></i></td>';
+                    if ($cek_sertifikat == true) {
+                      if ($cek_sertifikat->tgl_cetak == null) {
+                        $style_box = 'style="background-color: #fdcb6e; color: black;"';
+                        $style_file = '<td width="4%" style="text-align: center; color: blue">
+                        <a href="' . base_url('Practicum/PrintCertificate/' . substr(sha1($dmk->id_daftar_mk), 7, 5)) . '"><i class="fa fa-file fa-2x"></i></a></td>';
+                      } else {
+                        $style_box = 'style="background-color: #00b894; color: white;"';
+                      }
+                    } else {
+                      $style_box = 'style="background-color: #ff7675; color: white;"';
+                    }
+                    ?>
+                    <div class="ibox-title collapse-link" <?= $style_box ?>>
                       <h5><?= $dmk->kode_mk . ' - ' . $dmk->nama_mk ?></h5>
                     </div>
                     <div class="ibox-content">
@@ -79,12 +95,20 @@
                           <td width="4%" style="text-align: center; <?= $style_check ?>"><i class="fa fa-check fa-2x"></i></td>
                           <td width="4%" style="text-align: center; <?= $style_pencil ?>"><i class="fa fa-pencil fa-2x"></i></td>
                           <td width="4%" style="text-align: center; <?= $style_cross ?>"><i class="fa fa-close fa-2x"></i></td>
-                          <td width="4%" style="text-align: center;"><i class="fa fa-file fa-2x"></i></td>
+                          <?= $style_file ?>
                           <td width="56%"></td>
                           <td width="4%" style="text-align: center; color: green"><a href="<?= base_url('Practicum/DetailCertificate/' . substr(sha1($dmk->id_daftar_mk), 7, 5)) ?>"><i class="fa fa-eye fa-2x"></i></a></td>
                           <?php
-                          if ($cek_laporan->status_laporan == 2) {
-                            echo '<td width="4%" style="text-align: center; color: green;"><i class="fa fa-check-circle fa-2x"></i></td>';
+                          if ($cek_laporan == true) {
+                            if ($cek_laporan->status_laporan == 2) {
+                          ?>
+                              <td width="4%" style="text-align: center; color: green;">
+                                <i class="fa fa-check-circle fa-2x" onclick="generate_sertifikat('<?= $dmk->id_daftar_mk ?>')"></i>
+                              </td>
+                          <?php
+                            } else {
+                              echo '<td width="4%" style="text-align: center;"><i class="fa fa-check-circle fa-2x"></i></td>';
+                            }
                           } else {
                             echo '<td width="4%" style="text-align: center;"><i class="fa fa-check-circle fa-2x"></i></td>';
                           }
@@ -108,17 +132,35 @@
                         <tbody>
                           <?php
                           foreach ($daftar_asprak as $da) {
+                            $sertifikat = $this->db->where('nim_asprak', $da->nim_asprak)->where('id_daftar_mk', $dmk->id_daftar_mk)->get('sertifikat')->row();
+                            if ($sertifikat == true) {
+                              $no_sertifikat = $sertifikat->no_sertifikat;
+                              $presensi = $sertifikat->presensi;
+                              $validasi = $sertifikat->validasi;
+                              if ($sertifikat->validasi == 'Yes' && $sertifikat->tgl_diambil == null) {
+                                $status = 'Untaken';
+                              } elseif ($sertifikat->validasi == 'Yes' && $sertifikat->tgl_diambil != null) {
+                                $status = 'Taken';
+                              } elseif ($sertifikat->validasi == 'No') {
+                                $status = null;
+                              }
+                            } else {
+                              $no_sertifikat = null;
+                              $presensi = null;
+                              $validasi = null;
+                              $status = null;
+                            }
                           ?>
                             <tr>
-                              <td></td>
+                              <td><?= $no_sertifikat ?></td>
                               <td><?= $da->nim_asprak ?></td>
                               <td><?= $da->nama_asprak ?></td>
                               <td><?= $da->posisi ?></td>
+                              <td><?= $presensi ?></td>
                               <td></td>
                               <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
+                              <td><?= $validasi ?></td>
+                              <td><?= $status ?></td>
                             </tr>
                           <?php
                           }
