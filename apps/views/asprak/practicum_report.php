@@ -1,6 +1,6 @@
       <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-12">
-          <h2 style="text-align: center">Practicum Report</h2>
+          <h2 style="text-align: center">LPJ Asprak</h2>
         </div>
       </div>
       <div class="wrapper wrapper-content animated fadeInRight">
@@ -13,13 +13,18 @@
             ?>
             <div class="row">
               <div class="col-md-2 col-sm-2" style="margin-bottom: 5px">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addPracticumReport"><i class="fa fa-plus"></i> Add Practicum Report</button>
+                <?php
+                // $nim = $this->session->userdata('nim');
+                // $cek_koor = $this->db->where('nim_asprak', $nim)->where('posisi', 'Koordinator')->get('daftarasprak')->row();
+                // if ($cek_koor == true) {
+                ?>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addPracticumReport"><i class="fa fa-plus"></i> Add LPJ</button>
                 <div class="modal inmodal fade" id="addPracticumReport" tabindex="-1" role="dialog" aria-hidden="true">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">Add Practicum Report</h4>
+                        <h4 class="modal-title">Add LPJ</h4>
                       </div>
                       <form method="post" action="<?= base_url('Asprak/PracticumReport') ?>" enctype="multipart/form-data">
                         <div class="modal-body">
@@ -27,7 +32,7 @@
                             <div class="col-md-6 col-sm-12">
                               <div class="form-group">
                                 <label class="font-bold">Courses</label>
-                                <select name="daftar_mk" id="daftar_mk" class="matkul form-control">
+                                <select name="daftar_mk" id="daftar_mk" class="matkul form-control" required>
                                   <option></option>
                                   <?php
                                   $jumlah = $this->db->select('count(id_daftar_asprak) jumlah')->from('daftarasprak')->where('nim_asprak', userdata('nim'))->group_by('nim_asprak')->get()->row()->jumlah;
@@ -48,7 +53,7 @@
                               <div class="form-group">
                                 <label class="font-bold">File</label>
                                 <div class="custom-file">
-                                  <input type="file" name="file_laporan" id="file_laporan" accept="application/pdf" class="custom-file-input">
+                                  <input type="file" name="file_laporan" id="file_laporan" accept="application/pdf" class="custom-file-input" required>
                                   <label for="logo" class="custom-file-label">Choose file...</label>
                                 </div>
                               </div>
@@ -63,6 +68,9 @@
                     </div>
                   </div>
                 </div>
+                <?php
+                // }
+                ?>
               </div>
             </div>
             <div class="ibox">

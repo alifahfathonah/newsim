@@ -72,10 +72,11 @@
                           <td><?= $d->catatan_revisi ?></td>
                           <td><?= $status ?></td>
                           <td style="text-align: center">
-                            <a href="<?= base_url($d->nama_file) ?>" target="_blank">
-                              <button class="btn btn-success btn-sm"><i class="fa fa-eye"></i></button>
-                            </a>
-                            <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit<?= substr(sha1($d->id_laporan_praktikum), 7, 7) ?>"><i class="fa fa-edit"></i></button>
+                            <form method="post" action="<?= base_url('Practicum/ReadReport') ?>" target="_blank">
+                              <input type="text" name="id_laporan_praktikum" value="<?= $d->id_laporan_praktikum ?>" style="display: none;">
+                              <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></button>
+                              <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit<?= substr(sha1($d->id_laporan_praktikum), 7, 7) ?>"><i class="fa fa-edit"></i></button>
+                            </form>
                           </td>
                           <div class="modal inmodal fade" id="edit<?= substr(sha1($d->id_laporan_praktikum), 7, 7) ?>" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-lg">

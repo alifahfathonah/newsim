@@ -494,7 +494,6 @@ class Asprak extends CI_Controller
       $id_daftar_mk = input('daftar_mk');
       $data = $this->db->select('tahun_ajaran.ta, daftar_mk.kode_mk, matakuliah.nama_mk')->from('daftar_mk')->join('tahun_ajaran', 'daftar_mk.id_ta = tahun_ajaran.id_ta')->join('matakuliah', 'daftar_mk.kode_mk = matakuliah.kode_mk')->where('daftar_mk.id_daftar_mk', $id_daftar_mk)->get()->row();
       print_r($data);
-      echo '<br>';
       $nama_file  = $data->ta . '_' . $data->kode_mk . '_' . preg_replace('/[^a-zA-Z0-9]/', '_', $data->nama_mk) . '.pdf';
       $input  = array(
         'tanggal_upload'  => date('Y-m-d H:i:s'),
@@ -582,6 +581,37 @@ class Asprak extends CI_Controller
       }
       set_flashdata('msg', '<div class="alert alert-success msg">Your BAP successfully submited</div>');
       redirect('Asprak/Salary');
+    }
+  }
+
+  public function Certificate()
+  {
+    $data           = $this->data;
+    $data['title']  = 'Certificate | SIM Laboratorium';
+    view('asprak/header', $data);
+    view('asprak/certificate', $data);
+    view('asprak/footer');
+  }
+
+  public function DownloadCertificate()
+  {
+    set_rules('nim_asprak', 'NIM Asprak', 'required|trim');
+    set_rules('id_daftar_mk', 'ID Daftar MK', 'required|trim');
+    if (validation_run() == true) {
+      $nim_asprak = input('nim_asprak');
+      $id_daftar_mk = input('id_daftar_mk');
+      $no_sertifikat = $this->db->where('nim_asprak', $nim_asprak)->where('id_daftar_mk', $id_daftar_mk)->get('sertifikat')->row();
+      $daftar_mk = $this->db->where('id_daftar_mk', $id_daftar_mk)->get('daftar_mk')->row();
+      $nama_mk  = $this->db->where('kode_mk', $daftar_mk->kode_mk)->get('matakuliah')->row();
+      $tahun_ajaran = $this->db->where('id_ta', $daftar_mk->id_ta)->get('tahun_ajaran')->row();
+      $nama_asprak = $this->db->where('nim_asprak', $nim_asprak)->get('asprak')->row();
+      $data['no_sertifikat']  = $no_sertifikat;
+      $data['nama_asprak']    = $nama_asprak->nama_asprak;
+      $data['ta']             = $tahun_ajaran->ta;
+      $data['nama_mk']        = $nama_mk->nama_mk;
+      view('asprak/download_sertifikat', $data);
+    } else {
+      redirect('Asprak/Certificate');
     }
   }
 
