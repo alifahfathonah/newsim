@@ -43,12 +43,14 @@
                                       <input type="radio" name="pilihan" id="transfer" value="Transfer">
                                       <label for="transfer">Bank Transfer</label>
                                     </div>';
-                                    } elseif ($cek_akun->linkaja_asprak != null || $cek_akun->linkaja_asprak != '') {
+                                    }
+                                    if ($cek_akun->linkaja_asprak != null || $cek_akun->linkaja_asprak != '') {
                                       echo '<div class="radio">
                                       <input type="radio" name="pilihan" id="linkaja" value="LinkAja">
                                       <label for="linkaja">Linkaja</label>
                                     </div>';
-                                    } elseif (($cek_akun->norek_asprak == null || $cek_akun->norek_asprak == '') && ($cek_akun->linkaja_asprak == null || $cek_akun->linkaja_asprak == '')) {
+                                    }
+                                    if (($cek_akun->norek_asprak == null || $cek_akun->norek_asprak == '') && ($cek_akun->linkaja_asprak == null || $cek_akun->linkaja_asprak == '')) {
                                       echo '<h4>Please complete your profile</h4>';
                                     }
                                   }
