@@ -198,6 +198,18 @@
           </a>
           </li>
           <?php
+          if (uri('2') == 'Certificate') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('Asprak/Certificate') ?>">
+            <i class="fa fa-certificate"></i>
+            <span class="nav-label">Certificate</span>
+          </a>
+          </li>
+          <?php
           if (uri('2') == 'PracticumReport') {
             echo '<li class="active">';
           } else {
