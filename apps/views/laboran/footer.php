@@ -74,7 +74,7 @@ if ($honor_asprak > 0) {
         "hideMethod": "fadeOut"
       }
       toastr.options.onclick = function() {
-        window.location.href = '<?= base_url('Finance/Honor') ?>'
+        window.location.href = '<?= base_url('Finance/Honor#pengambilan') ?>'
       }
       toastr.info("You have <?= $honor_asprak ?> practicum assistant salary withdrawals to check. Please go to Finance &rarr; Honor");
     });
@@ -699,6 +699,18 @@ if (uri('1') == 'Finance') {
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
   <script src="<?= base_url('assets/inspinia/') ?>js/plugins/chartJs/Chart.min.js"></script>
   <script>
+    $(function() {
+      var hash = window.location.hash;
+      hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+      $('.nav-tabs a').click(function(e) {
+        $(this).tab('show');
+        var scrollmem = $('body').scrollTop();
+        window.location.hash = this.hash;
+        $('html,body').scrollTop(scrollmem);
+      });
+    });
+
     $(function() {
       var line_data = {
         <?php

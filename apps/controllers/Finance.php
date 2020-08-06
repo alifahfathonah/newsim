@@ -272,7 +272,7 @@ class Finance extends CI_Controller
         $input['bukti_transfer'] = $config['upload_path'] . '' . $nama_file;
       }
       $this->db->where('id_honor', $id_honor)->update('honor', $input);
-      redirect('Finance/Honor');
+      redirect('Finance/Honor#pengambilan');
     }
   }
 
