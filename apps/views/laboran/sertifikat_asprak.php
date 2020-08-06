@@ -78,9 +78,9 @@
                         $style_cross  = null;
                         $cek_laporan  = $this->db->where('id_daftar_mk', $dmk->id_daftar_mk)->get('laporan_praktikum')->row();
                         if ($cek_laporan == true) {
-                          if ($cek_laporan->status_laporan == 0) {
+                          if ($cek_laporan->status_laporan == 2) {
                             $style_pencil = 'color: orange';
-                          } elseif ($cek_laporan->status_laporan == 2) {
+                          } elseif ($cek_laporan->status_laporan == 1) {
                             $style_check = 'color: green';
                           }
                         } else {
@@ -100,7 +100,7 @@
                           <td width="4%" style="text-align: center; color: green"><a href="<?= base_url('Practicum/DetailCertificate/' . substr(sha1($dmk->id_daftar_mk), 7, 5)) ?>"><i class="fa fa-eye fa-2x"></i></a></td>
                           <?php
                           if ($cek_laporan == true) {
-                            if ($cek_laporan->status_laporan == 2) {
+                            if ($cek_laporan->status_laporan == 1) {
                           ?>
                               <td width="4%" style="text-align: center; color: green;">
                                 <i class="fa fa-check-circle fa-2x" onclick="generate_sertifikat('<?= $dmk->id_daftar_mk ?>')"></i>
