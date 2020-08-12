@@ -605,10 +605,12 @@ class Asprak extends CI_Controller
       $nama_mk  = $this->db->where('kode_mk', $daftar_mk->kode_mk)->get('matakuliah')->row();
       $tahun_ajaran = $this->db->where('id_ta', $daftar_mk->id_ta)->get('tahun_ajaran')->row();
       $nama_asprak = $this->db->where('nim_asprak', $nim_asprak)->get('asprak')->row();
+      $status_keanggotaan = $this->db->where('nim_asprak', $nim_asprak)->where('id_daftar_mk', $id_daftar_mk)->get('daftarasprak')->row();
       $data['no_sertifikat']  = $no_sertifikat;
       $data['nama_asprak']    = $nama_asprak->nama_asprak;
       $data['ta']             = $tahun_ajaran->ta;
       $data['nama_mk']        = $nama_mk->nama_mk;
+      $data['keanggotaan']    = $status_keanggotaan->posisi;
       view('asprak/download_sertifikat', $data);
     } else {
       redirect('Asprak/Certificate');

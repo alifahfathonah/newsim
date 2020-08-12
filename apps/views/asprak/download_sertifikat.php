@@ -117,6 +117,11 @@
       $semester = 'Genap';
       $periode  = $tmp[0] . '/' . ($tmp[0] + 1);
     }
+    if ($keanggotaan == 'Anggota') {
+      $keanggotaan = null;
+    } elseif ($keanggotaan == 'Koordinator') {
+      $keanggotaan = 'Koordinator';
+    }
     ?>
     <div class="no_sertifikat">
       No : CF.<?= $no_sertifikat->no_sertifikat ?>/AKD.7/IT-D3LAB/<?= $tahun_cetak ?>
@@ -131,7 +136,7 @@
       sebagai
     </div>
     <div class="nama_mk">
-      Asisten Praktikum <?= $nama_mk ?>
+      <?= $keanggotaan ?> Asisten Praktikum <?= $nama_mk ?>
     </div>
     <div class="tahun_ajaran">
       pada Semester <?= $semester ?> TA <?= $periode ?>
