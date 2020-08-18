@@ -86,7 +86,7 @@ if ($honor_aslab > 0) {
   <script>
     $(function() {
       toastr.options = {
-        "closeButton": false,
+        "closeButton": true,
         "debug": false,
         "progressBar": false,
         "preventDuplicates": false,
