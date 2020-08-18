@@ -63,7 +63,7 @@
                             <td width="15%">Bank Mandiri Account</td>
                             <td width="2%">:</td>
                             <td width="31%" style="padding-bottom: 5px">
-                              <input type="text" name="norek_asprak" id="norek_asprak" class="form-control" value="<?= $profil->norek_asprak ?>" onkeyup="isi_bank()">
+                              <input type="text" name="norek_asprak" id="norek_asprak" class="form-control" data-mask="999-99-9999999-9" value="<?= $profil->norek_asprak ?>" onkeyup="isi_bank()">
                             </td>
                             <td width="2%"></td>
                             <td width="15%">Account Name</td>
