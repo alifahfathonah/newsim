@@ -317,7 +317,16 @@ class Practicum extends CI_Controller
     $tgl_generate = date('Y-m-d H:i:s');
     $no_sertifikat = $this->db->select('no_sertifikat')->from('sertifikat')->order_by('no_sertifikat', 'desc')->limit('1')->get()->row();
     if ($no_sertifikat == true) {
-      $no_sertifikat = $no_sertifikat->no_sertifikat + 1;
+      $no_sertifikat = $no_sertifikat->no_sertifikat;
+      if (strlen($no_sertifikat) == 1) {
+        $no_sertifikat = '000' . $no_sertifikat;
+      } elseif (strlen($no_sertifikat) == 2) {
+        $no_sertifikat = '00' . $no_sertifikat;
+      } elseif (strlen($no_sertifikat) == 3) {
+        $no_sertifikat = '0' . $no_sertifikat;
+      } elseif (strlen($no_sertifikat) == 4) {
+        $no_sertifikat = $no_sertifikat;
+      }
     } else {
       $no_sertifikat = '0783';
     }
@@ -389,29 +398,44 @@ class Practicum extends CI_Controller
       } else {
         $validasi = 'Yes';
       }
-      $input = array(
-        'no_sertifikat'   => $no_sertifikat,
-        'nim_asprak'      => $da->nim_asprak,
-        'id_daftar_mk'    => $id,
-        'b1'              => $b1,
-        'b2'              => $b2,
-        'b3'              => $b3,
-        'b4'              => $b4,
-        'presensi'        => $total,
-        'validasi'        => $validasi,
-        'tgl_generate'    => $tgl_generate
-      );
-      $this->m->insertData('sertifikat', $input);
-      $no_sertifikat = $no_sertifikat + 1;
-      if (strlen($no_sertifikat) == 1) {
-        $no_sertifikat = '000' . $no_sertifikat;
-      } elseif (strlen($no_sertifikat) == 2) {
-        $no_sertifikat = '00' . $no_sertifikat;
-      } elseif (strlen($no_sertifikat) == 3) {
-        $no_sertifikat = '0' . $no_sertifikat;
-      } elseif (strlen($no_sertifikat) == 4) {
-        $no_sertifikat = $no_sertifikat;
+      if ($validasi == 'Yes') {
+        $no_sertifikat = $no_sertifikat + 1;
+        if (strlen($no_sertifikat) == 1) {
+          $no_sertifikat = '000' . $no_sertifikat;
+        } elseif (strlen($no_sertifikat) == 2) {
+          $no_sertifikat = '00' . $no_sertifikat;
+        } elseif (strlen($no_sertifikat) == 3) {
+          $no_sertifikat = '0' . $no_sertifikat;
+        } elseif (strlen($no_sertifikat) == 4) {
+          $no_sertifikat = $no_sertifikat;
+        }
+        $input = array(
+          'no_sertifikat'   => $no_sertifikat,
+          'nim_asprak'      => $da->nim_asprak,
+          'id_daftar_mk'    => $id,
+          'b1'              => $b1,
+          'b2'              => $b2,
+          'b3'              => $b3,
+          'b4'              => $b4,
+          'presensi'        => $total,
+          'validasi'        => $validasi,
+          'tgl_generate'    => $tgl_generate
+        );
+      } elseif ($validasi == 'No') {
+        $input = array(
+          'no_sertifikat'   => '-',
+          'nim_asprak'      => $da->nim_asprak,
+          'id_daftar_mk'    => $id,
+          'b1'              => $b1,
+          'b2'              => $b2,
+          'b3'              => $b3,
+          'b4'              => $b4,
+          'presensi'        => $total,
+          'validasi'        => $validasi,
+          'tgl_generate'    => $tgl_generate
+        );
       }
+      $this->m->insertData('sertifikat', $input);
     }
     redirect('Practicum/Certificate');
   }
