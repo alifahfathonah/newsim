@@ -52,7 +52,7 @@
               ?>
                   <div class="ibox collapsed">
                     <?php
-                    $cek_sertifikat = $this->db->distinct()->select('*')->from('sertifikat')->where('id_daftar_mk', $dmk->id_daftar_mk)->get()->row();
+                    $cek_sertifikat = $this->db->distinct()->select('*')->from('sertifikat')->where('id_daftar_mk', $dmk->id_daftar_mk)->where('validasi', 'Yes')->get()->row();
                     $style_file = null;
                     $style_file = '<td width="4%" style="text-align: center;"><i class="fa fa-file fa-2x"></i></td>';
                     if ($cek_sertifikat == true) {
