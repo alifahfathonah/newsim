@@ -328,7 +328,7 @@ class Practicum extends CI_Controller
         $no_sertifikat = $no_sertifikat;
       }
     } else {
-      $no_sertifikat = '0783';
+      $no_sertifikat = '0782';
     }
     $daftar_asprak = $this->db->select('asprak.nim_asprak, asprak.nama_asprak')->from('daftarasprak')->join('asprak', 'daftarasprak.nim_asprak = asprak.nim_asprak')->where('daftarasprak.id_daftar_mk', $id)->order_by('asprak.nama_asprak')->get()->result();
     $sum = 0;
