@@ -27,6 +27,11 @@
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/lightbox/ekko-lightbox.css" rel="stylesheet">
   <?php
   }
+  if (uri('1') == 'LPJAsprak') {
+    ?>
+      <link href="<?= base_url('assets/inspinia/') ?>css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <?php
+    }
   if (uri('1') == 'Setting') {
   ?>
     <link href="<?= base_url('assets/inspinia/') ?>css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
@@ -127,6 +132,18 @@
             <a href="<?= base_url('BAP/Approved') ?>">Approved</a>
             </li>
           </ul>
+          </li>
+          <?php
+          if (uri('1') == 'LPJAsprak') {
+            echo '<li class="active">';
+          } else {
+            echo '<li>';
+          }
+          ?>
+          <a href="<?= base_url('LPJAsprak') ?>">
+            <i class="fa fa-file"></i>
+            <span class="nav-label">LPJ Asprak</span>
+          </a>
           </li>
           <?php
           if (uri('1') == 'Setting') {
