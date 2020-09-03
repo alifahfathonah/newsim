@@ -50,11 +50,21 @@
                           <td><?= $s->validasi ?></td>
                           <td><?= $status ?></td>
                           <td style="text-align: center;">
-                            <form method="post" action="<?= base_url('Asprak/DownloadCertificate') ?>" target="_blank">
+                          <?php
+                          if ($s->validasi == 'Yes') {
+                          ?>
+                          <form method="post" action="<?= base_url('Asprak/DownloadCertificate') ?>" target="_blank">
                               <input type="text" name="nim_asprak" id="nim_asprak" value="<?= userdata('nim') ?>" style="display: none;">
                               <input type="text" name="id_daftar_mk" id="id_daftar_mk" value="<?= $s->id_daftar_mk ?>" style="display: none;">
                               <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-download"></i></button>
                             </form>
+                          <?php
+                          } elseif ($s->validasi == 'No') {
+                          ?>
+                          <button type="button" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+                          <?php
+                          }
+                          ?>
                           </td>
                         </tr>
                       <?php
