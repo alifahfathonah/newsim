@@ -48,7 +48,15 @@
                           <td><?= $keanggotaan ?></td>
                           <td><?= $s->no_sertifikat ?></td>
                           <td><?= $s->validasi ?></td>
-                          <td><?= $status ?></td>
+                          <td>
+                          <?php
+                          if ($s->validasi == 'No') {
+                            echo 'Presensi kehadiran kurang memenuhi';
+                          } elseif ($s->validasi == 'Yes') {
+                            echo $status;
+                          }
+                          ?>
+                          </td>
                           <td style="text-align: center;">
                           <?php
                           if ($s->validasi == 'Yes') {
